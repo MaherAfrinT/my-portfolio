@@ -1,0 +1,82 @@
+mutation SeedDatabase @transaction {
+  user_insertMany(data: [
+    {
+      id: "71e54917-cfc8-4712-a162-43178c139701",
+      email: "alice@example.com",
+      createdAt: "2024-01-01T00:00:00Z",
+      displayName: "Alice Smith",
+      planTier: "premium"
+    },
+    {
+      id: "71e54917-cfc8-4712-a162-43178c139702",
+      email: "bob@example.com",
+      createdAt: "2024-02-15T10:00:00Z",
+      displayName: "Bob Jones",
+      planTier: "basic"
+    }
+  ])
+  recipe_insertMany(data: [
+    {
+      id: "a3a1b8c1-1234-5678-90ab-cdef12345671",
+      userId: "71e54917-cfc8-4712-a162-43178c139701",
+      name: "Breakfast Prompt",
+      promptTemplate: "Generate a breakfast recipe using {{ingredient}}",
+      isActive: true
+    },
+    {
+      id: "a3a1b8c1-1234-5678-90ab-cdef12345672",
+      userId: "71e54917-cfc8-4712-a162-43178c139702",
+      name: "Dinner Prompt",
+      promptTemplate: "Suggest a healthy dinner based on {{calories}} calories",
+      isActive: false
+    }
+  ])
+  trigger_insertMany(data: [
+    {
+      id: "b4b2c9d2-1234-5678-90ab-cdef12345671",
+      recipeId: "a3a1b8c1-1234-5678-90ab-cdef12345671",
+      type: "schedule",
+      config: "{\"cron\": \"0 7 * * *\"}",
+      description: "Morning trigger"
+    },
+    {
+      id: "b4b2c9d2-1234-5678-90ab-cdef12345672",
+      recipeId: "a3a1b8c1-1234-5678-90ab-cdef12345672",
+      type: "webhook",
+      config: "{\"url\": \"https://api.example.com/hook\"}",
+      description: "External API trigger"
+    }
+  ])
+  generation_insertMany(data: [
+    {
+      id: "c5c3d0e3-1234-5678-90ab-cdef12345671",
+      recipeId: "a3a1b8c1-1234-5678-90ab-cdef12345671",
+      outputContent: "Scrambled eggs with toast.",
+      status: "completed",
+      tokensUsed: 15
+    },
+    {
+      id: "c5c3d0e3-1234-5678-90ab-cdef12345672",
+      recipeId: "a3a1b8c1-1234-5678-90ab-cdef12345672",
+      outputContent: "Grilled chicken salad.",
+      status: "completed",
+      tokensUsed: 22
+    }
+  ])
+  template_insertMany(data: [
+    {
+      id: "d6d4e1f4-1234-5678-90ab-cdef12345671",
+      userId: "71e54917-cfc8-4712-a162-43178c139701",
+      body: "Standard {{variable}} template",
+      version: "1.0.0",
+      tags: ["marketing", "standard"]
+    },
+    {
+      id: "d6d4e1f4-1234-5678-90ab-cdef12345672",
+      userId: "71e54917-cfc8-4712-a162-43178c139702",
+      body: "Advanced {{complex}} logic template",
+      version: "2.1.0",
+      tags: ["internal"]
+    }
+  ])
+}

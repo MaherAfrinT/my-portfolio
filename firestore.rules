@@ -1,0 +1,52 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    function isAdmin() {
+      return request.auth != null && request.auth.token.email == "shahariar.sabbir.101@gmail.com";
+    }
+
+    match /projects/{document} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    
+    match /career/{document} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    
+    match /config/{document} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /testimonials/{document} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    
+    match /blogPosts/{document} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    
+    match /journalEntries/{document} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /certifications/{document} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    
+    match /contactMessages/{document} {
+      allow create: if request.resource.data.keys().hasAll(['name', 'email', 'message', 'createdAt', 'read'])
+                    && request.resource.data.name is string
+                    && request.resource.data.email is string
+                    && request.resource.data.message is string;
+      allow read, update, delete: if isAdmin();
+    }
+  }
+}

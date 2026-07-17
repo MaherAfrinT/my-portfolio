@@ -1,0 +1,257 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import { useFirestoreCollection } from '../../hooks/useFirestoreCollection';
+import { PageTransition } from '../../components/layout/PageTransition';
+import { formatDate } from '../../lib/utils';
+import { Tag } from '../../components/ui/Tag';
+import { Reveal } from '../../components/ui/Reveal';
+
+export function CareerPage() {
+  const {
+    data: experiences,
+    loading: expLoading,
+    error: expError,
+  } = useFirestoreCollection('career', 'startDate', 'desc');
+  const {
+    data: testimonials,
+    loading: testLoading,
+    error: testError,
+  } = useFirestoreCollection('testimonials', 'createdAt', 'desc');
+
+  return (
+    <PageTransition>
+      <div className="relative flex flex-col gap-8 space-y-24 pb-24 md:flex-row">
+        {/* Sticky Page Nav (Side Nav) */}
+        <nav className="relative hidden w-48 shrink-0 md:block">
+          <div className="sticky top-32 space-y-4 border-l-2 border-slate-200 pl-4 dark:border-slate-800">
+            <a
+              href="#experience"
+              className="block font-medium text-slate-500 transition-colors hover:text-cyan-500"
+            >
+              Experience
+            </a>
+            <a
+              href="#testimonials"
+              className="block font-medium text-slate-500 transition-colors hover:text-purple-500"
+            >
+              Testimonials
+            </a>
+          </div>
+        </nav>
+
+        <div className="flex-1 space-y-24">
+          <section id="experience" className="scroll-mt-32">
+            <Reveal>
+              <header className="mb-12 pt-12">
+                <h1 className="mb-6 text-4xl font-extrabold md:text-5xl">
+                  <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+                    Experience
+                  </span>
+                </h1>
+                <p className="max-w-2xl text-xl text-slate-600 dark:text-slate-400">
+                  My professional journey and education.
+                </p>
+              </header>
+            </Reveal>
+
+            {expLoading ? (
+              <div className="flex justify-center py-20">
+                <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-cyan-500"></div>
+              </div>
+            ) : expError ? (
+              <div className="text-red-500">Error loading career data.</div>
+            ) : (
+              <div className="relative mx-auto max-w-5xl space-y-16 py-10">
+                {/* Central line */}
+                <div className="absolute top-0 bottom-0 left-8 z-0 w-px transform bg-slate-800 md:left-1/2 md:-translate-x-1/2" />
+
+                {experiences?.map((item, idx) => {
+                  const isEven = idx % 2 === 0;
+                  return (
+                    <motion.div
+                      key={item.id}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: '-100px' }}
+                      transition={{ delay: 0.1, duration: 0.5 }}
+                      className={`relative flex w-full flex-col items-center md:flex-row ${isEven ? 'md:flex-row-reverse' : ''}`}
+                    >
+                      {/* Half width spacer for desktop */}
+                      <div className="hidden w-1/2 md:block" />
+
+                      {/* Node */}
+                      <div className="absolute left-8 z-10 flex h-12 w-12 -translate-x-1/2 transform items-center justify-center rounded-full border border-cyan-500 bg-[#030712] shadow-[0_0_20px_rgba(0,255,204,0.3)] md:left-1/2">
+                        <span className="font-mono text-sm font-bold tracking-tighter text-cyan-400">
+                          &lt;&gt;
+                        </span>
+                      </div>
+
+                      {/* Content */}
+                      <div
+                        className={`w-full pr-4 pl-24 md:w-1/2 md:px-12 ${isEven ? 'md:text-right' : 'md:text-left'}`}
+                      >
+                        <div className="glass-panel rounded-xl group relative overflow-hidden border border-slate-800 bg-slate-900/40 p-8 shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:border-cyan-500/50 hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
+                          {/* Glow effect on hover */}
+                          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+                          <h3 className="mb-2 text-2xl font-bold text-white">
+                            {item.role}
+                          </h3>
+
+                          <div
+                            className={`mb-4 flex items-center gap-2 font-mono text-sm text-cyan-500 ${isEven ? 'md:justify-end' : 'md:justify-start'}`}
+                          >
+                            {formatDate(item.startDate)}{' '}
+                            <span className="text-slate-600">-</span>{' '}
+                            {item.current
+                              ? 'Present'
+                              : formatDate(item.endDate)}
+                          </div>
+
+                          <div className="mb-6 text-lg font-medium text-slate-300">
+                            {item.company}
+                          </div>
+
+                          {item.description && (
+                            <p className="mb-6 text-sm leading-relaxed whitespace-pre-wrap text-slate-400">
+                              {item.description}
+                            </p>
+                          )}
+
+                          {/* Achievements with checkmarks */}
+                          {item.achievements &&
+                            item.achievements.length > 0 && (
+                              <ul
+                                className={`space-y-3 ${isEven ? 'md:flex md:flex-col md:items-end' : ''}`}
+                              >
+                                {item.achievements.map((ach, aIdx) => (
+                                  <li
+                                    key={aIdx}
+                                    className={`flex max-w-md items-start text-sm text-slate-300 ${isEven ? 'md:flex-row-reverse md:text-right' : ''}`}
+                                  >
+                                    <svg
+                                      className={`mt-0.5 h-5 w-5 shrink-0 text-cyan-500 ${isEven ? 'ml-3' : 'mr-3'}`}
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke="currentColor"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                      />
+                                    </svg>
+                                    <span className="leading-relaxed opacity-90">
+                                      {ach}
+                                    </span>
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+
+                          {item.skills && item.skills.length > 0 && (
+                            <div
+                              className={`mt-8 flex flex-wrap gap-2 border-t border-slate-800 pt-6 ${isEven ? 'md:justify-end' : 'md:justify-start'}`}
+                            >
+                              {item.skills.map((skill) => (
+                                <Tag
+                                  key={skill}
+                                  className="border-cyan-800/50 bg-cyan-900/30 text-cyan-300"
+                                >
+                                  {skill}
+                                </Tag>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+
+                {experiences?.length === 0 && (
+                  <div className="w-full py-10 text-center text-slate-500">
+                    No experience records found.
+                  </div>
+                )}
+              </div>
+            )}
+          </section>
+
+          <section id="testimonials" className="scroll-mt-32">
+            <Reveal>
+              <header className="mb-12">
+                <h2 className="mb-6 text-3xl font-extrabold md:text-4xl">
+                  <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+                    Testimonials
+                  </span>
+                </h2>
+                <p className="max-w-2xl text-lg text-slate-600 dark:text-slate-400">
+                  What people say about working with me.
+                </p>
+              </header>
+            </Reveal>
+
+            {testLoading ? (
+              <div className="flex justify-center py-20">
+                <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-cyan-500"></div>
+              </div>
+            ) : testError ? (
+              <div className="text-red-500">Error loading testimonials.</div>
+            ) : (
+              <div className="grid grid-cols-1 gap-6">
+                {testimonials?.map((t, idx) => (
+                  <motion.div
+                    key={t.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1 }}
+                  >
+                    <div className="glass-panel rounded-xl group relative overflow-hidden p-8 shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:border-cyan-500/50 hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                      <div className="absolute top-6 right-8 font-serif text-6xl leading-none text-cyan-500/20">
+                        "
+                      </div>
+                      <p className="relative z-10 mb-6 text-lg text-slate-700 italic dark:text-slate-300">
+                        {t.quote}
+                      </p>
+                      <div className="flex items-center gap-4">
+                        {t.avatarUrl ? (
+                          <img
+                            src={t.avatarUrl}
+                            alt={t.author}
+                            className="h-12 w-12 rounded-full object-cover"
+                          />
+                        ) : (
+                          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-cyan-100 text-xl font-bold text-cyan-600 dark:bg-cyan-900/30 dark:text-cyan-400">
+                            {t.author.charAt(0)}
+                          </div>
+                        )}
+                        <div>
+                          <div className="font-bold text-slate-900 dark:text-white">
+                            {t.author}
+                          </div>
+                          <div className="text-sm text-slate-500">
+                            {t.position}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+
+                {testimonials?.length === 0 && (
+                  <div className="py-10 text-slate-500">
+                    No testimonials yet.
+                  </div>
+                )}
+              </div>
+            )}
+          </section>
+        </div>
+      </div>
+    </PageTransition>
+  );
+}

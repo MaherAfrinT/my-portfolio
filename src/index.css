@@ -1,0 +1,28 @@
+@import "tailwindcss";
+@import "./styles/animations.css";
+@import "./styles/markdown.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-dark-bg: #051014;
+  --color-dark-surface: rgba(5, 16, 20, 0.7);
+  --color-neon-cyan: #00ffcc;
+  --color-neon-pink: #ff00ff;
+  --color-neon-purple: #8a2be2;
+  --color-light-bg: #F8F9FA;
+  --color-light-surface: rgba(255, 255, 255, 0.8);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  /* Parrot OS dark mode default, off-white light mode */
+  @apply bg-[#F8F9FA] text-slate-900 dark:bg-[#051014] dark:text-slate-200 transition-colors duration-500 selection:bg-cyan-500 selection:text-white;
+}
+
+.glass-panel {
+  @apply bg-white/80 dark:bg-[#051014]/70 backdrop-blur-md border border-gray-200/50 dark:border-cyan-900/30 shadow-xl;
+}
