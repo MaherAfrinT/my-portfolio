@@ -31,6 +31,7 @@ export function KineticText({ text = '', className = '' }) {
 
   return (
     <motion.div
+      key={text}
       className={`flex flex-wrap justify-center md:justify-start ${className}`}
       variants={container}
       initial="hidden"

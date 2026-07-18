@@ -68,13 +68,26 @@ export function JournalPage() {
                 <h3 className="mb-10 text-2xl font-bold">Timeline</h3>
               </Reveal>
 
-              <div className="space-y-10">
+              <div className="relative ml-4 space-y-12 border-l-2 border-slate-200 pb-8 md:ml-[20%] dark:border-slate-800">
                 {publishedEntries.map((entry) => (
                   <Reveal key={entry.id}>
-                    <div className="relative pl-8 md:pl-0">
-                      <div className="items-start md:grid md:grid-cols-5 md:gap-8">
-                        {/* Desktop Date Column */}
-                        <div className="col-span-1 hidden pt-2 text-right text-sm font-medium text-slate-500 md:block dark:text-slate-400">
+                    <div className="relative pl-8 md:pl-12">
+                      {/* Timeline Node */}
+                      <div className="absolute -left-[7px] top-8 h-3 w-3 rounded-full bg-cyan-500 shadow-[0_0_10px_#00E5FF] outline outline-4 outline-slate-50 dark:outline-slate-950" />
+
+                      {/* Desktop Date */}
+                      <div className="font-mono absolute right-[calc(100%+2rem)] top-7 hidden w-48 text-right text-sm font-medium text-slate-500 md:block dark:text-slate-400">
+                        {entry.date?.toDate
+                          ? format(entry.date.toDate(), 'MMM d, yyyy')
+                          : entry.date
+                            ? format(new Date(entry.date), 'MMM d, yyyy')
+                            : ''}
+                      </div>
+
+                      {/* Timeline Item Card */}
+                      <div className="group relative rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/50 hover:shadow-lg md:p-8 dark:border-slate-800 dark:bg-slate-900">
+                        {/* Mobile Date Header */}
+                        <div className="font-mono mb-4 text-xs font-semibold tracking-wider text-cyan-600 uppercase md:hidden dark:text-cyan-400">
                           {entry.date?.toDate
                             ? format(entry.date.toDate(), 'MMM d, yyyy')
                             : entry.date
@@ -82,39 +95,27 @@ export function JournalPage() {
                               : ''}
                         </div>
 
-                        {/* Timeline Item Card */}
-                        <div className="group relative rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/50 hover:shadow-lg md:col-span-4 md:p-8 dark:border-slate-800 dark:bg-slate-900">
-                          {/* Mobile Date Header */}
-                          <div className="mb-4 text-xs font-semibold tracking-wider text-cyan-600 uppercase md:hidden dark:text-cyan-400">
-                            {entry.date?.toDate
-                              ? format(entry.date.toDate(), 'MMM d, yyyy')
-                              : entry.date
-                                ? format(new Date(entry.date), 'MMM d, yyyy')
-                                : ''}
-                          </div>
+                        <div className="mb-4 flex items-center gap-3">
+                          <h4 className="text-xl font-bold text-slate-900 dark:text-white">
+                            {entry.title || 'Untitled Update'}
+                          </h4>
+                          {entry.category && (
+                            <span className="font-mono rounded-full border border-cyan-100 bg-cyan-50 px-2.5 py-1 text-xs font-medium text-cyan-700 dark:border-cyan-800/50 dark:bg-cyan-900/30 dark:text-cyan-300">
+                              {entry.category}
+                            </span>
+                          )}
+                        </div>
 
-                          <div className="mb-4 flex items-center gap-3">
-                            <h4 className="text-xl font-bold text-slate-900 dark:text-white">
-                              {entry.title || 'Untitled Update'}
-                            </h4>
-                            {entry.category && (
-                              <span className="rounded-full border border-cyan-100 bg-cyan-50 px-2.5 py-1 text-xs font-medium text-cyan-700 dark:border-cyan-800/50 dark:bg-cyan-900/30 dark:text-cyan-300">
-                                {entry.category}
-                              </span>
-                            )}
-                          </div>
-
-                          <div 
-                            className="prose prose-slate dark:prose-invert max-w-none text-sm leading-relaxed md:text-base"
-                            style={getReaderStyles()}
+                        <div
+                          className="prose prose-slate dark:prose-invert max-w-none text-sm leading-relaxed md:text-base"
+                          style={getReaderStyles()}
+                        >
+                          <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            rehypePlugins={[rehypeHighlight]}
                           >
-                            <ReactMarkdown
-                              remarkPlugins={[remarkGfm]}
-                              rehypePlugins={[rehypeHighlight]}
-                            >
-                              {entry.content || entry.note || ''}
-                            </ReactMarkdown>
-                          </div>
+                            {entry.content || entry.note || ''}
+                          </ReactMarkdown>
                         </div>
                       </div>
                     </div>

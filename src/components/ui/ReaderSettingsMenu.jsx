@@ -121,6 +121,13 @@ export function ReaderSettingsMenu() {
                   </button>
                 </div>
               </div>
+
+              <button
+                onClick={() => setIsOpen(false)}
+                className="mt-6 w-full rounded-xl bg-cyan-500 py-3 text-sm font-bold text-white hover:bg-cyan-600 active:scale-[0.98]"
+              >
+                Save Settings
+              </button>
             </div>
           </motion.div>
         )}

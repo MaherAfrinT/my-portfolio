@@ -21,8 +21,24 @@ export function useReaderSettings() {
     localStorage.setItem('reader-settings', JSON.stringify(settings));
   }, [settings]);
 
+  useEffect(() => {
+    const handleSettingsChange = (e) => {
+      setSettings(e.detail);
+    };
+    window.addEventListener('readerSettingsChanged', handleSettingsChange);
+    return () => {
+      window.removeEventListener('readerSettingsChanged', handleSettingsChange);
+    };
+  }, []);
+
   const updateSetting = (key, value) => {
-    setSettings((prev) => ({ ...prev, [key]: value }));
+    setSettings((prev) => {
+      const newSettings = { ...prev, [key]: value };
+      window.dispatchEvent(
+        new CustomEvent('readerSettingsChanged', { detail: newSettings })
+      );
+      return newSettings;
+    });
   };
 
   // Generate CSS style object based on current settings

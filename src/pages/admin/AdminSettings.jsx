@@ -6,6 +6,7 @@ import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Textarea } from '../../components/ui/Textarea';
 import { Card, CardContent } from '../../components/ui/Card';
+import Circle from '@uiw/react-color-circle';
 
 export function AdminSettings() {
   const [formData, setFormData] = useState(DEFAULT_SITE_CONFIG);
@@ -233,20 +234,30 @@ export function AdminSettings() {
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div className="space-y-2">
                 <label className="text-sm font-medium">Cat Accent Color</label>
-                <div className="flex items-center gap-4">
-                  <Input
-                    type="color"
-                    name="catAccentColor"
-                    value={formData.catAccentColor || '#FFFF00'}
-                    onChange={handleChange}
-                    className="h-10 w-16 cursor-pointer p-1"
+                <div className="flex flex-col gap-4">
+                  <Circle
+                    colors={[
+                      '#FFFF00', // Yellow
+                      '#00E5FF', // Cyan
+                      '#FF0055', // Pink
+                      '#00FF00', // Green
+                      '#FF9900', // Orange
+                      '#9900FF', // Purple
+                      '#FFFFFF', // White
+                    ]}
+                    color={formData.catAccentColor || '#FFFF00'}
+                    onChange={(color) => {
+                      handleChange({
+                        target: { name: 'catAccentColor', value: color.hex },
+                      });
+                    }}
                   />
                   <Input
                     type="text"
                     name="catAccentColor"
                     value={formData.catAccentColor || '#FFFF00'}
                     onChange={handleChange}
-                    className="flex-1 font-mono"
+                    className="font-mono w-40"
                   />
                 </div>
               </div>

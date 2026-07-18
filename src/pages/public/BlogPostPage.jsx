@@ -97,7 +97,7 @@ export function BlogPostPage() {
               {post.tags?.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-full bg-cyan-100 px-2.5 py-1 text-xs font-medium text-cyan-800 dark:bg-cyan-900/30 dark:text-cyan-400"
+                  className="font-mono rounded-full bg-cyan-100 px-2.5 py-1 text-xs font-medium text-cyan-800 dark:bg-cyan-900/30 dark:text-cyan-400"
                 >
                   {tag}
                 </span>
@@ -106,7 +106,7 @@ export function BlogPostPage() {
             <h1 className="mb-6 text-4xl leading-tight font-extrabold text-slate-900 md:text-5xl dark:text-white">
               {post.title}
             </h1>
-            <div className="text-sm text-slate-500 dark:text-slate-400">
+            <div className="font-mono text-sm text-slate-500 dark:text-slate-400">
               Published on{' '}
               {post.publishedAt?.toDate
                 ? format(post.publishedAt.toDate(), 'MMMM d, yyyy')

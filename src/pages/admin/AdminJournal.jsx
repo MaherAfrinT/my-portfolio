@@ -4,6 +4,7 @@ import { useFirestoreCollection } from '../../hooks/useFirestoreCollection';
 import { useAdminDelete } from '../../hooks/useAdminDelete';
 import { COLLECTIONS } from '../../lib/constants';
 import { Button } from '../../components/ui/Button';
+import { Trash2 } from 'lucide-react';
 
 export function AdminJournal() {
   const {
@@ -26,7 +27,7 @@ export function AdminJournal() {
         </Button>
       </div>
 
-      <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800">
+      <div className="hidden md:block overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800">
         <table className="w-full text-left">
           <thead className="border-b border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-700/50">
             <tr>
@@ -107,6 +108,64 @@ export function AdminJournal() {
             )}
           </tbody>
         </table>
+      </div>
+
+      <div className="block space-y-4 md:hidden">
+        {entries?.map((entry) => (
+          <div
+            key={entry.id}
+            className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800"
+          >
+            <div className="mb-2 flex items-start justify-between">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                {entry.title || 'Untitled'}
+              </h3>
+              <button
+                onClick={() => handleDelete(entry.id, 'journal entry')}
+                disabled={isDeleting}
+                className="text-red-500 hover:text-red-700 disabled:opacity-50 dark:text-red-400"
+                aria-label="Delete"
+              >
+                <Trash2 className="h-5 w-5" />
+              </button>
+            </div>
+            
+            <div className="mb-3 text-sm text-slate-500 dark:text-slate-400">
+              {entry.date?.toDate
+                ? entry.date.toDate().toLocaleDateString()
+                : new Date(entry.date).toLocaleDateString()}
+            </div>
+
+            <div className="mb-3">
+              <span className="inline-flex items-center rounded-full bg-cyan-100 px-2.5 py-0.5 text-xs font-medium text-cyan-800 dark:bg-cyan-900 dark:text-cyan-300">
+                {entry.category || 'General'}
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between text-sm">
+              <span
+                className={
+                  entry.isPublished
+                    ? 'text-green-600 dark:text-green-400'
+                    : 'text-amber-600 dark:text-amber-400'
+                }
+              >
+                {entry.isPublished ? 'Published' : 'Draft'}
+              </span>
+              <Link
+                to={`/admin/journal/edit/${entry.id}`}
+                className="text-cyan-600 hover:underline dark:text-cyan-400"
+              >
+                Edit
+              </Link>
+            </div>
+          </div>
+        ))}
+        {entries?.length === 0 && (
+          <div className="py-8 text-center text-slate-500">
+            No journal entries found. Create one to get started!
+          </div>
+        )}
       </div>
     </div>
   );

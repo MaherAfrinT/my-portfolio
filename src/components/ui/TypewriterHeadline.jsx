@@ -16,9 +16,22 @@ export function TypewriterHeadline({
     return () => clearTimeout(cursorTimeout);
   }, [blink]);
 
+  // Reset state if words array changes
+  useEffect(() => {
+    setIndex(0);
+    setSubIndex(0);
+    setReverse(false);
+  }, [words.join(',')]);
+
   // Typing logic
   useEffect(() => {
-    if (subIndex === words[index].length + 1 && !reverse) {
+    if (!words || words.length === 0) return;
+    
+    // Safety check in case words array shrank
+    const currentIndex = index >= words.length ? 0 : index;
+    const currentWord = words[currentIndex] || '';
+
+    if (subIndex === currentWord.length + 1 && !reverse) {
       setReverse(true);
       return;
     }
@@ -37,15 +50,19 @@ export function TypewriterHeadline({
       () => {
         setSubIndex((prev) => prev + (reverse ? -1 : 1));
       },
-      subIndex === words[index].length && !reverse ? pause : currentSpeed
+      subIndex === currentWord.length && !reverse ? pause : currentSpeed
     );
 
     return () => clearTimeout(timeout);
   }, [subIndex, reverse, index, words, speed, pause]);
 
+  // Safety checks for render
+  const currentIndex = index >= words.length ? 0 : index;
+  const currentWord = words[currentIndex] || '';
+
   return (
     <span className="mt-2 block font-mono text-5xl font-black tracking-tight text-cyan-500 drop-shadow-[0_0_12px_rgba(0,255,204,0.6)] md:text-7xl dark:text-[#00ffcc]">
-      {words[index].substring(0, subIndex)}
+      {currentWord.substring(0, subIndex)}
       <span
         className={`ml-2 inline-block h-[0.9em] w-[4px] bg-cyan-500 align-middle transition-opacity duration-100 dark:bg-[#00ffcc] ${blink ? 'opacity-100' : 'opacity-0'}`}
       />

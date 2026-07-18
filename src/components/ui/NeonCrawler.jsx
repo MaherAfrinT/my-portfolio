@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, useSpring, useMotionValue } from 'framer-motion';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 export function NeonCrawler() {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
+  const isMobile = useMediaQuery('(max-width: 768px)');
 
   // 5 Segments for the crawler
   const SEGMENTS = 5;
@@ -133,6 +135,8 @@ export function NeonCrawler() {
       );
     }, 1000);
   };
+
+  if (isMobile) return null;
 
   return (
     <>

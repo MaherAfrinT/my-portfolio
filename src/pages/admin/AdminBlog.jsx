@@ -4,6 +4,7 @@ import { useFirestoreCollection } from '../../hooks/useFirestoreCollection';
 import { useAdminDelete } from '../../hooks/useAdminDelete';
 import { COLLECTIONS } from '../../lib/constants';
 import { Button } from '../../components/ui/Button';
+import { Trash2 } from 'lucide-react';
 
 export function AdminBlog() {
   const {
@@ -26,7 +27,7 @@ export function AdminBlog() {
         </Button>
       </div>
 
-      <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800">
+      <div className="hidden md:block overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800">
         <table className="w-full text-left">
           <thead className="border-b border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-700/50">
             <tr>
@@ -114,6 +115,61 @@ export function AdminBlog() {
             )}
           </tbody>
         </table>
+      </div>
+
+      <div className="block space-y-4 md:hidden">
+        {posts?.map((post) => (
+          <div
+            key={post.id}
+            className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800"
+          >
+            <div className="mb-2 flex items-start justify-between">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                {post.title}
+              </h3>
+              <button
+                onClick={() => handleDelete(post.id, 'post')}
+                disabled={isDeleting}
+                className="text-red-500 hover:text-red-700 disabled:opacity-50 dark:text-red-400"
+                aria-label="Delete"
+              >
+                <Trash2 className="h-5 w-5" />
+              </button>
+            </div>
+            <div className="mb-3 flex flex-wrap gap-1">
+              {post.tags?.map((tag) => (
+                <span
+                  key={tag}
+                  className="inline-flex items-center rounded bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-800 dark:bg-slate-700 dark:text-slate-300"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <div className="flex items-center justify-between text-sm">
+              <span
+                className={
+                  post.isPublished
+                    ? 'text-green-600 dark:text-green-400'
+                    : 'text-amber-600 dark:text-amber-400'
+                }
+              >
+                {post.isPublished ? 'Published' : 'Draft'}
+              </span>
+              <Link
+                to={`/admin/blog/edit/${post.id}`}
+                className="text-cyan-600 hover:underline dark:text-cyan-400"
+              >
+                Edit
+              </Link>
+            </div>
+          </div>
+        ))}
+        {posts?.length === 0 && (
+          <div className="py-8 text-center text-slate-500">
+            No blog posts found. Create one to get started!
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useFirestoreCollection } from '../../hooks/useFirestoreCollection';
+import { motion } from 'framer-motion';
 import { PageTransition } from '../../components/layout/PageTransition';
 import { Reveal } from '../../components/ui/Reveal';
 import { WalkingCatFooter } from '../../components/ui/WalkingCatFooter';
@@ -49,7 +50,8 @@ export function BlogPage() {
             {/* Filter Bar */}
             <div className="mb-8 flex flex-wrap gap-2">
               {tags.map((tag) => (
-                <button
+                <motion.button
+                  layout
                   key={tag}
                   onClick={() => setFilter(tag)}
                   className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
@@ -59,7 +61,7 @@ export function BlogPage() {
                   }`}
                 >
                   {tag}
-                </button>
+                </motion.button>
               ))}
             </div>
 
@@ -92,7 +94,7 @@ export function BlogPage() {
                       {/* Standard Content (Hidden on hover using opacity or replaced by slide up overlay) */}
                       {/* Actually, let's keep the standard content below the image and slide the glassmorphism overlay OVER the image */}
                       <div className="p-6">
-                        <div className="mb-2 text-sm text-slate-500 dark:text-slate-400">
+                        <div className="mb-2 font-mono text-sm text-slate-500 dark:text-slate-400">
                           {post.publishedAt?.toDate
                             ? format(post.publishedAt.toDate(), 'MMMM d, yyyy')
                             : post.publishedAt
@@ -109,7 +111,7 @@ export function BlogPage() {
                           {post.tags?.slice(0, 3).map((tag) => (
                             <span
                               key={tag}
-                              className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300"
+                              className="font-mono rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300"
                             >
                               {tag}
                             </span>
@@ -119,7 +121,7 @@ export function BlogPage() {
 
                       {/* Glassmorphism Hover Overlay */}
                       <div className="absolute inset-0 flex translate-y-full flex-col justify-end bg-black/40 p-6 backdrop-blur-md transition-transform duration-500 ease-out group-hover:translate-y-0">
-                        <div className="mb-2 text-sm font-medium text-cyan-300">
+                        <div className="mb-2 font-mono text-sm font-medium text-cyan-300">
                           {post.publishedAt?.toDate
                             ? format(post.publishedAt.toDate(), 'MMMM d, yyyy')
                             : 'Draft'}
@@ -138,7 +140,7 @@ export function BlogPage() {
                           {post.tags?.map((tag) => (
                             <span
                               key={tag}
-                              className="rounded-full bg-white/20 px-2.5 py-1 text-xs font-medium text-white"
+                              className="font-mono rounded-full bg-white/20 px-2.5 py-1 text-xs font-medium text-white"
                             >
                               {tag}
                             </span>

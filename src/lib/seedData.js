@@ -139,7 +139,7 @@ const DEFAULT_CERTIFICATIONS = [
     issuer: 'Cisco',
     description:
       'The CCNA certification validates your skills and knowledge in network fundamentals.\n\n### Key Areas Covered:\n- Routing and Switching\n- Network Security Basics',
-    badgeUrl: 'https://i.imgur.com/39hNqfD.png',
+    badgeUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Cisco_logo_blue_2016.svg',
     verifyUrl: 'https://www.credly.com',
     issuedDate: '2024-06',
     expiryDate: '2027-06',
@@ -151,7 +151,7 @@ const DEFAULT_CERTIFICATIONS = [
     issuer: 'Amazon Web Services',
     description:
       'This certification validates overall understanding of the AWS Cloud platform.\n\n### Key Areas Covered:\n- Core AWS services (EC2, S3, RDS)',
-    badgeUrl: 'https://i.imgur.com/kP7T3c4.png',
+    badgeUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg',
     verifyUrl: 'https://www.credly.com',
     issuedDate: '2024-08',
     expiryDate: '2027-08',

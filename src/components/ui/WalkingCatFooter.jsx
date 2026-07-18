@@ -9,7 +9,7 @@ export function WalkingCatFooter() {
     config?.catMessage ||
     "You've reached the end! The developer is out walking his cat.";
 
-  const [isLooking, setIsLooking] = useState(false);
+  const [isSitting, setIsSitting] = useState(false);
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -19,12 +19,16 @@ export function WalkingCatFooter() {
       const catCenterX = rect.left + rect.width / 2;
       const catCenterY = rect.top + rect.height / 2;
 
-      const dist = Math.sqrt(
+      const distance = Math.sqrt(
         Math.pow(e.clientX - catCenterX, 2) +
           Math.pow(e.clientY - catCenterY, 2)
       );
 
-      setIsLooking(dist < 150);
+      setIsSitting((prev) => {
+        if (distance < 150 && !prev) return true;
+        if (distance >= 150 && prev) return false;
+        return prev;
+      });
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -48,7 +52,7 @@ export function WalkingCatFooter() {
 
         @keyframes sit-animation {
           from { background-position: -400px 0; }
-          to { background-position: -400px -1200px; }
+          to { background-position: -400px -1000px; }
         }
 
         .cat-sprite {
@@ -62,17 +66,18 @@ export function WalkingCatFooter() {
         }
 
         .sitting {
-          animation: sit-animation 2s steps(6) infinite;
+          animation: sit-animation 0.8s steps(5) forwards;
         }
 
         @keyframes treadmill {
-          0% { transform: translateX(-50%); }
-          100% { transform: translateX(0%); }
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(50%); }
         }
         
         .treadmill-track {
           display: flex;
           width: 200%;
+          margin-left: -100%;
           /* Move right to give illusion of cat walking left */
           animation: treadmill 2s infinite linear;
         }
@@ -106,7 +111,7 @@ export function WalkingCatFooter() {
         {/* The Cat - Wrapped to constrain height since we are scaling the 200px sprite down */}
         <div className="pointer-events-none relative z-10 mb-[2px] flex h-[80px] w-full items-end justify-center">
           <div
-            className={`cat-sprite absolute bottom-0 origin-bottom ${isLooking ? 'sitting' : 'walking'}`}
+            className={`cat-sprite absolute bottom-0 origin-bottom ${isSitting ? 'sitting' : 'walking'}`}
             style={{ transform: 'scale(0.45)' }}
           />
         </div>
@@ -117,7 +122,7 @@ export function WalkingCatFooter() {
           <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-white via-transparent to-white dark:from-slate-950 dark:via-transparent dark:to-slate-950" />
 
           <div
-            className={`treadmill-track relative z-0 ${isLooking ? 'treadmill-paused' : ''}`}
+            className={`treadmill-track relative z-0 ${isSitting ? 'treadmill-paused' : ''}`}
           >
             {/* Segment 1 */}
             <div className="relative flex w-1/2 items-end">
@@ -147,7 +152,7 @@ export function WalkingCatFooter() {
 
       {/* Message */}
       <p className="neon-text mt-8 max-w-sm px-4 text-center font-mono text-sm font-medium tracking-wide transition-all duration-700 md:text-base">
-        {isLooking ? 'Meow?' : message}
+        {isSitting ? 'Meow?' : message}
       </p>
     </div>
   );

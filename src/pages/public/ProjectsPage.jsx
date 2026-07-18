@@ -74,7 +74,8 @@ export function ProjectsPage() {
             {/* Filter Bar */}
             <div className="mb-8 flex flex-wrap gap-2">
               {categories.map((cat) => (
-                <button
+                <motion.button
+                  layout
                   key={cat}
                   onClick={() => setFilter(cat)}
                   className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
@@ -84,7 +85,7 @@ export function ProjectsPage() {
                   }`}
                 >
                   {cat}
-                </button>
+                </motion.button>
               ))}
             </div>
 
