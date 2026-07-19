@@ -7,6 +7,11 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  resolve: {
+    alias: {
+      'lottie-web': 'lottie-web/build/player/lottie_light.js'
+    }
+  },
   build: {
     rollupOptions: {
       output: {
