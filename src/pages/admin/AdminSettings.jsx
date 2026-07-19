@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
-import { DEFAULT_SITE_CONFIG } from '../../lib/constants';
+import { DEFAULT_SITE_CONFIG, COLLECTIONS } from '../../lib/constants';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Textarea } from '../../components/ui/Textarea';

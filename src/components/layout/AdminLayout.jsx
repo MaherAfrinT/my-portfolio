@@ -79,7 +79,7 @@ export function AdminLayout() {
     },
   ];
 
-  const SidebarContent = () => (
+  const renderSidebarContent = () => (
     <>
       <div className="flex h-16 items-center justify-between border-b border-slate-200 px-6 dark:border-slate-800">
         <span className="text-xl font-bold text-cyan-600 dark:text-cyan-400">
@@ -155,7 +155,7 @@ export function AdminLayout() {
     <div className="flex h-screen overflow-hidden bg-slate-50 dark:bg-[#030712]">
       {/* Desktop Sidebar */}
       <aside className="hidden md:flex w-64 flex-shrink-0 flex-col border-r border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
-        <SidebarContent />
+        {renderSidebarContent()}
       </aside>
 
       {/* Mobile Sidebar Overlay */}
@@ -176,7 +176,7 @@ export function AdminLayout() {
               transition={{ type: 'spring', bounce: 0, duration: 0.3 }}
               className="fixed inset-y-0 left-0 z-50 flex w-64 flex-col bg-white dark:bg-slate-900 md:hidden"
             >
-              <SidebarContent />
+              {renderSidebarContent()}
             </motion.aside>
           </>
         )}
