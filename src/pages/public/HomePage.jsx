@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 // Lottie is imported dynamically via React.lazy below
 import * as LucideIcons from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { LOTTIE_CAT_URL, DEFAULT_SITE_CONFIG } from '../../lib/constants';
+import { DEFAULT_SITE_CONFIG } from '../../lib/constants';
 import { Tag } from '../../components/ui/Tag';
 import { useSiteConfig } from '../../contexts/SiteConfigContext';
 import { useFirestoreCollection } from '../../hooks/useFirestoreCollection';
@@ -13,16 +13,16 @@ import { TypewriterHeadline } from '../../components/ui/TypewriterHeadline';
 import { KineticText } from '../../components/ui/KineticText';
 import { Reveal } from '../../components/ui/Reveal';
 
-const LazyLottie = React.lazy(() => import('lottie-react'));
+
 
 export function HomePage() {
   const { config } = useSiteConfig();
-  const { data: certifications } = useFirestoreCollection(
+  const { data: certifications, loading: certsLoading } = useFirestoreCollection(
     'certifications',
     'createdAt',
     'desc'
   );
-  const [animationData, setAnimationData] = useState(null);
+
   const [selectedCertTag, setSelectedCertTag] = useState(null);
   const [isCertDropdownOpen, setIsCertDropdownOpen] = useState(false);
   const certDropdownRef = React.useRef(null);
@@ -47,12 +47,7 @@ export function HomePage() {
       )
     : certifications;
 
-  React.useEffect(() => {
-    fetch(LOTTIE_CAT_URL)
-      .then((res) => res.json())
-      .then((data) => setAnimationData(data))
-      .catch((err) => console.error('Failed to load Lottie animation:', err));
-  }, []);
+
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -136,34 +131,26 @@ export function HomePage() {
               </motion.div>
             </motion.div>
 
-            <motion.div
-              className="relative z-0 flex w-full max-w-md flex-1 justify-center"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              <div className="relative h-64 w-64 md:h-96 md:w-96">
-                <div className="animate-pulse-glow absolute inset-0 rounded-full bg-cyan-500/20 blur-3xl filter dark:bg-[#00ffcc]/10"></div>
-                {config.heroImageUrl ? (
+            {config.heroImageUrl && (
+              <motion.div
+                className="relative z-0 flex w-full max-w-md flex-1 justify-center"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                <div className="relative h-64 w-64 md:h-96 md:w-96">
+                  <div className="animate-pulse-glow absolute inset-0 rounded-full bg-cyan-500/20 blur-3xl filter dark:bg-[#00ffcc]/10"></div>
                   <img
                     src={config.heroImageUrl}
                     alt={config.name || 'Hero'}
                     loading="lazy"
+                    width="384"
+                    height="384"
                     className="relative z-10 h-full w-full rounded-full border-4 border-cyan-500/30 object-cover shadow-[0_0_30px_rgba(0,255,204,0.3)]"
                   />
-                ) : (
-                  animationData && (
-                    <React.Suspense fallback={<div className="relative z-10 h-full w-full rounded-full bg-slate-200/50 dark:bg-slate-800/50 animate-pulse" />}>
-                      <LazyLottie
-                        animationData={animationData}
-                        loop={false}
-                        className="relative z-10 h-full w-full"
-                      />
-                    </React.Suspense>
-                  )
-                )}
-              </div>
-            </motion.div>
+                </div>
+              </motion.div>
+            )}
           </section>
         )}
 
@@ -195,7 +182,7 @@ export function HomePage() {
                     src={config.aboutImageUrl}
                     alt="About Me"
                     loading="lazy"
-                    className="aspect-square w-full rounded-2xl border-2 border-cyan-500/20 object-cover shadow-[0_0_20px_rgba(0,255,204,0.15)] shadow-xl"
+                    className="h-auto w-full rounded-2xl border-2 border-cyan-500/20 object-cover shadow-xl shadow-[0_0_20px_rgba(0,255,204,0.15)]"
                   />
                 </motion.div>
               )}
@@ -469,7 +456,25 @@ export function HomePage() {
                 ))}
               </AnimatePresence>
 
-              {(!filteredCerts || filteredCerts.length === 0) && (
+              {certsLoading && (!filteredCerts || filteredCerts.length === 0) && (
+                Array.from({ length: 3 }).map((_, idx) => (
+                  <div key={idx} className="h-64 rounded-xl border border-slate-200 bg-slate-100/50 p-6 animate-pulse dark:border-slate-800 dark:bg-slate-900/50">
+                    <div className="mb-4 flex items-start gap-4">
+                      <div className="h-16 w-16 rounded-lg bg-slate-200 dark:bg-slate-800"></div>
+                      <div className="flex-1 space-y-2">
+                        <div className="h-6 w-3/4 rounded bg-slate-200 dark:bg-slate-800"></div>
+                        <div className="h-4 w-1/2 rounded bg-slate-200 dark:bg-slate-800"></div>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="h-4 w-full rounded bg-slate-200 dark:bg-slate-800"></div>
+                      <div className="h-4 w-5/6 rounded bg-slate-200 dark:bg-slate-800"></div>
+                    </div>
+                  </div>
+                ))
+              )}
+
+              {!certsLoading && (!filteredCerts || filteredCerts.length === 0) && (
                 <div className="col-span-full rounded-xl border border-slate-800 bg-slate-900/20 py-8 text-center text-slate-500">
                   No certifications found.
                 </div>

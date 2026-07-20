@@ -1,7 +1,6 @@
 export const ADMIN_EMAIL = 'shahariar.sabbir.101@gmail.com';
 
-// Public placeholder Lottie URL (can be swapped later)
-export const LOTTIE_CAT_URL = '/lottie-cat.json';
+
 
 export const DEFAULT_SITE_CONFIG = {
   name: 'Shahariar Sabbir',
