@@ -7,7 +7,7 @@ export function UniversalFooter() {
   const { config } = useSiteConfig();
 
   return (
-    <footer className="relative z-10 mt-auto w-full border-t border-slate-200 bg-white/80 py-12 backdrop-blur-md dark:border-slate-800 dark:bg-slate-950/80">
+    <footer className="relative z-10 mt-auto w-full border-t border-slate-200 bg-white/80 py-12 backdrop-blur-md dark:border-[#333333] dark:bg-[#0A0A0A]/80">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-12">
           
@@ -69,7 +69,7 @@ export function UniversalFooter() {
                   href={config.socials.github}
                   target="_blank"
                   rel="noreferrer"
-                  className="group rounded-full bg-slate-100 p-3 text-slate-600 transition-all hover:bg-cyan-50 hover:text-cyan-600 dark:bg-slate-900 dark:text-slate-400 dark:hover:bg-cyan-950 dark:hover:text-cyan-400"
+                  className="group rounded-full bg-slate-100 p-3 text-slate-600 transition-all hover:bg-cyan-50 hover:text-cyan-600 dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:bg-[#222222] dark:hover:text-[#00E5FF]"
                   aria-label="GitHub"
                 >
                   <Github size={20} className="transition-transform group-hover:scale-110" />
@@ -80,7 +80,7 @@ export function UniversalFooter() {
                   href={config.socials.linkedin}
                   target="_blank"
                   rel="noreferrer"
-                  className="group rounded-full bg-slate-100 p-3 text-slate-600 transition-all hover:bg-cyan-50 hover:text-cyan-600 dark:bg-slate-900 dark:text-slate-400 dark:hover:bg-cyan-950 dark:hover:text-cyan-400"
+                  className="group rounded-full bg-slate-100 p-3 text-slate-600 transition-all hover:bg-cyan-50 hover:text-cyan-600 dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:bg-[#222222] dark:hover:text-[#00E5FF]"
                   aria-label="LinkedIn"
                 >
                   <Linkedin size={20} className="transition-transform group-hover:scale-110" />
@@ -91,7 +91,7 @@ export function UniversalFooter() {
                   href={config.socials.twitter}
                   target="_blank"
                   rel="noreferrer"
-                  className="group rounded-full bg-slate-100 p-3 text-slate-600 transition-all hover:bg-cyan-50 hover:text-cyan-600 dark:bg-slate-900 dark:text-slate-400 dark:hover:bg-cyan-950 dark:hover:text-cyan-400"
+                  className="group rounded-full bg-slate-100 p-3 text-slate-600 transition-all hover:bg-cyan-50 hover:text-cyan-600 dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:bg-[#222222] dark:hover:text-[#00E5FF]"
                   aria-label="Twitter"
                 >
                   <Twitter size={20} className="transition-transform group-hover:scale-110" />
@@ -100,7 +100,7 @@ export function UniversalFooter() {
               {config.email && (
                 <a
                   href={`mailto:${config.email}`}
-                  className="group rounded-full bg-slate-100 p-3 text-slate-600 transition-all hover:bg-cyan-50 hover:text-cyan-600 dark:bg-slate-900 dark:text-slate-400 dark:hover:bg-cyan-950 dark:hover:text-cyan-400"
+                  className="group rounded-full bg-slate-100 p-3 text-slate-600 transition-all hover:bg-cyan-50 hover:text-cyan-600 dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:bg-[#222222] dark:hover:text-[#00E5FF]"
                   aria-label="Email"
                 >
                   <Mail size={20} className="transition-transform group-hover:scale-110" />

@@ -11,7 +11,7 @@ export function PublicLayout() {
   const { config } = useSiteConfig();
 
   return (
-    <div className="flex min-h-screen flex-col font-sans selection:bg-cyan-500 selection:text-white">
+    <div className="flex min-h-screen flex-col font-sans">
       <AnimatedGridBackground />
       <CursorTrail />
       <NeonCrawler />

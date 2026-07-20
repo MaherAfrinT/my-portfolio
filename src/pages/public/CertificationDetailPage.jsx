@@ -95,7 +95,7 @@ export function CertificationDetailPage() {
             <div className="relative z-10 flex flex-col gap-8 md:flex-row">
               {/* Badge Column */}
               <div className="flex shrink-0 flex-col items-center md:w-1/3">
-                <div className="mb-6 flex h-48 w-48 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 p-4 shadow-xl dark:border-slate-700 dark:bg-slate-800/50">
+                <div className="mb-6 flex h-48 w-48 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 p-4 shadow-xl dark:border-[#333333] dark:bg-dark-surface">
                   {cert.badgeUrl ? (
                     <img
                       src={cert.badgeUrl}
@@ -214,7 +214,7 @@ export function CertificationDetailPage() {
                       {cert.tags.map((tag) => (
                         <Tag
                           key={tag}
-                          className="bg-slate-100 text-slate-700 dark:bg-slate-800/80 dark:text-slate-300"
+                          className="bg-slate-100 text-slate-700 dark:bg-dark-surface dark:text-slate-300"
                         >
                           {tag}
                         </Tag>

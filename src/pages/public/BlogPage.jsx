@@ -57,7 +57,7 @@ export function BlogPage() {
                   className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                     filter === tag
                       ? 'bg-cyan-600 text-white dark:bg-cyan-500'
-                      : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                      : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 dark:border-[#333333] dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:bg-[#222222]'
                   }`}
                 >
                   {tag}
@@ -73,7 +73,7 @@ export function BlogPage() {
                     to={`/blog/${post.slug || post.id}`}
                     className="block break-inside-avoid"
                   >
-                    <div className="group relative h-full cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg dark:border-slate-800 dark:bg-slate-900">
+                    <div className="group relative h-full cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg dark:border-[#333333] dark:bg-dark-surface">
                       {/* Image Container */}
                       <div className="relative aspect-[4/3] w-full overflow-hidden sm:aspect-auto sm:h-72">
                         {post.coverImage ? (

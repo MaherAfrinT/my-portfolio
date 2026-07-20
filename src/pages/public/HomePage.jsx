@@ -318,7 +318,7 @@ export function HomePage() {
                   className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all ${
                     selectedCertTag === null
                       ? 'bg-cyan-500 text-white shadow-[0_0_15px_rgba(6,182,212,0.4)]'
-                      : 'bg-slate-200 text-slate-600 hover:bg-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                      : 'bg-slate-200 text-slate-600 hover:bg-slate-300 dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:bg-[#222222]'
                   }`}
                 >
                   All
@@ -330,7 +330,7 @@ export function HomePage() {
                     className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all ${
                       selectedCertTag === tag
                         ? 'bg-cyan-500 text-white shadow-[0_0_15px_rgba(6,182,212,0.4)]'
-                        : 'bg-slate-200 text-slate-600 hover:bg-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                        : 'bg-slate-200 text-slate-600 hover:bg-slate-300 dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:bg-[#222222]'
                     }`}
                   >
                     {tag}

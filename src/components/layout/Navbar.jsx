@@ -22,7 +22,7 @@ export function Navbar() {
   const backdropBlur = useTransform(
     scrollY,
     [0, 100],
-    ['blur(8px)', 'blur(16px)']
+    ['blur(12px)', 'blur(16px)']
   );
   const shadow = useTransform(
     scrollY,
@@ -48,7 +48,7 @@ export function Navbar() {
       style={{ paddingTop: headerPadding, paddingBottom: headerPadding }}
     >
       <motion.div
-        className="mx-auto flex max-w-5xl items-center justify-between rounded-full border border-gray-200/40 px-6 py-3 dark:border-gray-800/60 dark:shadow-[0_0_20px_rgba(0,255,204,0.05)]"
+        className="mx-auto flex max-w-5xl items-center justify-between rounded-full border border-gray-200/40 px-6 py-3 dark:border-[rgba(0,229,255,0.15)] dark:shadow-[0_0_20px_rgba(0,255,204,0.05)]"
         style={{
           backdropFilter: backdropBlur,
           boxShadow: shadow,
@@ -64,7 +64,7 @@ export function Navbar() {
         <div
           className="absolute inset-0 hidden rounded-full dark:block"
           style={{
-            backgroundColor: 'var(--header-bg-dark, rgba(15, 23, 42, 0.7))',
+            backgroundColor: 'var(--header-bg-dark, rgba(10, 10, 10, 0.7))',
           }}
         />
 
@@ -122,7 +122,7 @@ export function Navbar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full right-4 left-4 mt-2 rounded-2xl border border-slate-200 bg-white/95 p-4 shadow-xl backdrop-blur-xl md:hidden dark:border-slate-800 dark:bg-slate-900/95"
+            className="absolute top-full right-4 left-4 mt-2 rounded-2xl border border-slate-200 bg-white/95 p-4 shadow-xl backdrop-blur-xl md:hidden dark:border-[#333333] dark:bg-dark-surface/95"
           >
             <div className="flex flex-col space-y-2">
               {navLinks.map((link) => (
@@ -133,7 +133,7 @@ export function Navbar() {
                   className={`rounded-xl px-4 py-3 text-sm font-medium ${
                     location.pathname === link.path
                       ? 'bg-cyan-50 text-cyan-600 dark:bg-cyan-900/30 dark:text-cyan-400'
-                      : 'text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-800/50'
+                      : 'text-slate-600 hover:bg-slate-50 dark:text-[#EDEDED] dark:hover:bg-[#222222]'
                   }`}
                 >
                   {link.label}

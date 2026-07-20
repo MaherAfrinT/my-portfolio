@@ -5,10 +5,10 @@ import { motion } from 'framer-motion';
 export function Card({ children, className, ...props }) {
   return (
     <motion.div
-      whileHover={{ y: -5 }}
+      whileHover={{ y: -4 }}
       transition={{ duration: 0.2 }}
       className={cn(
-        'group overflow-hidden rounded-xl border border-slate-200 bg-white shadow-md transition-all duration-300 hover:shadow-xl dark:border-gray-800 dark:bg-gray-900 dark:shadow-none dark:hover:shadow-[0_0_15px_rgba(0,255,204,0.1)]',
+        'group overflow-hidden rounded-xl border border-slate-200 bg-white shadow-md transition-all duration-300 hover:shadow-xl dark:border-[#333333] dark:bg-dark-surface dark:shadow-none dark:hover:border-[#00E5FF] dark:hover:shadow-[0_8px_20px_rgba(0,229,255,0.15)]',
         className
       )}
       {...props}
@@ -20,7 +20,7 @@ export function Card({ children, className, ...props }) {
 
 export function CardImage({ src, alt, className }) {
   return (
-    <div className="relative h-48 overflow-hidden bg-slate-100 dark:bg-slate-800">
+    <div className="relative h-48 overflow-hidden bg-slate-100 dark:bg-dark-surface">
       {src ? (
         <img
           src={src}

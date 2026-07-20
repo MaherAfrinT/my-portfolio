@@ -35,3 +35,39 @@ body {
 .glass-panel {
   @apply bg-white/80 dark:bg-[#111111] backdrop-blur-md border border-gray-200/50 dark:border-[#333333] shadow-xl;
 }
+
+/* Custom Terminal Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F8F9FA; 
+}
+.dark ::-webkit-scrollbar-track {
+  background: #0A0A0A; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1; 
+  border-radius: 4px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #111111; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8; 
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #00E5FF; 
+}
+
+::selection {
+  background-color: #00E5FF;
+  color: #0A0A0A;
+}
+::-moz-selection {
+  background-color: #00E5FF;
+  color: #0A0A0A;
+}

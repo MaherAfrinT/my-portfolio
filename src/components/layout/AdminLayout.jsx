@@ -81,7 +81,7 @@ export function AdminLayout() {
 
   const renderSidebarContent = () => (
     <>
-      <div className="flex h-16 items-center justify-between border-b border-slate-200 px-6 dark:border-slate-800">
+      <div className="flex h-16 items-center justify-between border-b border-slate-200 px-6 dark:border-[#333333]">
         <span className="text-xl font-bold text-cyan-600 dark:text-cyan-400">
           Admin Panel
         </span>
@@ -103,8 +103,8 @@ export function AdminLayout() {
                   location.pathname === item.path ||
                   (item.path !== '/admin' &&
                     location.pathname.startsWith(item.path))
-                    ? 'bg-cyan-50 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300'
-                    : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
+                    ? 'bg-cyan-50 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-400'
+                    : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-[#222222]'
                 }`}
               >
                 <svg
@@ -126,7 +126,7 @@ export function AdminLayout() {
           ))}
         </ul>
       </nav>
-      <div className="border-t border-slate-200 p-4 dark:border-slate-800">
+      <div className="border-t border-slate-200 p-4 dark:border-[#333333]">
         <Button
           variant="ghost"
           className="w-full justify-start text-red-500 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/30 dark:hover:text-red-400"
@@ -152,9 +152,9 @@ export function AdminLayout() {
   );
 
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-50 dark:bg-[#030712]">
+    <div className="flex min-h-screen bg-slate-50 dark:bg-[#0A0A0A]">
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex w-64 flex-shrink-0 flex-col border-r border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
+      <aside className="hidden md:flex w-64 flex-shrink-0 flex-col border-r border-slate-200 bg-white dark:border-[#333333] dark:bg-dark-surface">
         {renderSidebarContent()}
       </aside>
 
@@ -173,8 +173,8 @@ export function AdminLayout() {
               initial={{ x: '-100%' }}
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
-              transition={{ type: 'spring', bounce: 0, duration: 0.3 }}
-              className="fixed inset-y-0 left-0 z-50 flex w-64 flex-col bg-white dark:bg-slate-900 md:hidden"
+              transition={{ type: 'tween', duration: 0.3 }}
+              className="fixed inset-y-0 left-0 z-50 flex w-64 flex-col bg-white dark:bg-dark-surface md:hidden"
             >
               {renderSidebarContent()}
             </motion.aside>
@@ -184,7 +184,7 @@ export function AdminLayout() {
 
       {/* Main Content */}
       <div className="flex flex-1 flex-col overflow-hidden">
-        <header className="flex h-16 items-center justify-between border-b border-slate-200 bg-white px-4 md:px-6 dark:border-slate-800 dark:bg-slate-900">
+        <header className="flex h-16 items-center justify-between border-b border-slate-200 bg-white px-4 md:px-6 dark:border-[#333333] dark:bg-dark-surface">
           <div className="flex items-center gap-3">
             <button
               className="md:hidden text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"

@@ -56,7 +56,7 @@ export function JournalPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
             >
-              <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8 dark:border-slate-800 dark:bg-slate-900">
+              <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8 dark:border-[#333333] dark:bg-dark-surface">
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                 <h3 className="mb-6 text-lg font-semibold">Activity Graph</h3>
                 <CalendarHeatmap entries={publishedEntries} />
@@ -85,7 +85,7 @@ export function JournalPage() {
                       </div>
 
                       {/* Timeline Item Card */}
-                      <div className="group relative rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/50 hover:shadow-lg md:p-8 dark:border-slate-800 dark:bg-slate-900">
+                      <div className="group relative rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/50 hover:shadow-lg md:p-8 dark:border-[#333333] dark:bg-dark-surface">
                         {/* Mobile Date Header */}
                         <div className="font-mono mb-4 text-xs font-semibold tracking-wider text-cyan-600 uppercase md:hidden dark:text-cyan-400">
                           {entry.date?.toDate
