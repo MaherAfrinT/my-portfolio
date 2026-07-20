@@ -5,10 +5,10 @@ import { motion } from 'framer-motion';
 export function Card({ children, className, ...props }) {
   return (
     <motion.div
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.2 }}
+      whileHover={{ y: -2 }}
+      transition={{ duration: 0.3, ease: 'easeInOut' }}
       className={cn(
-        'group overflow-hidden rounded-xl border border-slate-200 bg-white shadow-md transition-all duration-300 hover:shadow-xl dark:border-[#333333] dark:bg-dark-surface dark:shadow-none dark:hover:border-[#00E5FF] dark:hover:shadow-[0_8px_20px_rgba(0,229,255,0.15)]',
+        'group overflow-hidden rounded-xl border border-slate-200 bg-white shadow-md transition-all duration-300 ease-in-out hover:shadow-lg dark:border-[#333333] dark:bg-dark-surface dark:shadow-none dark:hover:border-[#00E5FF] dark:hover:shadow-[0_8px_20px_rgba(0,229,255,0.15)]',
         className
       )}
       {...props}

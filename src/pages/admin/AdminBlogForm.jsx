@@ -141,20 +141,21 @@ export function AdminBlogForm() {
                 </button>
               </div>
               <div className="flex rounded-lg bg-slate-100 p-1 dark:bg-slate-900">
-              <button
-                type="button"
-                onClick={() => setActiveTab('edit')}
-                className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${activeTab === 'edit' ? 'bg-white shadow-sm dark:bg-slate-700' : 'text-slate-500 hover:text-slate-700'}`}
-              >
-                Edit
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab('preview')}
-                className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${activeTab === 'preview' ? 'bg-white shadow-sm dark:bg-slate-700' : 'text-slate-500 hover:text-slate-700'}`}
-              >
-                Preview
-              </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('edit')}
+                  className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${activeTab === 'edit' ? 'bg-white shadow-sm dark:bg-slate-700' : 'text-slate-500 hover:text-slate-700'}`}
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('preview')}
+                  className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${activeTab === 'preview' ? 'bg-white shadow-sm dark:bg-slate-700' : 'text-slate-500 hover:text-slate-700'}`}
+                >
+                  Preview
+                </button>
+              </div>
             </div>
           </div>
 

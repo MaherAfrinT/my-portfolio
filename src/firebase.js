@@ -9,7 +9,7 @@ import { getFirestore } from 'firebase/firestore';
 // ──────────────────────────────────────────────────────────────
 // import { getStorage } from "firebase/storage";
 
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: 'AIzaSyBMKN983mAjjtHo_UMaNEZdE6rryh6msbw',
   authDomain: 'my-portfolio-34630.firebaseapp.com',
   projectId: 'my-portfolio-34630',

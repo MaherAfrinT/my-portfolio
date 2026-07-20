@@ -34,7 +34,7 @@ export function Navbar() {
     ]
   );
 
-  const navLinks = [
+  const navLinks = config.navLinks || [
     { path: '/', label: 'Home' },
     { path: '/projects', label: 'Projects' },
     { path: '/career', label: 'Career' },
@@ -85,7 +85,7 @@ export function Navbar() {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`group relative rounded-full px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                className={`group relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ease-in-out ${
                   isActive
                     ? 'text-cyan-800 dark:text-cyan-300'
                     : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'
@@ -112,6 +112,7 @@ export function Navbar() {
           <button
             className="p-2 text-slate-600 md:hidden dark:text-slate-400"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle mobile menu"
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Lottie from 'lottie-react';
+// Lottie is imported dynamically via React.lazy below
 import * as LucideIcons from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { LOTTIE_CAT_URL, DEFAULT_SITE_CONFIG } from '../../lib/constants';
@@ -12,6 +12,8 @@ import { Button } from '../../components/ui/Button';
 import { TypewriterHeadline } from '../../components/ui/TypewriterHeadline';
 import { KineticText } from '../../components/ui/KineticText';
 import { Reveal } from '../../components/ui/Reveal';
+
+const LazyLottie = React.lazy(() => import('lottie-react'));
 
 export function HomePage() {
   const { config } = useSiteConfig();
@@ -73,95 +75,102 @@ export function HomePage() {
     <PageTransition>
       <div className="space-y-32 pb-24">
         {/* Hero Section */}
-        <section className="flex min-h-[85vh] flex-col items-center justify-between gap-12 pt-12 md:flex-row md:pt-20">
-          <motion.div
-            className="flex-1 space-y-6"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <motion.p
-              variants={cardVariants}
-              className="font-mono text-lg text-cyan-400 dark:text-[#00ffcc]"
-            >
-              {config.greetingText || DEFAULT_SITE_CONFIG.greetingText}{' '}
-              {config.name}.
-            </motion.p>
-            <motion.h1 variants={cardVariants} className="flex flex-col gap-1 min-h-[160px] md:min-h-[180px]">
-              <span className="text-4xl font-extrabold tracking-tight text-slate-900 md:text-6xl dark:text-white">
-                {config.heroPrefix || DEFAULT_SITE_CONFIG.heroPrefix}
-              </span>
-              <TypewriterHeadline
-                words={
-                  config.typewriterWords || DEFAULT_SITE_CONFIG.typewriterWords
-                }
-              />
-            </motion.h1>
+        {config.sectionVisibility?.hero !== false && (
+          <section className="flex min-h-[85vh] flex-col items-center justify-between gap-12 pt-12 md:flex-row md:pt-20">
             <motion.div
-              variants={cardVariants}
-              className="max-w-xl pt-4 text-base leading-relaxed text-slate-700 md:text-lg dark:text-slate-300"
+              className="flex-1 space-y-6"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
             >
-              <KineticText
-                text={config.tagline || DEFAULT_SITE_CONFIG.tagline}
-              />
-            </motion.div>
-
-            <motion.div
-              variants={cardVariants}
-              className="flex flex-wrap gap-4 pt-8"
-            >
-              <Button
-                as="a"
-                href={config.resumeUrl || '#'}
-                target={config.resumeUrl ? '_blank' : '_self'}
-                rel="noopener noreferrer"
-                size="lg"
-                className="flex items-center gap-2 border-none bg-cyan-500 text-slate-900 shadow-[0_0_15px_rgba(0,255,204,0.3)] transition-transform hover:scale-105 hover:bg-cyan-600"
+              <motion.p
+                variants={cardVariants}
+                className="font-mono text-lg text-cyan-400 dark:text-[#00ffcc]"
               >
-                <LucideIcons.Download className="h-4 w-4" /> Resume
-              </Button>
-              <Button
-                as={Link}
-                to="/projects"
-                size="lg"
-                variant="outline"
-                className="flex items-center gap-2 shadow-[0_0_15px_rgba(0,255,204,0.1)] transition-transform hover:scale-105"
-              >
-                View Projects <LucideIcons.ArrowUpRight className="h-4 w-4" />
-              </Button>
-            </motion.div>
-          </motion.div>
-
-          <motion.div
-            className="relative z-0 flex w-full max-w-md flex-1 justify-center"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            <div className="relative h-64 w-64 md:h-96 md:w-96">
-              <div className="animate-pulse-glow absolute inset-0 rounded-full bg-cyan-500/20 blur-3xl filter dark:bg-[#00ffcc]/10"></div>
-              {config.heroImageUrl ? (
-                <img
-                  src={config.heroImageUrl}
-                  alt={config.name || 'Hero'}
-                  className="relative z-10 h-full w-full rounded-full border-4 border-cyan-500/30 object-cover shadow-[0_0_30px_rgba(0,255,204,0.3)]"
+                {config.greetingText || DEFAULT_SITE_CONFIG.greetingText}{' '}
+                {config.name}.
+              </motion.p>
+              <motion.h1 variants={cardVariants} className="flex flex-col gap-1 min-h-[160px] md:min-h-[180px]">
+                <span className="text-4xl font-extrabold tracking-tight text-slate-900 md:text-6xl dark:text-white">
+                  {config.heroPrefix || DEFAULT_SITE_CONFIG.heroPrefix}
+                </span>
+                <TypewriterHeadline
+                  words={
+                    config.typewriterWords || DEFAULT_SITE_CONFIG.typewriterWords
+                  }
                 />
-              ) : (
-                animationData && (
-                  <Lottie
-                    animationData={animationData}
-                    loop={true}
-                    className="relative z-10 h-full w-full"
+              </motion.h1>
+              <motion.div
+                variants={cardVariants}
+                className="max-w-xl pt-4 text-base leading-relaxed text-slate-700 md:text-lg dark:text-slate-300"
+              >
+                <KineticText
+                  text={config.tagline || DEFAULT_SITE_CONFIG.tagline}
+                />
+              </motion.div>
+
+              <motion.div
+                variants={cardVariants}
+                className="flex flex-wrap gap-4 pt-8"
+              >
+                <Button
+                  as="a"
+                  href={config.resumeUrl || '#'}
+                  target={config.resumeUrl ? '_blank' : '_self'}
+                  rel="noopener noreferrer"
+                  download
+                  size="lg"
+                  className="flex items-center gap-2 border-none bg-cyan-500 text-slate-900 shadow-[0_0_15px_rgba(0,255,204,0.3)] transition-transform hover:scale-105 hover:bg-cyan-600"
+                >
+                  <LucideIcons.Download className="h-4 w-4" /> Resume
+                </Button>
+                <Button
+                  as={Link}
+                  to="/projects"
+                  size="lg"
+                  variant="outline"
+                  className="flex items-center gap-2 shadow-[0_0_15px_rgba(0,255,204,0.1)] transition-transform hover:scale-105"
+                >
+                  View Projects <LucideIcons.ArrowUpRight className="h-4 w-4" />
+                </Button>
+              </motion.div>
+            </motion.div>
+
+            <motion.div
+              className="relative z-0 flex w-full max-w-md flex-1 justify-center"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              <div className="relative h-64 w-64 md:h-96 md:w-96">
+                <div className="animate-pulse-glow absolute inset-0 rounded-full bg-cyan-500/20 blur-3xl filter dark:bg-[#00ffcc]/10"></div>
+                {config.heroImageUrl ? (
+                  <img
+                    src={config.heroImageUrl}
+                    alt={config.name || 'Hero'}
+                    loading="lazy"
+                    className="relative z-10 h-full w-full rounded-full border-4 border-cyan-500/30 object-cover shadow-[0_0_30px_rgba(0,255,204,0.3)]"
                   />
-                )
-              )}
-            </div>
-          </motion.div>
-        </section>
+                ) : (
+                  animationData && (
+                    <React.Suspense fallback={<div className="relative z-10 h-full w-full rounded-full bg-slate-200/50 dark:bg-slate-800/50 animate-pulse" />}>
+                      <LazyLottie
+                        animationData={animationData}
+                        loop={false}
+                        className="relative z-10 h-full w-full"
+                      />
+                    </React.Suspense>
+                  )
+                )}
+              </div>
+            </motion.div>
+          </section>
+        )}
 
         {/* About Section */}
-        <section id="about" className="scroll-mt-24">
-          <Reveal>
+        {config.sectionVisibility?.about !== false && (
+          <section id="about" className="scroll-mt-24">
+            <Reveal>
             <h2 className="mb-8 flex items-center font-mono text-3xl font-bold">
               <span className="mr-4 text-cyan-500 dark:text-[#00ffcc]">
                 01.
@@ -185,6 +194,7 @@ export function HomePage() {
                   <img
                     src={config.aboutImageUrl}
                     alt="About Me"
+                    loading="lazy"
                     className="aspect-square w-full rounded-2xl border-2 border-cyan-500/20 object-cover shadow-[0_0_20px_rgba(0,255,204,0.15)] shadow-xl"
                   />
                 </motion.div>
@@ -192,10 +202,12 @@ export function HomePage() {
             </div>
           </Reveal>
         </section>
+        )}
 
         {/* Skills Section */}
-        <section id="skills" className="scroll-mt-24">
-          <Reveal>
+        {config.sectionVisibility?.skills !== false && (
+          <section id="skills" className="scroll-mt-24">
+            <Reveal>
             <h2 className="mb-8 flex items-center font-mono text-3xl font-bold">
               <span className="mr-4 text-cyan-500 dark:text-[#00ffcc]">
                 02.
@@ -221,7 +233,7 @@ export function HomePage() {
                       <h3 className="relative z-10 mb-6 flex items-center gap-3 border-b border-slate-200 pb-4 text-xl font-bold text-slate-900 dark:border-slate-800 dark:text-white">
                         <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg bg-cyan-500/10 text-cyan-500 dark:text-[#00ffcc]">
                           {skillGroup.categoryImageUrl ? (
-                            <img src={skillGroup.categoryImageUrl} alt={skillGroup.category} className="h-full w-full object-cover" />
+                            <img src={skillGroup.categoryImageUrl} alt={skillGroup.category} loading="lazy" className="h-full w-full object-cover" />
                           ) : (
                             <Icon className="h-5 w-5" />
                           )}
@@ -253,6 +265,7 @@ export function HomePage() {
                                   <img
                                     src={imageUrl}
                                     alt={name}
+                                    loading="lazy"
                                     className="h-full w-full object-contain"
                                     onError={(e) => {
                                       e.target.onerror = null;
@@ -268,6 +281,7 @@ export function HomePage() {
                                   <img
                                     src={`https://cdn.simpleicons.org/${icon}/00ffcc`}
                                     alt={name}
+                                    loading="lazy"
                                     className="h-full w-full object-contain"
                                     onError={(e) => {
                                       e.target.onerror = null;
@@ -297,10 +311,12 @@ export function HomePage() {
             </motion.div>
           </Reveal>
         </section>
+        )}
 
         {/* Certifications Section */}
-        <section id="certifications" className="scroll-mt-24">
-          <Reveal>
+        {config.sectionVisibility?.certifications !== false && (
+          <section id="certifications" className="scroll-mt-24">
+            <Reveal>
             <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
               <h2 className="flex items-center font-mono text-3xl font-bold">
                 <span className="mr-4 text-cyan-500 dark:text-[#00ffcc]">
@@ -409,6 +425,7 @@ export function HomePage() {
                               <img
                                 src={cert.badgeUrl}
                                 alt={cert.title}
+                                loading="lazy"
                                 className="max-h-full max-w-full object-contain"
                               />
                             </div>
@@ -460,10 +477,12 @@ export function HomePage() {
             </motion.div>
           </Reveal>
         </section>
+        )}
 
         {/* Manifesto Section */}
-        <section id="manifesto" className="scroll-mt-24">
-          <Reveal>
+        {config.sectionVisibility?.manifesto !== false && (
+          <section id="manifesto" className="scroll-mt-24">
+            <Reveal>
             <h2 className="mb-8 flex items-center font-mono text-3xl font-bold">
               <span className="mr-4 text-cyan-500 dark:text-[#00ffcc]">
                 04.
@@ -521,10 +540,12 @@ export function HomePage() {
             )}
           </Reveal>
         </section>
+        )}
 
         {/* CTA Section */}
-        <section id="contact" className="scroll-mt-24 pb-24">
-          <Reveal>
+        {config.sectionVisibility?.contactCTA !== false && (
+          <section id="contact" className="scroll-mt-24 pb-24">
+            <Reveal>
             <div className="glass-panel rounded-3xl group relative overflow-hidden p-12 text-center shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:border-cyan-500/50 hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)] md:p-20">
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               <div className="relative z-10 flex flex-col items-center justify-center">
@@ -534,23 +555,24 @@ export function HomePage() {
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
                   </span>
                   <span className="text-xs font-medium text-slate-600 dark:text-slate-400">
-                    Available for work
+                    {config.ctaBadge || 'Available for work'}
                   </span>
                 </div>
                 <h2 className="mb-8 max-w-2xl text-4xl font-extrabold text-slate-900 md:text-6xl dark:text-white">
-                  Let's create your next big idea.
+                  {config.ctaTitle || "Let's create your next big idea."}
                 </h2>
                 <Button
                   as={Link}
                   to="/contact"
                   className="rounded-full border border-slate-800 bg-transparent px-8 py-6 text-lg font-medium text-slate-900 transition-all hover:bg-slate-900 hover:text-white dark:border-slate-200 dark:text-white dark:hover:bg-white dark:hover:text-slate-900"
                 >
-                  Contact Me
+                  {config.ctaButtonText || 'Contact Me'}
                 </Button>
               </div>
             </div>
           </Reveal>
         </section>
+        )}
       </div>
     </PageTransition>
   );

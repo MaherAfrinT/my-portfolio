@@ -6,8 +6,11 @@ import { PageTransition } from '../../components/layout/PageTransition';
 import { formatDate } from '../../lib/utils';
 import { Tag } from '../../components/ui/Tag';
 import { Reveal } from '../../components/ui/Reveal';
+import { useSiteConfig } from '../../contexts/SiteConfigContext';
+import { WalkingCatFooter } from '../../components/ui/WalkingCatFooter';
 
 export function CareerPage() {
+  const { config } = useSiteConfig();
   const {
     data: experiences,
     loading: expLoading,
@@ -25,22 +28,27 @@ export function CareerPage() {
         {/* Sticky Page Nav (Side Nav) */}
         <nav className="relative hidden w-48 shrink-0 md:block">
           <div className="sticky top-32 space-y-4 border-l-2 border-slate-200 pl-4 dark:border-slate-800">
-            <a
-              href="#experience"
-              className="block font-medium text-slate-500 transition-colors hover:text-cyan-500"
-            >
-              Experience
-            </a>
-            <a
-              href="#testimonials"
-              className="block font-medium text-slate-500 transition-colors hover:text-purple-500"
-            >
-              Testimonials
-            </a>
+            {config.sectionVisibility?.experience !== false && (
+              <a
+                href="#experience"
+                className="block font-medium text-slate-500 transition-colors hover:text-cyan-500"
+              >
+                Experience
+              </a>
+            )}
+            {config.sectionVisibility?.testimonials !== false && (
+              <a
+                href="#testimonials"
+                className="block font-medium text-slate-500 transition-colors hover:text-purple-500"
+              >
+                Testimonials
+              </a>
+            )}
           </div>
         </nav>
 
         <div className="flex-1 space-y-24">
+          {config.sectionVisibility?.experience !== false && (
           <section id="experience" className="scroll-mt-32">
             <Reveal>
               <header className="mb-12 pt-12">
@@ -167,7 +175,9 @@ export function CareerPage() {
               </div>
             )}
           </section>
+          )}
 
+          {config.sectionVisibility?.testimonials !== false && (
           <section id="testimonials" className="scroll-mt-32">
             <Reveal>
               <header className="mb-12">
@@ -266,8 +276,10 @@ export function CareerPage() {
               </div>
             )}
           </section>
+          )}
         </div>
       </div>
+      <WalkingCatFooter />
     </PageTransition>
   );
 }

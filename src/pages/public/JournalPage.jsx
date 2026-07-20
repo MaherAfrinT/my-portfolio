@@ -5,9 +5,7 @@ import { PageTransition } from '../../components/layout/PageTransition';
 import { Reveal } from '../../components/ui/Reveal';
 import { CalendarHeatmap } from '../../components/ui/CalendarHeatmap';
 import { format } from 'date-fns';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import rehypeHighlight from 'rehype-highlight';
+import { LazyMarkdown } from '../../components/ui/LazyMarkdown';
 import { WalkingCatFooter } from '../../components/ui/WalkingCatFooter';
 import { useReaderSettings } from '../../hooks/useReaderSettings';
 import { ReaderSettingsMenu } from '../../components/ui/ReaderSettingsMenu';
@@ -110,12 +108,9 @@ export function JournalPage() {
                           className="prose prose-slate dark:prose-invert max-w-none text-sm leading-relaxed md:text-base"
                           style={getReaderStyles()}
                         >
-                          <ReactMarkdown
-                            remarkPlugins={[remarkGfm]}
-                            rehypePlugins={[rehypeHighlight]}
-                          >
+                          <LazyMarkdown>
                             {entry.content || entry.note || ''}
-                          </ReactMarkdown>
+                          </LazyMarkdown>
                         </div>
                       </div>
                     </div>

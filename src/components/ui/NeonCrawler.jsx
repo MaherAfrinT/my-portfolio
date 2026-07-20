@@ -8,74 +8,87 @@ export function NeonCrawler() {
   const isDark = theme === 'dark';
   const isMobile = useMediaQuery('(max-width: 768px)');
 
-  // 5 Segments for the crawler
   const SEGMENTS = 5;
 
-  // Use arrays of motion values to track each segment
-  const xValues = Array(SEGMENTS)
-    .fill(0)
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    .map(() => useMotionValue(Math.random() * window.innerWidth));
-  const yValues = Array(SEGMENTS)
-    .fill(0)
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    .map(() => useMotionValue(Math.random() * window.innerHeight));
+  const xValues = Array(SEGMENTS).fill(0).map(() => useMotionValue(Math.random() * window.innerWidth));
+  const yValues = Array(SEGMENTS).fill(0).map(() => useMotionValue(Math.random() * window.innerHeight));
 
-  // Apply staggered spring physics to create a trailing effect
-  const xSprings = xValues.map((val, i) =>
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useSpring(val, {
-      damping: 15 + i * 2,
-      stiffness: 200 - i * 15,
-      mass: 1 + i * 0.2,
-    })
-  );
-  const ySprings = yValues.map((val, i) =>
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useSpring(val, {
-      damping: 15 + i * 2,
-      stiffness: 200 - i * 15,
-      mass: 1 + i * 0.2,
-    })
-  );
+  const xSprings = xValues.map((val, i) => useSpring(val, { damping: 15 + i * 2, stiffness: 200 - i * 15, mass: 1 + i * 0.2 }));
+  const ySprings = yValues.map((val, i) => useSpring(val, { damping: 15 + i * 2, stiffness: 200 - i * 15, mass: 1 + i * 0.2 }));
+
+  const eyeOffsetX = useMotionValue(0);
+  const eyeOffsetY = useMotionValue(0);
 
   const [mode, setMode] = useState('wandering');
   const [particles, setParticles] = useState([]);
   const requestRef = useRef();
+  const [isBlinking, setIsBlinking] = useState(false);
+  const mouseX = useRef(0);
+  const mouseY = useRef(0);
 
-  // Color logic
   const colors = isDark
     ? ['#00ffcc', '#00ffcc', '#8a2be2', '#8a2be2', '#ff00ff']
     : ['#ff9a9e', '#fecfef', '#a18cd1', '#fbc2eb', '#84fab0'];
 
-  // Wandering mode logic
+  // Blinking logic
   useEffect(() => {
+    if (isMobile) return;
+    const blinkInterval = setInterval(() => {
+      setIsBlinking(true);
+      setTimeout(() => setIsBlinking(false), 150);
+    }, Math.random() * 4000 + 2000); // Blink every 2-6 seconds
+    return () => clearInterval(blinkInterval);
+  }, [isMobile]);
+
+  // Wandering & Evasion logic
+  useEffect(() => {
+    if (isMobile) return;
     let angle = Math.random() * Math.PI * 2;
     let targetX = xValues[0].get();
     let targetY = yValues[0].get();
     let lastTime = performance.now();
+    let timeOffset = Math.random() * 100;
 
     const animate = (time) => {
+      const delta = Math.min((time - lastTime) * 0.05, 2);
+      lastTime = time;
+
+      // Calculate distance to mouse
+      const dx = mouseX.current - targetX;
+      const dy = mouseY.current - targetY;
+      const distToMouse = Math.sqrt(dx * dx + dy * dy);
+
+      // Eye tracking
+      const angleToMouse = Math.atan2(dy, dx);
+      eyeOffsetX.set(Math.cos(angleToMouse) * 3);
+      eyeOffsetY.set(Math.sin(angleToMouse) * 3);
+
       if (mode === 'wandering') {
-        const delta = (time - lastTime) * 0.05;
-        lastTime = time;
+        timeOffset += 0.05;
+        
+        // Evasion
+        let speedMult = 1;
+        if (distToMouse < 150) {
+          // Run away!
+          angle = Math.atan2(-dy, -dx);
+          speedMult = 3.5;
+        } else {
+          // Organic wandering with sine wave
+          angle += Math.sin(timeOffset) * 0.1;
+        }
 
-        // Change angle slightly for organic movement
-        angle += (Math.random() - 0.5) * 0.5;
+        targetX += Math.cos(angle) * delta * 2 * speedMult;
+        targetY += Math.sin(angle) * delta * 2 * speedMult;
 
-        targetX += Math.cos(angle) * delta;
-        targetY += Math.sin(angle) * delta;
+        // Bounce off walls organically
+        if (targetX < 50) { targetX = 50; angle = Math.PI - angle; }
+        if (targetX > window.innerWidth - 50) { targetX = window.innerWidth - 50; angle = Math.PI - angle; }
+        if (targetY < 50) { targetY = 50; angle = -angle; }
+        if (targetY > window.innerHeight - 50) { targetY = window.innerHeight - 50; angle = -angle; }
 
-        // Bounce off walls
-        if (targetX < 50 || targetX > window.innerWidth - 50)
-          angle = Math.PI - angle;
-        if (targetY < 50 || targetY > window.innerHeight - 50) angle = -angle;
-
-        // Update head (index 0)
         xValues[0].set(targetX);
         yValues[0].set(targetY);
 
-        // Update segments to follow head
         for (let i = 1; i < SEGMENTS; i++) {
           xValues[i].set(xValues[i - 1].get());
           yValues[i].set(yValues[i - 1].get());
@@ -84,17 +97,17 @@ export function NeonCrawler() {
       requestRef.current = requestAnimationFrame(animate);
     };
 
-    if (mode === 'wandering') {
-      lastTime = performance.now();
-      requestRef.current = requestAnimationFrame(animate);
-    }
-
+    requestRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(requestRef.current);
-  }, [mode, xValues, yValues]);
+  }, [mode, xValues, yValues, isMobile, eyeOffsetX, eyeOffsetY]);
 
-  // Cursor following logic
+  // Cursor tracking
   useEffect(() => {
+    if (isMobile) return;
     const handleMouseMove = (e) => {
+      mouseX.current = e.clientX;
+      mouseY.current = e.clientY;
+      
       if (mode === 'following-cursor' || mode === 'dragging') {
         xValues[0].set(e.clientX);
         yValues[0].set(e.clientY);
@@ -108,31 +121,21 @@ export function NeonCrawler() {
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [mode, xValues, yValues]);
+  }, [mode, xValues, yValues, isMobile]);
 
-  // Handle interaction
   const handleCrawlerClick = (e) => {
-    // Spawn particles
-    const newParticles = Array(10)
-      .fill(0)
-      .map((_, i) => ({
-        id: Date.now() + i,
-        x: e.clientX,
-        y: e.clientY,
-        angle: (i / 10) * Math.PI * 2,
-      }));
+    const newParticles = Array(10).fill(0).map((_, i) => ({
+      id: Date.now() + i,
+      x: e.clientX,
+      y: e.clientY,
+      angle: (i / 10) * Math.PI * 2,
+    }));
 
     setParticles((prev) => [...prev, ...newParticles]);
-
-    // Cycle modes
-    setMode((prev) =>
-      prev === 'wandering' ? 'following-cursor' : 'wandering'
-    );
+    setMode((prev) => prev === 'wandering' ? 'following-cursor' : 'wandering');
 
     setTimeout(() => {
-      setParticles((prev) =>
-        prev.filter((p) => !newParticles.find((np) => np.id === p.id))
-      );
+      setParticles((prev) => prev.filter((p) => !newParticles.find((np) => np.id === p.id)));
     }, 1000);
   };
 
@@ -140,8 +143,18 @@ export function NeonCrawler() {
 
   return (
     <>
-      <div className="pointer-events-none fixed inset-0 z-40 overflow-hidden">
-        {/* Render segments (reverse order so head is on top) */}
+      {/* Hidden SVG for Gooey Filter */}
+      <svg width="0" height="0" className="pointer-events-none absolute hidden">
+        <defs>
+          <filter id="gooey">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+            <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="gooey" />
+            <feBlend in="SourceGraphic" in2="gooey" />
+          </filter>
+        </defs>
+      </svg>
+
+      <div className="pointer-events-none fixed inset-0 z-40 overflow-hidden" style={{ filter: 'url(#gooey)' }}>
         {[...Array(SEGMENTS)].map((_, i) => {
           const idx = SEGMENTS - 1 - i;
           const isHead = idx === 0;
@@ -164,18 +177,26 @@ export function NeonCrawler() {
               }}
               onClick={isHead ? handleCrawlerClick : undefined}
             >
-              {/* Eyes for head */}
               {isHead && (
-                <div className="relative h-full w-full">
-                  <div className="absolute top-1 left-1 h-1.5 w-1.5 rounded-full bg-black" />
-                  <div className="absolute top-1 right-1 h-1.5 w-1.5 rounded-full bg-black" />
-                </div>
+                <motion.div 
+                  className="relative h-full w-full"
+                  animate={{ scaleY: isBlinking ? 0 : 1 }}
+                  transition={{ duration: 0.05 }}
+                >
+                  <motion.div 
+                    className="absolute top-[6px] left-[4px] h-[5px] w-[5px] rounded-full bg-[#111]" 
+                    style={{ x: eyeOffsetX, y: eyeOffsetY }}
+                  />
+                  <motion.div 
+                    className="absolute top-[6px] right-[4px] h-[5px] w-[5px] rounded-full bg-[#111]"
+                    style={{ x: eyeOffsetX, y: eyeOffsetY }}
+                  />
+                </motion.div>
               )}
             </motion.div>
           );
         })}
 
-        {/* Particles */}
         {particles.map((p) => (
           <motion.div
             key={p.id}

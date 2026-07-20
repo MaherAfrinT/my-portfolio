@@ -7,6 +7,7 @@ import { Input } from '../../components/ui/Input';
 import { Textarea } from '../../components/ui/Textarea';
 import { Card, CardContent } from '../../components/ui/Card';
 import Circle from '@uiw/react-color-circle';
+import * as LucideIcons from 'lucide-react';
 
 export function AdminSettings() {
   const [formData, setFormData] = useState(DEFAULT_SITE_CONFIG);
@@ -56,6 +57,15 @@ export function AdminSettings() {
     }));
   };
 
+  const handleNavLinkChange = (idx, field, value) => {
+    const updatedLinks = [...(formData.navLinks || [])];
+    updatedLinks[idx] = { ...updatedLinks[idx], [field]: value };
+    setFormData((prev) => ({
+      ...prev,
+      navLinks: updatedLinks,
+    }));
+  };
+
   const addSocial = () => {
     const newSocial = { id: Date.now().toString(), platform: 'New Link', url: '', iconName: 'Link' };
     setFormData((prev) => ({
@@ -69,6 +79,22 @@ export function AdminSettings() {
     setFormData((prev) => ({
       ...prev,
       socialLinks: updatedSocials,
+    }));
+  };
+
+  const addNavLink = () => {
+    const newLink = { id: Date.now().toString(), path: '/', label: 'New Link' };
+    setFormData((prev) => ({
+      ...prev,
+      navLinks: [...(prev.navLinks || []), newLink],
+    }));
+  };
+
+  const removeNavLink = (idx) => {
+    const updatedLinks = formData.navLinks.filter((_, i) => i !== idx);
+    setFormData((prev) => ({
+      ...prev,
+      navLinks: updatedLinks,
     }));
   };
 
@@ -163,7 +189,7 @@ export function AdminSettings() {
                   name="heroImageUrl"
                   value={formData.heroImageUrl || ''}
                   onChange={handleChange}
-                  placeholder="https://example.com/hero.png"
+                  placeholder="https://example.com/hero.webp"
                 />
                 <p className="text-xs text-slate-500">
                   Optional. Replaces the default hero animation.
@@ -175,7 +201,7 @@ export function AdminSettings() {
                   name="aboutImageUrl"
                   value={formData.aboutImageUrl || ''}
                   onChange={handleChange}
-                  placeholder="https://example.com/about.png"
+                  placeholder="https://example.com/about.webp"
                 />
                 <p className="text-xs text-slate-500">
                   Optional. Displays an image in the About section.
@@ -216,125 +242,57 @@ export function AdminSettings() {
 
         <Card>
           <div className="border-b border-slate-200 px-6 pt-6 pb-2 dark:border-slate-800">
-            <h2 className="text-xl font-bold">Projects Page Settings</h2>
+            <h2 className="text-xl font-bold">Section Visibility</h2>
+            <p className="text-sm text-slate-500">Toggle which sections appear on the Home Page and Career Page.</p>
           </div>
-          <CardContent className="space-y-6 pt-6">
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Projects Page Title</label>
-              <Input
-                name="projectsPageTitle"
-                value={formData.projectsPageTitle || ''}
-                onChange={handleChange}
-                placeholder="Selected Works"
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Projects Page Subtitle</label>
-              <Textarea
-                name="projectsPageSubtitle"
-                value={formData.projectsPageSubtitle || ''}
-                onChange={handleChange}
-                placeholder="A collection of my recent projects..."
-              />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <div className="flex items-center justify-between border-b border-slate-200 px-6 pt-6 pb-2 dark:border-slate-800">
-            <h2 className="text-xl font-bold">Social Links</h2>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={addSocial}
-              className="border-cyan-500/50 text-cyan-500 hover:bg-cyan-500/10"
-            >
-              <LucideIcons.Plus className="mr-2 h-4 w-4" /> Add Link
-            </Button>
-          </div>
-          <CardContent className="space-y-6 pt-6">
-            {(formData.socialLinks || []).map((social, idx) => (
-              <div key={social.id || idx} className="flex flex-col gap-4 md:flex-row items-end">
-                <div className="flex-1 space-y-2">
-                  <label className="text-sm font-medium">Platform Name</label>
-                  <Input
-                    value={social.platform || ''}
-                    onChange={(e) => handleSocialChange(idx, 'platform', e.target.value)}
-                  />
-                </div>
-                <div className="flex-1 space-y-2">
-                  <label className="text-sm font-medium">URL</label>
-                  <Input
-                    value={social.url || ''}
-                    onChange={(e) => handleSocialChange(idx, 'url', e.target.value)}
-                  />
-                </div>
-                <div className="w-32 space-y-2">
-                  <label className="text-sm font-medium">Icon Name</label>
-                  <Input
-                    value={social.iconName || 'Link'}
-                    onChange={(e) => handleSocialChange(idx, 'iconName', e.target.value)}
-                    title="Lucide icon name (e.g. Github, Linkedin, Twitter, Youtube)"
-                  />
-                </div>
-                <Button
-                  variant="outline"
-                  onClick={() => removeSocial(idx)}
-                  className="mb-0.5 border-red-200 text-red-500 hover:bg-red-50 dark:border-red-900 dark:hover:bg-red-900/20"
-                >
-                  <LucideIcons.Trash2 className="h-4 w-4" />
-                </Button>
-              </div>
+          <CardContent className="space-y-4 pt-6">
+            {Object.keys(formData.sectionVisibility || DEFAULT_SITE_CONFIG.sectionVisibility || {}).map((sectionKey) => (
+              <label key={sectionKey} className="flex items-center space-x-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  className="h-4 w-4 rounded border-slate-300 text-cyan-500 focus:ring-cyan-500"
+                  checked={formData.sectionVisibility?.[sectionKey] ?? true}
+                  onChange={(e) => {
+                    setFormData(prev => ({
+                      ...prev,
+                      sectionVisibility: {
+                        ...(prev.sectionVisibility || DEFAULT_SITE_CONFIG.sectionVisibility),
+                        [sectionKey]: e.target.checked
+                      }
+                    }));
+                  }}
+                />
+                <span className="text-sm font-medium capitalize text-slate-700 dark:text-slate-300">
+                  {sectionKey.replace(/([A-Z])/g, ' $1').trim()} Section
+                </span>
+              </label>
             ))}
           </CardContent>
         </Card>
 
         <Card>
           <div className="border-b border-slate-200 px-6 pt-6 pb-2 dark:border-slate-800">
-            <h2 className="text-xl font-bold">Easter Eggs & Footer</h2>
+            <h2 className="text-xl font-bold">Navigation Links</h2>
           </div>
-          <CardContent className="space-y-6 pt-6">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Cat Accent Color</label>
-                <div className="flex flex-col gap-4">
-                  <Circle
-                    colors={[
-                      '#FFFF00', // Yellow
-                      '#00E5FF', // Cyan
-                      '#FF0055', // Pink
-                      '#00FF00', // Green
-                      '#FF9900', // Orange
-                      '#9900FF', // Purple
-                      '#FFFFFF', // White
-                    ]}
-                    color={formData.catAccentColor || '#FFFF00'}
-                    onChange={(color) => {
-                      handleChange({
-                        target: { name: 'catAccentColor', value: color.hex },
-                      });
-                    }}
-                  />
-                  <Input
-                    type="text"
-                    name="catAccentColor"
-                    value={formData.catAccentColor || '#FFFF00'}
-                    onChange={handleChange}
-                    className="font-mono w-40"
-                  />
+          <CardContent className="space-y-4 pt-6">
+            {(formData.navLinks || []).map((link, idx) => (
+              <div key={link.id || idx} className="flex items-center gap-4 border border-slate-200 p-4 rounded-lg dark:border-slate-800">
+                <div className="flex-1 space-y-2">
+                  <label className="text-xs font-medium">Label</label>
+                  <Input value={link.label} onChange={(e) => handleNavLinkChange(idx, 'label', e.target.value)} />
                 </div>
+                <div className="flex-1 space-y-2">
+                  <label className="text-xs font-medium">Path</label>
+                  <Input value={link.path} onChange={(e) => handleNavLinkChange(idx, 'path', e.target.value)} />
+                </div>
+                <Button type="button" variant="danger" size="sm" onClick={() => removeNavLink(idx)} className="mt-6">
+                  Remove
+                </Button>
               </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Cat Message</label>
-                <Textarea
-                  name="catMessage"
-                  value={formData.catMessage || ''}
-                  onChange={handleChange}
-                  className="min-h-[100px]"
-                  placeholder="You've reached the end!"
-                />
-              </div>
-            </div>
+            ))}
+            <Button type="button" variant="outline" onClick={addNavLink}>
+              + Add Navigation Link
+            </Button>
           </CardContent>
         </Card>
 

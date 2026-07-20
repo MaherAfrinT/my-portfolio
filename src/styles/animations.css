@@ -3,7 +3,7 @@
 @theme {
   --animate-fade-in: fade-in 0.5s ease-out forwards;
   --animate-fade-in-up: fade-in-up 0.5s ease-out forwards;
-  --animate-pulse-glow: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-pulse-glow: pulse-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   
   @keyframes fade-in {
     from { opacity: 0; }
@@ -14,7 +14,7 @@
     to { opacity: 1; transform: translateY(0); }
   }
   @keyframes pulse-glow {
-    0%, 100% { opacity: 1; box-shadow: 0 0 15px rgba(0, 255, 204, 0.5); }
-    50% { opacity: .5; box-shadow: 0 0 5px rgba(0, 255, 204, 0.2); }
+    0%, 100% { box-shadow: 0 0 10px rgba(0, 255, 204, 0.3); }
+    50% { box-shadow: 0 0 5px rgba(0, 255, 204, 0.1); }
   }
 }

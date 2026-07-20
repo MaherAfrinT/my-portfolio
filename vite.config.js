@@ -12,7 +12,11 @@ export default defineConfig({
       'lottie-web': 'lottie-web/build/player/lottie_light.js'
     }
   },
+  esbuild: {
+    drop: ['console', 'debugger'],
+  },
   build: {
+    sourcemap: false,
     rollupOptions: {
       output: {
         manualChunks(id) {

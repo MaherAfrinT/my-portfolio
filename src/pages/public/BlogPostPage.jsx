@@ -9,10 +9,7 @@ import {
   getDoc,
 } from 'firebase/firestore';
 import { db } from '../../firebase';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import rehypeHighlight from 'rehype-highlight';
-import rehypeRaw from 'rehype-raw';
+import { LazyMarkdown } from '../../components/ui/LazyMarkdown';
 import { PageTransition } from '../../components/layout/PageTransition';
 import { Reveal } from '../../components/ui/Reveal';
 import { format } from 'date-fns';
@@ -135,12 +132,9 @@ export function BlogPostPage() {
             className="prose prose-slate dark:prose-invert prose-lg prose-headings:font-bold prose-a:text-cyan-500 hover:prose-a:text-cyan-600 prose-img:rounded-xl max-w-none"
             style={getReaderStyles()}
           >
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
-              rehypePlugins={[rehypeHighlight, rehypeRaw]}
-            >
+            <LazyMarkdown>
               {post.content}
-            </ReactMarkdown>
+            </LazyMarkdown>
           </div>
         </Reveal>
       </div>

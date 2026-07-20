@@ -22,6 +22,7 @@ const CertificationsPage = React.lazy(() => import('./pages/public/Certification
 const CertificationDetailPage = React.lazy(() => import('./pages/public/CertificationDetailPage').then(m => ({ default: m.CertificationDetailPage })));
 const ProjectDetailPage = React.lazy(() => import('./pages/public/ProjectDetailPage').then(m => ({ default: m.ProjectDetailPage })));
 const ContactPage = React.lazy(() => import('./pages/public/ContactPage').then(m => ({ default: m.ContactPage })));
+const UnderConstructionPage = React.lazy(() => import('./pages/public/UnderConstructionPage').then(m => ({ default: m.UnderConstructionPage })));
 
 // Admin Pages
 const AdminDashboard = React.lazy(() => import('./pages/admin/AdminDashboard').then(m => ({ default: m.AdminDashboard })));
@@ -31,6 +32,7 @@ const AdminCareer = React.lazy(() => import('./pages/admin/AdminCareer').then(m 
 const AdminCareerForm = React.lazy(() => import('./pages/admin/AdminCareerForm').then(m => ({ default: m.AdminCareerForm })));
 const AdminMessages = React.lazy(() => import('./pages/admin/AdminMessages').then(m => ({ default: m.AdminMessages })));
 const AdminSettings = React.lazy(() => import('./pages/admin/AdminSettings').then(m => ({ default: m.AdminSettings })));
+const AdminFooter = React.lazy(() => import('./pages/admin/AdminFooter').then(m => ({ default: m.AdminFooter })));
 const AdminManifesto = React.lazy(() => import('./pages/admin/AdminManifesto').then(m => ({ default: m.AdminManifesto })));
 const AdminTestimonials = React.lazy(() => import('./pages/admin/AdminTestimonials').then(m => ({ default: m.AdminTestimonials })));
 const AdminTestimonialForm = React.lazy(() => import('./pages/admin/AdminTestimonialForm').then(m => ({ default: m.AdminTestimonialForm })));
@@ -77,6 +79,7 @@ function App() {
                   />
                   <Route path="/contact" element={<ContactPage />} />
                   <Route path="/login" element={<LoginPage />} />
+                  <Route path="*" element={<UnderConstructionPage />} />
                 </Route>
 
                 {/* Admin Protected Routes */}
@@ -130,14 +133,14 @@ function App() {
                     <Route path="messages" element={<AdminMessages />} />
                     <Route path="manifesto" element={<AdminManifesto />} />
                     <Route path="settings" element={<AdminSettings />} />
+                    <Route path="footer" element={<AdminFooter />} />
 
                     {/* Catchall admin */}
                     <Route path="*" element={<Navigate to="/admin" replace />} />
                   </Route>
                 </Route>
 
-                {/* Fallback */}
-                <Route path="*" element={<Navigate to="/" replace />} />
+                {/* Fallback (moved to PublicLayout) */}
               </Routes>
             </Suspense>
           </BrowserRouter>
