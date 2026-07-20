@@ -20,6 +20,7 @@ export function useAdminTestimonialForm(id) {
     position: '',
     quote: '',
     avatarUrl: '',
+    referenceUrl: '',
   });
   const [loading, setLoading] = useState(isEditing);
   const [saving, setSaving] = useState(false);
@@ -38,6 +39,7 @@ export function useAdminTestimonialForm(id) {
             position: data.position || '',
             quote: data.quote || '',
             avatarUrl: data.avatarUrl || '',
+            referenceUrl: data.referenceUrl || '',
           });
         } else {
           setError('Testimonial not found.');

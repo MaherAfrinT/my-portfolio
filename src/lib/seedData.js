@@ -16,187 +16,250 @@ const DEFAULT_SKILLS = [
     category: 'Web Engineering',
     iconName: 'Globe',
     items: [
-      { name: 'React', icon: 'react' },
-      { name: 'JavaScript (ES6+)', icon: 'javascript' },
+      { name: 'React & Next.js', icon: 'react' },
+      { name: 'TypeScript', icon: 'typescript' },
       { name: 'Tailwind CSS', icon: 'tailwindcss' },
-      { name: 'HTML5 & CSS3', icon: 'html5' },
       { name: 'Node.js', icon: 'nodedotjs' },
+      { name: 'GraphQL', icon: 'graphql' },
     ],
   },
   {
-    category: 'CSE Core',
+    category: 'Systems & Architecture',
     iconName: 'Terminal',
     items: [
-      { name: 'C / C++', icon: 'cplusplus' },
+      { name: 'Rust', icon: 'rust' },
+      { name: 'Go', icon: 'go' },
       { name: 'Python', icon: 'python' },
-      { name: 'Data Structures', icon: 'codeforces' },
-      { name: 'Algorithms', icon: 'leetcode' },
-      { name: 'OOP', icon: 'gnubash' },
+      { name: 'Docker', icon: 'docker' },
+      { name: 'Kubernetes', icon: 'kubernetes' },
     ],
   },
   {
-    category: 'Linguistics',
-    iconName: 'Code',
+    category: 'Security & Ops',
+    iconName: 'Shield',
     items: [
-      { name: 'English (Fluent)', icon: 'googletranslate' },
-      { name: 'Japanese (Learning)', icon: 'duolingo' },
-      { name: 'Arabic (Learning)', icon: 'rosettastone' },
-      { name: 'Bengali (Native)', icon: 'google' },
+      { name: 'Penetration Testing', icon: 'kalilinux' },
+      { name: 'Cryptography', icon: 'gnuprivacyguard' },
+      { name: 'CI/CD Pipelines', icon: 'githubactions' },
+      { name: 'AWS & GCP', icon: 'amazonwebservices' },
     ],
   },
   {
-    category: 'Tools & OS',
+    category: 'Tools & Environments',
     iconName: 'Wrench',
     items: [
-      { name: 'Git & GitHub', icon: 'github' },
-      { name: 'VS Code', icon: 'visualstudiocode' },
+      { name: 'Neovim / VS Code', icon: 'neovim' },
+      { name: 'Git', icon: 'git' },
+      { name: 'Parrot OS / Arch', icon: 'linux' },
       { name: 'Firebase', icon: 'firebase' },
-      { name: 'Linux / Ubuntu', icon: 'ubuntu' },
     ],
   },
 ];
 
 const DEFAULT_EXPERIENCE = [
   {
-    role: 'Senior Software Engineer',
-    company: 'TechNova Inc.',
-    period: '2023 - Present',
-    desc: 'Leading a team of 5 engineers to build a scalable microservices architecture.',
+    role: 'Principal Security Engineer',
+    company: 'Cyberdyne Systems',
+    startDate: '2022-01-01T00:00:00.000Z',
+    endDate: '',
+    current: true,
+    description: 'Leading the offensive security team. Architecting zero-trust networks and performing rigorous penetration testing on core infrastructure.',
     achievements: [
-      'Improved app load times by 40%',
-      'Implemented robust CI/CD pipelines',
-      'Mentored 3 junior developers',
+      'Discovered and patched 12 zero-day vulnerabilities',
+      'Architected a globally distributed zero-trust mesh',
+      'Led a team of 8 security researchers',
     ],
+    skills: ['Zero-Trust', 'Penetration Testing', 'Cryptography'],
     order: 1,
   },
   {
-    role: 'Full Stack Developer',
-    company: 'Creative Agency',
-    period: '2020 - 2023',
-    desc: 'Developed and maintained 20+ client websites and web applications.',
+    role: 'Senior Full Stack Developer',
+    company: 'Vercel Labs',
+    startDate: '2019-03-01T00:00:00.000Z',
+    endDate: '2021-12-31T00:00:00.000Z',
+    current: false,
+    description: 'Core contributor to modern web frameworks. Focused on edge computing, serverless architectures, and delivering ultra-fast web experiences.',
     achievements: [
-      'Delivered 30+ projects on time',
-      'Migrated legacy monoliths to JAMstack',
-      'Achieved 100% accessibility scores',
+      'Reduced TTFB by 300ms across all edge nodes',
+      'Built and maintained 5 open-source libraries with 10k+ stars',
+      'Implemented advanced WebGL rendering pipelines',
     ],
+    skills: ['React', 'Next.js', 'Edge Computing', 'TypeScript'],
     order: 2,
+  },
+  {
+    role: 'Backend Systems Engineer',
+    company: 'Quantum Dynamics',
+    startDate: '2017-06-01T00:00:00.000Z',
+    endDate: '2019-02-28T00:00:00.000Z',
+    current: false,
+    description: 'Developed high-throughput data processing pipelines using Rust and Go for real-time financial trading systems.',
+    achievements: [
+      'Processed 1M+ events per second with sub-millisecond latency',
+      'Migrated legacy C++ monolith to Go microservices',
+      'Implemented custom memory allocators to prevent GC pauses',
+    ],
+    skills: ['Rust', 'Go', 'Microservices', 'High-Frequency Trading'],
+    order: 3,
   },
 ];
 
 const DEFAULT_PROJECTS = [
   {
-    title: 'Quantum Dashboard',
-    category: 'Dashboard',
-    tags: ['React', 'WebGL'],
-    image:
-      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800',
+    title: 'Neon Protocol',
+    categories: ['Security', 'Cryptography'],
+    techStack: ['Rust', 'Cryptography', 'WASM'],
+    coverImage: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=800',
+    summary: 'A decentralized, zero-knowledge encryption protocol designed for ultra-secure peer-to-peer messaging.',
+    githubUrl: 'https://github.com',
+    liveUrl: 'https://example.com',
   },
   {
-    title: 'E-Commerce OS',
-    category: 'SaaS',
-    tags: ['Next.js', 'Stripe'],
-    image:
-      'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=800',
+    title: 'Void Terminal',
+    categories: ['CLI Tool', 'Terminal'],
+    techStack: ['Go', 'Terminal', 'Linux'],
+    coverImage: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800',
+    summary: 'A blazing fast, GPU-accelerated terminal emulator built for hackers. Features native multiplexing and aesthetic glassmorphism.',
+    githubUrl: 'https://github.com',
   },
   {
-    title: 'Nebula Chat',
-    category: 'Web App',
-    tags: ['Firebase', 'WebRTC'],
-    image:
-      'https://images.unsplash.com/photo-1614680376593-902f74cf0d41?auto=format&fit=crop&q=80&w=800',
+    title: 'Obsidian Dashboard',
+    categories: ['Web App', 'Monitoring'],
+    techStack: ['React', 'Tailwind', 'Firebase'],
+    coverImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800',
+    summary: 'A highly customizable, minimalist command center for monitoring server clusters and security logs in real-time.',
+    liveUrl: 'https://example.com',
   },
   {
-    title: 'Fintech Wallet',
-    category: 'Mobile',
-    tags: ['React Native', 'Redux'],
-    image:
-      'https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&q=80&w=800',
+    title: 'CipherNet',
+    categories: ['Infrastructure', 'Security'],
+    techStack: ['Python', 'Docker', 'Kubernetes'],
+    coverImage: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800',
+    summary: 'Automated threat hunting framework that uses machine learning to detect anomalies in network traffic.',
+    githubUrl: 'https://github.com',
   },
+  {
+    title: 'Glass UI',
+    categories: ['Design System', 'UI/UX'],
+    techStack: ['CSS', 'Framer Motion'],
+    coverImage: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800',
+    summary: 'A premium CSS framework focusing on glassmorphism, neon accents, and fluid animations for modern web apps.',
+    githubUrl: 'https://github.com',
+    liveUrl: 'https://example.com',
+  },
+  {
+    title: 'Ghost OS',
+    categories: ['Operating System', 'Kernel'],
+    techStack: ['C', 'Assembly', 'Kernel'],
+    coverImage: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800',
+    summary: 'An experimental, incredibly lightweight UNIX-like operating system designed to run purely in memory without leaving a footprint.',
+    githubUrl: 'https://github.com',
+  }
 ];
 
 const DEFAULT_TESTIMONIALS = [
   {
-    author: 'Alex Rivera',
-    position: 'Product Manager at TechNova',
-    quote:
-      "One of the most dedicated developers I've worked with. Delivered our complex dashboard ahead of schedule and with pristine code quality.",
-    avatarUrl: '',
+    author: 'Sarah Jenkins',
+    position: 'CTO at Cyberdyne',
+    quote: "An absolute wizard when it comes to system architecture. They completely overhauled our security infrastructure and made it impenetrable while maintaining incredible performance.",
+    avatarUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80',
   },
   {
-    author: 'Samantha Lee',
-    position: 'Founder, Creative Agency',
-    quote:
-      'A true professional who understands both the technical and design aspects of modern web development. Highly recommended!',
-    avatarUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80',
+    author: 'Marcus Vance',
+    position: 'Lead Engineer, Vercel',
+    quote: "Their grasp on modern web technologies is unparalleled. The code they write isn't just functional; it's a piece of minimalist art.",
+    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80',
   },
+  {
+    author: 'Elena Rostova',
+    position: 'Security Researcher',
+    quote: "Collaborating with them on the Neon Protocol was an eye-opening experience. Deep technical knowledge combined with an incredible eye for aesthetics.",
+    avatarUrl: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80',
+  }
 ];
 
 const DEFAULT_CERTIFICATIONS = [
   {
-    title: 'CCNA',
-    fullName: 'Cisco Certified Network Associate',
-    issuer: 'Cisco',
-    description:
-      'The CCNA certification validates your skills and knowledge in network fundamentals.\n\n### Key Areas Covered:\n- Routing and Switching\n- Network Security Basics',
-    badgeUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Cisco_logo_blue_2016.svg',
-    verifyUrl: 'https://www.credly.com',
-    issuedDate: '2024-06',
-    expiryDate: '2027-06',
-    tags: ['Networking', 'Security', 'Cisco'],
+    title: 'OSCP',
+    fullName: 'Offensive Security Certified Professional',
+    issuer: 'OffSec',
+    description: 'A rigorous penetration testing certification that proves the ability to identify vulnerabilities, execute attacks, and perform post-exploitation tasks.\n\n### Skills Demonstrated:\n- Exploit Development\n- Privilege Escalation\n- Network Pivoting',
+    badgeUrl: 'https://upload.wikimedia.org/wikipedia/commons/2/29/Offensive_Security_logo.png',
+    verifyUrl: 'https://www.offensive-security.com',
+    issuedDate: '2023-05',
+    expiryDate: '',
+    tags: ['Security', 'Penetration Testing', 'Red Team'],
   },
   {
-    title: 'AWS Cloud Practitioner',
-    fullName: 'AWS Certified Cloud Practitioner',
+    title: 'AWS Security Specialty',
+    fullName: 'AWS Certified Security - Specialty',
     issuer: 'Amazon Web Services',
-    description:
-      'This certification validates overall understanding of the AWS Cloud platform.\n\n### Key Areas Covered:\n- Core AWS services (EC2, S3, RDS)',
+    description: 'Validates expertise in securing data and workloads in the AWS Cloud.\n\n### Skills Demonstrated:\n- Data Encryption Strategies\n- Identity and Access Management\n- Incident Response',
     badgeUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg',
-    verifyUrl: 'https://www.credly.com',
-    issuedDate: '2024-08',
-    expiryDate: '2027-08',
-    tags: ['Cloud', 'AWS'],
+    verifyUrl: 'https://aws.amazon.com',
+    issuedDate: '2024-01',
+    expiryDate: '2027-01',
+    tags: ['Cloud', 'Security', 'AWS'],
   },
+  {
+    title: 'CKA',
+    fullName: 'Certified Kubernetes Administrator',
+    issuer: 'Cloud Native Computing Foundation',
+    description: 'Assures that CNFCs have the skills, knowledge, and competency to perform the responsibilities of Kubernetes administrators.\n\n### Skills Demonstrated:\n- Cluster Architecture\n- Workloads & Scheduling\n- Troubleshooting',
+    badgeUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/39/Kubernetes_logo_without_workmark.svg',
+    verifyUrl: 'https://www.cncf.io',
+    issuedDate: '2022-11',
+    expiryDate: '2025-11',
+    tags: ['DevOps', 'Kubernetes', 'Infrastructure'],
+  }
 ];
 
 const DEFAULT_BLOG_POSTS = [
   {
-    title: 'Building a Modern Developer Portfolio',
-    slug: 'modern-developer-portfolio',
-    coverImage:
-      'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800',
-    tags: ['React', 'Firebase', 'Design'],
-    content:
-      'Building a portfolio is a great way to showcase your skills. Here is how I built this site using **React** and **Firebase**.\n\n### The Architecture\nWe used Vite, Tailwind, and Firebase Firestore for a fully dynamic setup.',
+    title: 'The Hacker Aesthetic: Why Dark Mode Wins',
+    slug: 'hacker-aesthetic-dark-mode',
+    coverImage: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=800',
+    tags: ['Design', 'CSS', 'UI/UX'],
+    content: 'The "Hacker Aesthetic" isn\'t just about looking cool; it\'s about reducing eye strain during long coding sessions and highlighting critical information using high-contrast neon accents.\n\n### The Psychology of Obsidian\nDeep blacks like `#0A0A0A` allow neon colors like Cyan (`#00E5FF`) to pop out, drawing the user\'s attention immediately to interactive elements. This is why terminals have used this color scheme for decades.\n\n### Implementing Glassmorphism\nBy combining semi-transparent dark backgrounds with `backdrop-filter: blur()`, we achieve a sense of depth that makes interfaces feel physical and premium.',
     isPublished: true,
   },
   {
-    title: 'Understanding React Server Components',
-    slug: 'react-server-components',
-    coverImage:
-      'https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=800',
-    tags: ['React', 'Next.js'],
-    content:
-      'Server components represent a fundamental shift in how we build React applications. They allow us to render components exclusively on the server, reducing the JavaScript bundle size.',
+    title: 'Zero-Trust Architecture in 2026',
+    slug: 'zero-trust-architecture',
+    coverImage: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800',
+    tags: ['Security', 'Architecture', 'Networking'],
+    content: 'The old model of "trust everything inside the firewall" is dead. In a world where endpoints are everywhere, the network is inherently hostile.\n\n### Never Trust, Always Verify\nZero-Trust assumes that a breach has already occurred. Every request, regardless of its origin, must be authenticated, authorized, and continuously validated.\n\n### Micro-Segmentation\nBy splitting the network into secure micro-segments, we limit the blast radius of any potential compromise.',
+    isPublished: true,
+  },
+  {
+    title: 'Rust vs Go: The Systems Programming War',
+    slug: 'rust-vs-go-systems',
+    coverImage: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&q=80&w=800',
+    tags: ['Rust', 'Go', 'Performance'],
+    content: 'Choosing between Rust and Go for systems programming often comes down to a tradeoff between absolute control and developer velocity.\n\n### Go: Concurrency Made Easy\nGo\'s goroutines and channels make writing concurrent network services incredibly straightforward. The garbage collector has improved to the point where pauses are negligible for most applications.\n\n### Rust: Fearless Concurrency\nRust\'s borrow checker guarantees memory safety without a garbage collector. It has a steeper learning curve, but the resulting binaries are blazingly fast and completely predictable.',
     isPublished: true,
   },
 ];
 
 const DEFAULT_JOURNAL_ENTRIES = [
   {
-    title: 'Reflections on Clean Code',
-    category: 'Code',
-    content:
-      "Writing clean code is not about making it look pretty; it's about making it understandable for the next developer who has to maintain it. Today I refactored a massive legacy component into smaller, testable units.",
+    title: 'The Beauty of the Command Line',
+    category: 'Philosophy',
+    content: "There is an elegant simplicity to the terminal. No distractions, no bloated UI. Just you and the machine, communicating through pure text. Today I spent three hours customizing my Neovim config, and it was the most productive I've felt all week.",
     isPublished: true,
   },
   {
-    title: 'The Japanese Concept of Kaizen',
-    category: 'Philosophy',
-    content:
-      "Kaizen translates to 'continuous improvement'. Applying this to both my coding journey and language studies has profoundly shifted my mindset from seeking perfection to seeking progress.",
+    title: 'Reflections on Clean Architecture',
+    category: 'Code',
+    content: "A system's architecture should scream its intent. When you look at a repository, you shouldn't see 'Oh, this is a Next.js app.' You should see 'Oh, this is a financial trading platform.' Frameworks are delivery mechanisms, not the architecture itself.",
     isPublished: true,
   },
+  {
+    title: 'The Myth of the 10x Developer',
+    category: 'Culture',
+    content: "The 10x developer isn't someone who types ten times faster. It's someone who prevents ten times the bugs, mentors their team to be twice as effective, and knows when *not* to write code. Simplicity is the ultimate sophistication.",
+    isPublished: true,
+  }
 ];
 
 /**

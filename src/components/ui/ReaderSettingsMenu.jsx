@@ -8,14 +8,14 @@ export function ReaderSettingsMenu() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 md:bottom-12 md:right-12">
+    <div className="fixed bottom-6 right-6 z-[100] md:bottom-12 md:right-12">
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed inset-x-4 bottom-24 z-50 mb-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-2xl md:absolute md:inset-x-auto md:bottom-16 md:right-0 md:w-72 dark:border-slate-800 dark:bg-slate-900"
+            className="fixed inset-x-4 bottom-24 z-[100] mb-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-2xl md:absolute md:inset-x-auto md:bottom-16 md:right-0 md:w-72 dark:border-slate-800 dark:bg-slate-900"
           >
             <div className="mb-4 flex items-center justify-between">
               <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500">

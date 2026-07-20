@@ -4,7 +4,7 @@ import catSprite from '../../assets/cat_tiles.png';
 
 export function WalkingCatFooter() {
   const { config } = useSiteConfig();
-  const color = config?.catAccentColor || '#FFFF00';
+  const color = config?.catAccentColor || '#00E5FF';
   const message =
     config?.catMessage ||
     "You've reached the end! The developer is out walking his cat.";
@@ -47,7 +47,7 @@ export function WalkingCatFooter() {
         
         @keyframes walk-animation {
           from { background-position: 0 0; }
-          to { background-position: 0 -2391px; }
+          to { background-position: 0 -2400px; }
         }
 
         @keyframes sit-animation {
@@ -119,7 +119,7 @@ export function WalkingCatFooter() {
         {/* The Treadmill Ground & Paw Prints */}
         <div className="absolute bottom-0 left-0 flex h-16 w-full items-end overflow-hidden">
           {/* Fading Edges Mask */}
-          <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-white via-transparent to-white dark:from-slate-950 dark:via-transparent dark:to-slate-950" />
+          <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-white via-transparent to-white dark:from-[#0A0A0A] dark:via-transparent dark:to-[#0A0A0A]" />
 
           <div
             className={`treadmill-track relative z-0 ${isSitting ? 'treadmill-paused' : ''}`}

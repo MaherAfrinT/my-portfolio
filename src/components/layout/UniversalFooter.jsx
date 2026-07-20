@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSiteConfig } from '../../contexts/SiteConfigContext';
-import { Github, Linkedin, Twitter, Mail } from 'lucide-react';
+import * as LucideIcons from 'lucide-react';
 
 export function UniversalFooter() {
   const { config } = useSiteConfig();
@@ -64,46 +64,29 @@ export function UniversalFooter() {
               Connect
             </h3>
             <div className="flex space-x-4">
-              {config.socials?.github && (
-                <a
-                  href={config.socials.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group rounded-full bg-slate-100 p-3 text-slate-600 transition-all hover:bg-cyan-50 hover:text-cyan-600 dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:bg-[#222222] dark:hover:text-[#00E5FF]"
-                  aria-label="GitHub"
-                >
-                  <Github size={20} className="transition-transform group-hover:scale-110" />
-                </a>
-              )}
-              {config.socials?.linkedin && (
-                <a
-                  href={config.socials.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group rounded-full bg-slate-100 p-3 text-slate-600 transition-all hover:bg-cyan-50 hover:text-cyan-600 dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:bg-[#222222] dark:hover:text-[#00E5FF]"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin size={20} className="transition-transform group-hover:scale-110" />
-                </a>
-              )}
-              {config.socials?.twitter && (
-                <a
-                  href={config.socials.twitter}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group rounded-full bg-slate-100 p-3 text-slate-600 transition-all hover:bg-cyan-50 hover:text-cyan-600 dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:bg-[#222222] dark:hover:text-[#00E5FF]"
-                  aria-label="Twitter"
-                >
-                  <Twitter size={20} className="transition-transform group-hover:scale-110" />
-                </a>
-              )}
+              {(config.socialLinks || []).map((social, idx) => {
+                const Icon =
+                  LucideIcons[social.iconName || 'Link'] || LucideIcons.Link;
+                return (
+                  <a
+                    key={social.id || idx}
+                    href={social.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group rounded-full bg-slate-100 p-3 text-slate-600 transition-all hover:bg-cyan-50 hover:text-cyan-600 dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:bg-[#222222] dark:hover:text-[#00E5FF]"
+                    aria-label={social.platform || 'Social Link'}
+                  >
+                    <Icon size={20} className="transition-transform group-hover:scale-110" />
+                  </a>
+                );
+              })}
               {config.email && (
                 <a
                   href={`mailto:${config.email}`}
                   className="group rounded-full bg-slate-100 p-3 text-slate-600 transition-all hover:bg-cyan-50 hover:text-cyan-600 dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:bg-[#222222] dark:hover:text-[#00E5FF]"
                   aria-label="Email"
                 >
-                  <Mail size={20} className="transition-transform group-hover:scale-110" />
+                  <LucideIcons.Mail size={20} className="transition-transform group-hover:scale-110" />
                 </a>
               )}
             </div>

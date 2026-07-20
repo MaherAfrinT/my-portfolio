@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useFirestoreCollection } from '../../hooks/useFirestoreCollection';
 import { PageTransition } from '../../components/layout/PageTransition';
 import { Reveal } from '../../components/ui/Reveal';
 import { Tag } from '../../components/ui/Tag';
+import { ChevronDown, Filter, X } from 'lucide-react';
 
 export function CertificationsPage() {
   const {
@@ -13,6 +14,19 @@ export function CertificationsPage() {
     error,
   } = useFirestoreCollection('certifications', 'createdAt', 'desc');
   const [selectedTag, setSelectedTag] = useState(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setIsDropdownOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // Extract all unique tags
   const allTags = certifications
@@ -40,32 +54,75 @@ export function CertificationsPage() {
           </header>
         </Reveal>
 
-        {/* Filter Tags */}
+        {/* Filter Dropdown */}
         <Reveal>
-          <div className="mb-8 flex flex-wrap gap-2">
-            <button
-              onClick={() => setSelectedTag(null)}
-              className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all ${
-                selectedTag === null
-                  ? 'bg-cyan-500 text-white shadow-[0_0_15px_rgba(6,182,212,0.4)]'
-                  : 'bg-slate-200 text-slate-600 hover:bg-slate-300 dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:bg-[#222222]'
-              }`}
-            >
-              All
-            </button>
-            {allTags.map((tag) => (
+          <div className="mb-8 flex items-center gap-3" ref={dropdownRef}>
+            <div className="relative">
               <button
-                key={tag}
-                onClick={() => setSelectedTag(tag)}
-                className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all ${
-                  selectedTag === tag
-                    ? 'bg-cyan-500 text-white shadow-[0_0_15px_rgba(6,182,212,0.4)]'
-                    : 'bg-slate-200 text-slate-600 hover:bg-slate-300 dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:bg-[#222222]'
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all duration-300 ${
+                  selectedTag
+                    ? 'border-cyan-500/50 bg-cyan-500/10 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.2)]'
+                    : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 dark:border-[#333] dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:border-[#555]'
                 }`}
               >
-                {tag}
+                <Filter size={14} />
+                {selectedTag || 'Filter by Tag'}
+                <ChevronDown
+                  size={14}
+                  className={`transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`}
+                />
               </button>
-            ))}
+
+              <AnimatePresence>
+                {isDropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -8, scale: 0.95 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute top-full left-0 z-50 mt-2 min-w-[200px] overflow-hidden rounded-xl border border-slate-200 bg-white/95 p-1.5 shadow-xl backdrop-blur-xl dark:border-[#333] dark:bg-[#1a1a1a]/95"
+                  >
+                    <button
+                      onClick={() => { setSelectedTag(null); setIsDropdownOpen(false); }}
+                      className={`flex w-full items-center rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors ${
+                        selectedTag === null
+                          ? 'bg-cyan-500/15 text-cyan-400'
+                          : 'text-slate-600 hover:bg-slate-100 dark:text-[#EDEDED] dark:hover:bg-[#222]'
+                      }`}
+                    >
+                      All
+                    </button>
+                    {allTags.map((tag) => (
+                      <button
+                        key={tag}
+                        onClick={() => { setSelectedTag(tag); setIsDropdownOpen(false); }}
+                        className={`flex w-full items-center rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors ${
+                          selectedTag === tag
+                            ? 'bg-cyan-500/15 text-cyan-400'
+                            : 'text-slate-600 hover:bg-slate-100 dark:text-[#EDEDED] dark:hover:bg-[#222]'
+                        }`}
+                      >
+                        {tag}
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Active filter badge with clear button */}
+            {selectedTag && (
+              <motion.button
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                onClick={() => setSelectedTag(null)}
+                className="flex items-center gap-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1.5 text-xs font-medium text-cyan-400 transition-colors hover:bg-cyan-500/20"
+              >
+                {selectedTag}
+                <X size={12} />
+              </motion.button>
+            )}
           </div>
         </Reveal>
 

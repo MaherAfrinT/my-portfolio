@@ -41,14 +41,34 @@ export function AdminSettings() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSocialChange = (e) => {
-    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      socials: { ...prev.socials, [name]: value },
+      [name]: value,
+    }));
+  };
+
+  const handleSocialChange = (idx, field, value) => {
+    const updatedSocials = [...(formData.socialLinks || [])];
+    updatedSocials[idx] = { ...updatedSocials[idx], [field]: value };
+    setFormData((prev) => ({
+      ...prev,
+      socialLinks: updatedSocials,
+    }));
+  };
+
+  const addSocial = () => {
+    const newSocial = { id: Date.now().toString(), platform: 'New Link', url: '', iconName: 'Link' };
+    setFormData((prev) => ({
+      ...prev,
+      socialLinks: [...(prev.socialLinks || []), newSocial],
+    }));
+  };
+
+  const removeSocial = (idx) => {
+    const updatedSocials = formData.socialLinks.filter((_, i) => i !== idx);
+    setFormData((prev) => ({
+      ...prev,
+      socialLinks: updatedSocials,
     }));
   };
 
@@ -196,33 +216,76 @@ export function AdminSettings() {
 
         <Card>
           <div className="border-b border-slate-200 px-6 pt-6 pb-2 dark:border-slate-800">
-            <h2 className="text-xl font-bold">Social Links</h2>
+            <h2 className="text-xl font-bold">Projects Page Settings</h2>
           </div>
           <CardContent className="space-y-6 pt-6">
             <div className="space-y-2">
-              <label className="text-sm font-medium">GitHub</label>
+              <label className="text-sm font-medium">Projects Page Title</label>
               <Input
-                name="github"
-                value={formData.socials?.github || ''}
-                onChange={handleSocialChange}
+                name="projectsPageTitle"
+                value={formData.projectsPageTitle || ''}
+                onChange={handleChange}
+                placeholder="Selected Works"
               />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium">LinkedIn</label>
-              <Input
-                name="linkedin"
-                value={formData.socials?.linkedin || ''}
-                onChange={handleSocialChange}
+              <label className="text-sm font-medium">Projects Page Subtitle</label>
+              <Textarea
+                name="projectsPageSubtitle"
+                value={formData.projectsPageSubtitle || ''}
+                onChange={handleChange}
+                placeholder="A collection of my recent projects..."
               />
             </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Twitter</label>
-              <Input
-                name="twitter"
-                value={formData.socials?.twitter || ''}
-                onChange={handleSocialChange}
-              />
-            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <div className="flex items-center justify-between border-b border-slate-200 px-6 pt-6 pb-2 dark:border-slate-800">
+            <h2 className="text-xl font-bold">Social Links</h2>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={addSocial}
+              className="border-cyan-500/50 text-cyan-500 hover:bg-cyan-500/10"
+            >
+              <LucideIcons.Plus className="mr-2 h-4 w-4" /> Add Link
+            </Button>
+          </div>
+          <CardContent className="space-y-6 pt-6">
+            {(formData.socialLinks || []).map((social, idx) => (
+              <div key={social.id || idx} className="flex flex-col gap-4 md:flex-row items-end">
+                <div className="flex-1 space-y-2">
+                  <label className="text-sm font-medium">Platform Name</label>
+                  <Input
+                    value={social.platform || ''}
+                    onChange={(e) => handleSocialChange(idx, 'platform', e.target.value)}
+                  />
+                </div>
+                <div className="flex-1 space-y-2">
+                  <label className="text-sm font-medium">URL</label>
+                  <Input
+                    value={social.url || ''}
+                    onChange={(e) => handleSocialChange(idx, 'url', e.target.value)}
+                  />
+                </div>
+                <div className="w-32 space-y-2">
+                  <label className="text-sm font-medium">Icon Name</label>
+                  <Input
+                    value={social.iconName || 'Link'}
+                    onChange={(e) => handleSocialChange(idx, 'iconName', e.target.value)}
+                    title="Lucide icon name (e.g. Github, Linkedin, Twitter, Youtube)"
+                  />
+                </div>
+                <Button
+                  variant="outline"
+                  onClick={() => removeSocial(idx)}
+                  className="mb-0.5 border-red-200 text-red-500 hover:bg-red-50 dark:border-red-900 dark:hover:bg-red-900/20"
+                >
+                  <LucideIcons.Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
+            ))}
           </CardContent>
         </Card>
 

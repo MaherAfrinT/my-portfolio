@@ -43,9 +43,13 @@ service cloud.firestore {
     
     match /contactMessages/{document} {
       allow create: if request.resource.data.keys().hasAll(['name', 'email', 'message', 'createdAt', 'read'])
+                    && request.resource.data.keys().hasOnly(['name', 'email', 'message', 'createdAt', 'read'])
                     && request.resource.data.name is string
+                    && request.resource.data.name.size() < 100
                     && request.resource.data.email is string
-                    && request.resource.data.message is string;
+                    && request.resource.data.email.size() < 150
+                    && request.resource.data.message is string
+                    && request.resource.data.message.size() < 2000;
       allow read, update, delete: if isAdmin();
     }
   }

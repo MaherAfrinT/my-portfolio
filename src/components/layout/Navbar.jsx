@@ -18,18 +18,19 @@ export function Navbar() {
   const { scrollY } = useScroll();
 
   // Transform values based on scroll
-  const headerPadding = useTransform(scrollY, [0, 100], ['1rem', '0.5rem']);
+  const headerPadding = useTransform(scrollY, [0, 100], ['1rem', '0.75rem']);
+  const navWidth = useTransform(scrollY, [0, 100], ['1100px', '750px']);
   const backdropBlur = useTransform(
     scrollY,
     [0, 100],
-    ['blur(12px)', 'blur(16px)']
+    ['blur(8px)', 'blur(16px)']
   );
   const shadow = useTransform(
     scrollY,
     [0, 100],
     [
       '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
-      '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      '0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
     ]
   );
 
@@ -39,17 +40,19 @@ export function Navbar() {
     { path: '/career', label: 'Career' },
     { path: '/blog', label: 'Blog' },
     { path: '/journal', label: 'Journal' },
+    { path: '/contact', label: 'Contact' },
     { path: '/admin', label: 'Admin' },
   ];
 
   return (
     <motion.header
-      className="sticky top-0 z-50 mt-4 w-full px-4 transition-all duration-300 sm:px-6 lg:px-8"
+      className="sticky top-0 z-50 w-full px-4 transition-all duration-300 sm:px-6 lg:px-8 flex justify-center"
       style={{ paddingTop: headerPadding, paddingBottom: headerPadding }}
     >
       <motion.div
-        className="mx-auto flex max-w-5xl items-center justify-between rounded-full border border-gray-200/40 px-6 py-3 dark:border-[rgba(0,229,255,0.15)] dark:shadow-[0_0_20px_rgba(0,255,204,0.05)]"
+        className="relative flex w-full items-center justify-between rounded-full border border-gray-200/40 px-6 py-2 dark:border-[rgba(0,229,255,0.15)] dark:shadow-[0_0_20px_rgba(0,255,204,0.05)]"
         style={{
+          maxWidth: navWidth,
           backdropFilter: backdropBlur,
           boxShadow: shadow,
         }}
@@ -58,7 +61,7 @@ export function Navbar() {
         <div
           className="absolute inset-0 rounded-full dark:hidden"
           style={{
-            backgroundColor: 'var(--header-bg, rgba(255, 255, 255, 0.7))',
+            backgroundColor: 'var(--header-bg, rgba(255, 255, 255, 0.8))',
           }}
         />
         <div
@@ -70,7 +73,7 @@ export function Navbar() {
 
         <Link
           to="/"
-          className="relative z-10 bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-xl font-bold text-transparent transition-all duration-500 hover:from-purple-500 hover:to-cyan-500"
+          className="relative z-10 whitespace-nowrap bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-xl font-bold text-transparent transition-all duration-500 hover:from-purple-500 hover:to-cyan-500"
         >
           {config.name || 'Portfolio'}
         </Link>

@@ -5,6 +5,8 @@ import { Button } from '../../components/ui/Button';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
+import rehypeRaw from 'rehype-raw';
+import { Youtube, Image as ImageIcon } from 'lucide-react';
 
 export function AdminBlogForm() {
   const { id } = useParams();
@@ -21,6 +23,49 @@ export function AdminBlogForm() {
   } = useAdminBlogForm(id);
 
   const [activeTab, setActiveTab] = useState('edit');
+
+  const insertTextAtCursor = (text) => {
+    const textarea = document.getElementById('blog-content-textarea');
+    if (!textarea) return;
+    
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const currentContent = formData.content || '';
+    
+    const newContent = currentContent.substring(0, start) + text + currentContent.substring(end);
+    handleChange({ target: { name: 'content', value: newContent } });
+    
+    setTimeout(() => {
+      textarea.focus();
+      textarea.setSelectionRange(start + text.length, start + text.length);
+    }, 0);
+  };
+
+  const handleInsertYoutube = () => {
+    const url = prompt('Enter YouTube video URL:');
+    if (!url) return;
+    
+    let videoId = '';
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    if (match && match[2].length === 11) {
+      videoId = match[2];
+    } else {
+      alert('Invalid YouTube URL');
+      return;
+    }
+    
+    const embedCode = `\n<div class="my-6 aspect-video w-full overflow-hidden rounded-xl">\n  <iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>\n</div>\n`;
+    insertTextAtCursor(embedCode);
+  };
+
+  const handleInsertImage = () => {
+    const url = prompt('Enter Image URL (e.g. from Imgur):');
+    if (!url) return;
+    
+    const alt = prompt('Enter Image Description (optional):') || 'Image';
+    insertTextAtCursor(`\n![${alt}](${url})\n`);
+  };
 
 
   if (loading) return <div>Loading...</div>;
@@ -76,7 +121,26 @@ export function AdminBlogForm() {
             <label className="block text-sm font-medium">
               Content (Markdown)
             </label>
-            <div className="flex rounded-lg bg-slate-100 p-1 dark:bg-slate-900">
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleInsertYoutube}
+                  className="rounded bg-slate-100 p-1.5 text-slate-500 hover:bg-slate-200 hover:text-red-500 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-red-400"
+                  title="Insert YouTube Video"
+                >
+                  <Youtube className="h-4 w-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={handleInsertImage}
+                  className="rounded bg-slate-100 p-1.5 text-slate-500 hover:bg-slate-200 hover:text-cyan-500 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-cyan-400"
+                  title="Insert Image (Imgur)"
+                >
+                  <ImageIcon className="h-4 w-4" />
+                </button>
+              </div>
+              <div className="flex rounded-lg bg-slate-100 p-1 dark:bg-slate-900">
               <button
                 type="button"
                 onClick={() => setActiveTab('edit')}
@@ -96,6 +160,7 @@ export function AdminBlogForm() {
 
           {activeTab === 'edit' ? (
             <textarea
+              id="blog-content-textarea"
               name="content"
               value={formData.content}
               onChange={handleChange}
@@ -107,7 +172,7 @@ export function AdminBlogForm() {
             <div className="prose dark:prose-invert min-h-[350px] w-full max-w-none overflow-y-auto rounded-lg border border-slate-300 bg-white p-6 dark:border-slate-600 dark:bg-slate-900">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeHighlight]}
+                rehypePlugins={[rehypeHighlight, rehypeRaw]}
               >
                 {formData.content || '*No content to preview*'}
               </ReactMarkdown>

@@ -15,11 +15,13 @@ export const DEFAULT_SITE_CONFIG = {
   resumeUrl: '',
   about:
     'I am a full-stack developer passionate about creating interactive and beautiful user experiences.',
-  socials: {
-    github: 'https://github.com/',
-    linkedin: 'https://linkedin.com/',
-    twitter: 'https://twitter.com/',
-  },
+  projectsPageTitle: 'Selected Works',
+  projectsPageSubtitle: 'A collection of my recent projects, experiments, and open-source contributions.',
+  socialLinks: [
+    { id: '1', platform: 'GitHub', url: 'https://github.com/', iconName: 'Github' },
+    { id: '2', platform: 'LinkedIn', url: 'https://linkedin.com/', iconName: 'Linkedin' },
+    { id: '3', platform: 'Twitter', url: 'https://twitter.com/', iconName: 'Twitter' },
+  ],
   catAccentColor: '#FFFF00',
   catMessage: "You've reached the end! The developer is out walking his cat.",
 };

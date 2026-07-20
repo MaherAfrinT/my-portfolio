@@ -27,7 +27,7 @@ export function BlogPage() {
         <Reveal>
           <header className="pt-12">
             <h1 className="mb-6 text-4xl font-extrabold md:text-5xl">
-              <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#00E5FF] to-transparent bg-clip-text text-transparent">
                 Blog
               </span>
             </h1>
@@ -56,8 +56,8 @@ export function BlogPage() {
                   onClick={() => setFilter(tag)}
                   className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                     filter === tag
-                      ? 'bg-cyan-600 text-white dark:bg-cyan-500'
-                      : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 dark:border-[#333333] dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:bg-[#222222]'
+                      ? 'text-[#00E5FF] border-b-2 border-[#00E5FF] bg-transparent rounded-none'
+                      : 'text-[#EDEDED] border-b-2 border-transparent hover:border-[#333333] bg-transparent rounded-none'
                   }`}
                 >
                   {tag}
@@ -73,17 +73,18 @@ export function BlogPage() {
                     to={`/blog/${post.slug || post.id}`}
                     className="block break-inside-avoid"
                   >
-                    <div className="group relative h-full cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg dark:border-[#333333] dark:bg-dark-surface">
+                    <div className="group relative h-full cursor-pointer overflow-hidden rounded-2xl border border-[#333333] bg-[#111111] shadow-xl hover:border-[#00E5FF] transition-colors">
                       {/* Image Container */}
                       <div className="relative aspect-[4/3] w-full overflow-hidden sm:aspect-auto sm:h-72">
                         {post.coverImage ? (
                           <img
                             src={post.coverImage}
                             alt={post.title}
+                            loading="lazy"
                             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                           />
                         ) : (
-                          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-cyan-100 to-purple-100 dark:from-cyan-900/40 dark:to-purple-900/40">
+                          <div className="flex h-full w-full items-center justify-center bg-[#111111] border border-[#333333]">
                             <span className="text-4xl">📝</span>
                           </div>
                         )}
@@ -120,7 +121,7 @@ export function BlogPage() {
                       </div>
 
                       {/* Glassmorphism Hover Overlay */}
-                      <div className="absolute inset-0 flex translate-y-full flex-col justify-end bg-black/40 p-6 backdrop-blur-md transition-transform duration-500 ease-out group-hover:translate-y-0">
+                      <div className="absolute inset-0 flex translate-y-full flex-col justify-end bg-black/60 p-6 backdrop-blur-md border-t border-[#00E5FF]/30 transition-transform duration-500 ease-out group-hover:translate-y-0">
                         <div className="mb-2 font-mono text-sm font-medium text-cyan-300">
                           {post.publishedAt?.toDate
                             ? format(post.publishedAt.toDate(), 'MMMM d, yyyy')

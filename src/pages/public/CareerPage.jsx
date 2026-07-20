@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useFirestoreCollection } from '../../hooks/useFirestoreCollection';
 import { PageTransition } from '../../components/layout/PageTransition';
 import { formatDate } from '../../lib/utils';
@@ -45,7 +46,7 @@ export function CareerPage() {
               <header className="mb-12 pt-12">
                 <h1 className="mb-6 text-4xl font-extrabold md:text-5xl">
                   <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
-                    Experience
+                    Career Journey
                   </span>
                 </h1>
                 <p className="max-w-2xl text-xl text-slate-600 dark:text-slate-400">
@@ -63,10 +64,9 @@ export function CareerPage() {
             ) : (
               <div className="relative mx-auto max-w-5xl space-y-16 py-10">
                 {/* Central line */}
-                <div className="absolute top-0 bottom-0 left-8 z-0 w-px transform bg-slate-800 md:left-1/2 md:-translate-x-1/2" />
+                <div className="absolute top-0 bottom-0 left-8 z-0 w-px transform bg-slate-800" />
 
                 {experiences?.map((item, idx) => {
-                  const isEven = idx % 2 === 0;
                   return (
                     <motion.div
                       key={item.id}
@@ -74,22 +74,17 @@ export function CareerPage() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, margin: '-100px' }}
                       transition={{ delay: 0.1, duration: 0.5 }}
-                      className={`relative flex w-full flex-col items-center md:flex-row ${isEven ? 'md:flex-row-reverse' : ''}`}
+                      className="relative flex w-full flex-col items-center md:flex-row"
                     >
-                      {/* Half width spacer for desktop */}
-                      <div className="hidden w-1/2 md:block" />
-
                       {/* Node */}
-                      <div className="absolute left-8 z-10 flex h-12 w-12 -translate-x-1/2 transform items-center justify-center rounded-full border border-cyan-500 bg-[#030712] shadow-[0_0_20px_rgba(0,255,204,0.3)] md:left-1/2">
-                        <span className="font-mono text-sm font-bold tracking-tighter text-cyan-400">
-                          &lt;&gt;
+                      <div className="absolute left-8 z-10 flex h-12 w-12 -translate-x-1/2 transform items-center justify-center rounded-full border border-cyan-500 bg-[#030712] shadow-[0_0_20px_rgba(0,255,204,0.3)]">
+                        <span className={`font-mono font-bold tracking-tighter ${item.type === 'education' ? 'text-lg' : 'text-sm text-cyan-400'}`}>
+                          {item.type === 'education' ? '🎓' : '<>'}
                         </span>
                       </div>
 
                       {/* Content */}
-                      <div
-                        className={`w-full pr-4 pl-24 md:w-1/2 md:px-12 ${isEven ? 'md:text-right' : 'md:text-left'}`}
-                      >
+                      <div className="w-full pr-4 pl-24 text-left">
                         <div className="glass-panel rounded-xl group relative overflow-hidden border border-slate-800 bg-slate-900/40 p-8 shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:border-cyan-500/50 hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
                           {/* Glow effect on hover */}
                           <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
@@ -98,9 +93,7 @@ export function CareerPage() {
                             {item.role}
                           </h3>
 
-                          <div
-                            className={`mb-4 flex items-center gap-2 font-mono text-sm text-cyan-500 ${isEven ? 'md:justify-end' : 'md:justify-start'}`}
-                          >
+                          <div className="mb-4 flex items-center justify-start gap-2 font-mono text-sm text-cyan-500">
                             {formatDate(item.startDate)}{' '}
                             <span className="text-slate-600">-</span>{' '}
                             {item.current
@@ -121,16 +114,14 @@ export function CareerPage() {
                           {/* Achievements with checkmarks */}
                           {item.achievements &&
                             item.achievements.length > 0 && (
-                              <ul
-                                className={`space-y-3 ${isEven ? 'md:flex md:flex-col md:items-end' : ''}`}
-                              >
+                              <ul className="space-y-3">
                                 {item.achievements.map((ach, aIdx) => (
                                   <li
                                     key={aIdx}
-                                    className={`flex max-w-md items-start text-sm text-slate-300 ${isEven ? 'md:flex-row-reverse md:text-right' : ''}`}
+                                    className="flex max-w-xl items-start text-sm text-slate-300"
                                   >
                                     <svg
-                                      className={`mt-0.5 h-5 w-5 shrink-0 text-cyan-500 ${isEven ? 'ml-3' : 'mr-3'}`}
+                                      className="mt-0.5 mr-3 h-5 w-5 shrink-0 text-cyan-500"
                                       fill="none"
                                       viewBox="0 0 24 24"
                                       stroke="currentColor"
@@ -151,9 +142,7 @@ export function CareerPage() {
                             )}
 
                           {item.skills && item.skills.length > 0 && (
-                            <div
-                              className={`mt-8 flex flex-wrap gap-2 border-t border-slate-800 pt-6 ${isEven ? 'md:justify-end' : 'md:justify-start'}`}
-                            >
+                            <div className="mt-8 flex flex-wrap justify-start gap-2 border-t border-slate-800 pt-6">
                               {item.skills.map((skill) => (
                                 <Tag
                                   key={skill}
@@ -238,6 +227,33 @@ export function CareerPage() {
                           </div>
                         </div>
                       </div>
+                      {t.referenceUrl && (
+                        <div className="mt-6 border-t border-slate-200 pt-4 dark:border-slate-800">
+                          {t.referenceUrl.startsWith('http') ? (
+                            <a
+                              href={t.referenceUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 text-sm font-medium text-cyan-600 hover:text-cyan-500 dark:text-cyan-400 dark:hover:text-cyan-300"
+                            >
+                              View Reference Work
+                              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                              </svg>
+                            </a>
+                          ) : (
+                            <Link
+                              to={t.referenceUrl}
+                              className="inline-flex items-center gap-2 text-sm font-medium text-cyan-600 hover:text-cyan-500 dark:text-cyan-400 dark:hover:text-cyan-300"
+                            >
+                              View Reference Work
+                              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                              </svg>
+                            </Link>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </motion.div>
                 ))}

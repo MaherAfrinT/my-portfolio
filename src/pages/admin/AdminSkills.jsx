@@ -142,6 +142,18 @@ export function AdminSkills() {
                     title="Lucide icon name (e.g. Code, Globe, Terminal)"
                   />
                 </div>
+                <div className="flex-1 space-y-1">
+                  <label className="text-xs font-semibold text-slate-500 uppercase">
+                    Custom Image URL (Overrides Icon)
+                  </label>
+                  <Input
+                    value={category.categoryImageUrl || ''}
+                    onChange={(e) =>
+                      updateCategory(catIndex, 'categoryImageUrl', e.target.value)
+                    }
+                    placeholder="e.g. https://example.com/icon.png"
+                  />
+                </div>
               </div>
               <Button
                 variant="outline"

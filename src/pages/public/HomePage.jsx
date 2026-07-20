@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Lottie from 'lottie-react';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import * as LucideIcons from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { db } from '../../firebase';
 import { LOTTIE_CAT_URL, DEFAULT_SITE_CONFIG } from '../../lib/constants';
 import { Tag } from '../../components/ui/Tag';
 import { useSiteConfig } from '../../contexts/SiteConfigContext';
 import { useFirestoreCollection } from '../../hooks/useFirestoreCollection';
 import { PageTransition } from '../../components/layout/PageTransition';
 import { Button } from '../../components/ui/Button';
-import { Input } from '../../components/ui/Input';
-import { Textarea } from '../../components/ui/Textarea';
 import { TypewriterHeadline } from '../../components/ui/TypewriterHeadline';
 import { KineticText } from '../../components/ui/KineticText';
 import { Reveal } from '../../components/ui/Reveal';
@@ -26,6 +22,18 @@ export function HomePage() {
   );
   const [animationData, setAnimationData] = useState(null);
   const [selectedCertTag, setSelectedCertTag] = useState(null);
+  const [isCertDropdownOpen, setIsCertDropdownOpen] = useState(false);
+  const certDropdownRef = React.useRef(null);
+
+  React.useEffect(() => {
+    function handleClickOutside(e) {
+      if (certDropdownRef.current && !certDropdownRef.current.contains(e.target)) {
+        setIsCertDropdownOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const allCertTags = certifications
     ? Array.from(new Set(certifications.flatMap((cert) => cert.tags || [])))
@@ -79,7 +87,7 @@ export function HomePage() {
               {config.greetingText || DEFAULT_SITE_CONFIG.greetingText}{' '}
               {config.name}.
             </motion.p>
-            <motion.h1 variants={cardVariants} className="flex flex-col gap-1">
+            <motion.h1 variants={cardVariants} className="flex flex-col gap-1 min-h-[160px] md:min-h-[180px]">
               <span className="text-4xl font-extrabold tracking-tight text-slate-900 md:text-6xl dark:text-white">
                 {config.heroPrefix || DEFAULT_SITE_CONFIG.heroPrefix}
               </span>
@@ -103,38 +111,24 @@ export function HomePage() {
               className="flex flex-wrap gap-4 pt-8"
             >
               <Button
-                onClick={(e) => {
-                  e.preventDefault();
-                  document
-                    .getElementById('contact')
-                    ?.scrollIntoView({ behavior: 'smooth' });
-                }}
+                as="a"
+                href={config.resumeUrl || '#'}
+                target={config.resumeUrl ? '_blank' : '_self'}
+                rel="noopener noreferrer"
                 size="lg"
-                className="border-none bg-cyan-500 text-slate-900 shadow-[0_0_15px_rgba(0,255,204,0.3)] transition-transform hover:scale-105 hover:bg-cyan-600"
+                className="flex items-center gap-2 border-none bg-cyan-500 text-slate-900 shadow-[0_0_15px_rgba(0,255,204,0.3)] transition-transform hover:scale-105 hover:bg-cyan-600"
               >
-                Contact Me
+                <LucideIcons.Download className="h-4 w-4" /> Resume
               </Button>
               <Button
                 as={Link}
                 to="/projects"
                 size="lg"
-                className="flex items-center gap-2 border-none bg-cyan-500 text-slate-900 shadow-[0_0_15px_rgba(0,255,204,0.3)] transition-transform hover:scale-105 hover:bg-cyan-600"
+                variant="outline"
+                className="flex items-center gap-2 shadow-[0_0_15px_rgba(0,255,204,0.1)] transition-transform hover:scale-105"
               >
                 View Projects <LucideIcons.ArrowUpRight className="h-4 w-4" />
               </Button>
-              {config.resumeUrl && (
-                <Button
-                  as="a"
-                  href={config.resumeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="outline"
-                  size="lg"
-                  className="flex items-center gap-2 border-slate-700 text-slate-300 transition-transform hover:scale-105 hover:bg-slate-800 dark:border-slate-600 dark:hover:bg-slate-800"
-                >
-                  <LucideIcons.Download className="h-4 w-4" /> Resume
-                </Button>
-              )}
             </motion.div>
           </motion.div>
 
@@ -225,8 +219,12 @@ export function HomePage() {
                     <div className="glass-panel rounded-xl group relative h-full overflow-hidden p-6 transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:border-cyan-500/50 hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
                       <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                       <h3 className="relative z-10 mb-6 flex items-center gap-3 border-b border-slate-200 pb-4 text-xl font-bold text-slate-900 dark:border-slate-800 dark:text-white">
-                        <span className="rounded-lg bg-cyan-500/10 p-2 text-cyan-500 dark:text-[#00ffcc]">
-                          <Icon className="h-5 w-5" />
+                        <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg bg-cyan-500/10 text-cyan-500 dark:text-[#00ffcc]">
+                          {skillGroup.categoryImageUrl ? (
+                            <img src={skillGroup.categoryImageUrl} alt={skillGroup.category} className="h-full w-full object-cover" />
+                          ) : (
+                            <Icon className="h-5 w-5" />
+                          )}
                         </span>
                         {skillGroup.category}
                       </h3>
@@ -311,31 +309,74 @@ export function HomePage() {
                 Certifications
               </h2>
 
-              {/* Filter Tags */}
-              <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={() => setSelectedCertTag(null)}
-                  className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all ${
-                    selectedCertTag === null
-                      ? 'bg-cyan-500 text-white shadow-[0_0_15px_rgba(6,182,212,0.4)]'
-                      : 'bg-slate-200 text-slate-600 hover:bg-slate-300 dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:bg-[#222222]'
-                  }`}
-                >
-                  All
-                </button>
-                {allCertTags.map((tag) => (
+              {/* Filter Dropdown */}
+              <div className="flex items-center gap-3" ref={certDropdownRef}>
+                <div className="relative">
                   <button
-                    key={tag}
-                    onClick={() => setSelectedCertTag(tag)}
-                    className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all ${
-                      selectedCertTag === tag
-                        ? 'bg-cyan-500 text-white shadow-[0_0_15px_rgba(6,182,212,0.4)]'
-                        : 'bg-slate-200 text-slate-600 hover:bg-slate-300 dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:bg-[#222222]'
+                    onClick={() => setIsCertDropdownOpen(!isCertDropdownOpen)}
+                    className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all duration-300 ${
+                      selectedCertTag
+                        ? 'border-cyan-500/50 bg-cyan-500/10 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.2)]'
+                        : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 dark:border-[#333] dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:border-[#555]'
                     }`}
                   >
-                    {tag}
+                    <LucideIcons.Filter size={14} />
+                    {selectedCertTag || 'Filter by Tag'}
+                    <LucideIcons.ChevronDown
+                      size={14}
+                      className={`transition-transform duration-200 ${isCertDropdownOpen ? 'rotate-180' : ''}`}
+                    />
                   </button>
-                ))}
+
+                  <AnimatePresence>
+                    {isCertDropdownOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -8, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -8, scale: 0.95 }}
+                        transition={{ duration: 0.15 }}
+                        className="absolute top-full left-0 z-50 mt-2 min-w-[200px] overflow-hidden rounded-xl border border-slate-200 bg-white/95 p-1.5 shadow-xl backdrop-blur-xl dark:border-[#333] dark:bg-[#1a1a1a]/95"
+                      >
+                        <button
+                          onClick={() => { setSelectedCertTag(null); setIsCertDropdownOpen(false); }}
+                          className={`flex w-full items-center rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors ${
+                            selectedCertTag === null
+                              ? 'bg-cyan-500/15 text-cyan-400'
+                              : 'text-slate-600 hover:bg-slate-100 dark:text-[#EDEDED] dark:hover:bg-[#222]'
+                          }`}
+                        >
+                          All
+                        </button>
+                        {allCertTags.map((tag) => (
+                          <button
+                            key={tag}
+                            onClick={() => { setSelectedCertTag(tag); setIsCertDropdownOpen(false); }}
+                            className={`flex w-full items-center rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors ${
+                              selectedCertTag === tag
+                                ? 'bg-cyan-500/15 text-cyan-400'
+                                : 'text-slate-600 hover:bg-slate-100 dark:text-[#EDEDED] dark:hover:bg-[#222]'
+                            }`}
+                          >
+                            {tag}
+                          </button>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Active filter badge with clear button */}
+                {selectedCertTag && (
+                  <motion.button
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    onClick={() => setSelectedCertTag(null)}
+                    className="flex items-center gap-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1.5 text-xs font-medium text-cyan-400 transition-colors hover:bg-cyan-500/20"
+                  >
+                    {selectedCertTag}
+                    <LucideIcons.X size={12} />
+                  </motion.button>
+                )}
               </div>
             </div>
 
@@ -481,152 +522,36 @@ export function HomePage() {
           </Reveal>
         </section>
 
-        {/* Contact Section */}
+        {/* CTA Section */}
         <section id="contact" className="scroll-mt-24 pb-24">
-          <ContactForm />
+          <Reveal>
+            <div className="glass-panel rounded-3xl group relative overflow-hidden p-12 text-center shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:border-cyan-500/50 hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)] md:p-20">
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              <div className="relative z-10 flex flex-col items-center justify-center">
+                <div className="mb-6 flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white/50 px-4 py-2 dark:border-slate-800 dark:bg-slate-900/50">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
+                  </span>
+                  <span className="text-xs font-medium text-slate-600 dark:text-slate-400">
+                    Available for work
+                  </span>
+                </div>
+                <h2 className="mb-8 max-w-2xl text-4xl font-extrabold text-slate-900 md:text-6xl dark:text-white">
+                  Let's create your next big idea.
+                </h2>
+                <Button
+                  as={Link}
+                  to="/contact"
+                  className="rounded-full border border-slate-800 bg-transparent px-8 py-6 text-lg font-medium text-slate-900 transition-all hover:bg-slate-900 hover:text-white dark:border-slate-200 dark:text-white dark:hover:bg-white dark:hover:text-slate-900"
+                >
+                  Contact Me
+                </Button>
+              </div>
+            </div>
+          </Reveal>
         </section>
       </div>
     </PageTransition>
-  );
-}
-
-function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
-  const [status, setStatus] = useState('idle');
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) return;
-
-    setStatus('submitting');
-    try {
-      await addDoc(collection(db, 'contactMessages'), {
-        ...formData,
-        createdAt: serverTimestamp(),
-        read: false,
-      });
-      setStatus('success');
-      setFormData({ name: '', email: '', message: '' });
-    } catch (error) {
-      console.error('Error submitting form', error);
-      setStatus('error');
-    }
-  };
-
-  return (
-    <Reveal>
-      <h2 className="mb-8 flex items-center font-mono text-3xl font-bold">
-        <span className="mr-4 text-cyan-500 dark:text-[#00ffcc]">05.</span> Get
-        In Touch
-      </h2>
-      <div className="glass-panel rounded-xl group relative max-w-2xl overflow-hidden p-8 shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:border-cyan-500/50 hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-        <div className="relative z-10">
-          {status === 'success' ? (
-            <div className="py-12 text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-green-500 dark:bg-green-900/30">
-                <svg
-                  className="h-8 w-8"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              </div>
-              <h3 className="mb-2 text-xl font-semibold">Message Sent!</h3>
-              <p className="text-slate-500 dark:text-slate-400">
-                Thanks for reaching out. I'll get back to you soon.
-              </p>
-              <Button
-                className="mt-6 bg-cyan-500 text-slate-900 hover:bg-cyan-600"
-                onClick={() => setStatus('idle')}
-              >
-                Send Another
-              </Button>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                <div className="space-y-2">
-                  <label
-                    htmlFor="name"
-                    className="font-mono text-sm font-medium text-slate-400"
-                  >
-                    Name
-                  </label>
-                  <Input
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                    placeholder="John Doe"
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label
-                    htmlFor="email"
-                    className="font-mono text-sm font-medium text-slate-400"
-                  >
-                    Email
-                  </label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                    placeholder="john@example.com"
-                    required
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label
-                  htmlFor="message"
-                  className="font-mono text-sm font-medium text-slate-400"
-                >
-                  Message
-                </label>
-                <Textarea
-                  id="message"
-                  value={formData.message}
-                  onChange={(e) =>
-                    setFormData({ ...formData, message: e.target.value })
-                  }
-                  placeholder="Hello, I'd like to talk about..."
-                  className="min-h-[150px]"
-                  required
-                />
-              </div>
-              {status === 'error' && (
-                <p className="text-sm text-red-500">
-                  There was an error sending your message. Please try again.
-                </p>
-              )}
-              <Button
-                type="submit"
-                isLoading={status === 'submitting'}
-                className="w-full border-none bg-cyan-500 font-bold tracking-wide text-slate-900 shadow-[0_0_10px_rgba(0,255,204,0.2)] hover:bg-cyan-600 md:w-auto"
-              >
-                Send Message
-              </Button>
-            </form>
-          )}
-        </div>
-      </div>
-    </Reveal>
   );
 }

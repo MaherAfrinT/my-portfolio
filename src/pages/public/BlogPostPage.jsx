@@ -12,6 +12,7 @@ import { db } from '../../firebase';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
+import rehypeRaw from 'rehype-raw';
 import { PageTransition } from '../../components/layout/PageTransition';
 import { Reveal } from '../../components/ui/Reveal';
 import { format } from 'date-fns';
@@ -136,7 +137,7 @@ export function BlogPostPage() {
           >
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
-              rehypePlugins={[rehypeHighlight]}
+              rehypePlugins={[rehypeHighlight, rehypeRaw]}
             >
               {post.content}
             </ReactMarkdown>

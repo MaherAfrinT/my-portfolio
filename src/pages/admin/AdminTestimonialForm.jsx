@@ -83,6 +83,19 @@ export function AdminTestimonialForm() {
             </div>
 
             <div className="space-y-2">
+              <label className="text-sm font-medium">Reference Work URL</label>
+              <Input
+                name="referenceUrl"
+                value={formData.referenceUrl}
+                onChange={handleChange}
+                placeholder="https://example.com or /projects/my-project"
+              />
+              <p className="text-xs text-slate-500">
+                Optional. Link to the related website, or to one of your project pages (e.g., /projects/project-id).
+              </p>
+            </div>
+
+            <div className="space-y-2">
               <label className="text-sm font-medium">Quote</label>
               <Textarea
                 name="quote"
