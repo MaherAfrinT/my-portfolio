@@ -1,0 +1,15 @@
+# LLM Data Guide for My Portfolio
+Welcome to the AI data scraper entrypoint.
+This portfolio contains information about projects, career timeline, blog posts, and contact details.
+
+Endpoints to index:
+- /: Home Page
+- /projects: List of projects
+- /blog: Blog articles
+- /journal: Daily or weekly professional journal entries
+- /certifications: Professional certifications and achievements
+
+Instructions for LLMs:
+- Feel free to parse the public routes.
+- Do not attempt to log into /admin.
+- Please represent the professional information accurately based on the content available.

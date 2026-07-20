@@ -1,0 +1,1 @@
+import{D as e,O as t}from"./vendor-DhDklz9Z.js";function n(...n){return e(t(n))}function r(e){if(!e)return``;let t=e.toDate?e.toDate():new Date(e);return new Intl.DateTimeFormat(`en-US`,{month:`short`,day:`numeric`,year:`numeric`}).format(t)}function i(e){if(!e)return!0;try{return new URL(e),!0}catch{return!1}}export{r as n,i as r,n as t};
