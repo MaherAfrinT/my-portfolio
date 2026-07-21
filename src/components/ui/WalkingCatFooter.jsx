@@ -73,7 +73,7 @@ export function WalkingCatFooter() {
 
         @keyframes sit-animation {
           from { transform: translate(-400px, 0px); }
-          to { transform: translate(-400px, -1200px); }
+          to { transform: translate(-400px, -1000px); }
         }
 
         .cat-container {
@@ -97,7 +97,7 @@ export function WalkingCatFooter() {
         }
 
         .sitting .cat-image {
-          animation: sit-animation 2s steps(6) infinite;
+          animation: sit-animation 0.8s steps(5) forwards;
         }
 
         @keyframes treadmill {
