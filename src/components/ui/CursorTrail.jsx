@@ -83,7 +83,11 @@ export function CursorTrail() {
 
       {/* Crisp Dot Cursor */}
       <motion.div
-        className="pointer-events-none fixed top-0 left-0 z-[100] mix-blend-difference"
+        className={`pointer-events-none fixed top-0 left-0 z-[100] transition-colors duration-200 ${
+          isHovering
+            ? 'border-2 border-slate-400 bg-transparent dark:border-[#00E5FF]'
+            : 'border-0 border-transparent bg-slate-400 dark:bg-[#00E5FF]'
+        }`}
         style={{
           x: dotX,
           y: dotY,
@@ -95,8 +99,6 @@ export function CursorTrail() {
           scale: isVisible ? (isClicking ? 0.8 : 1) : 0,
           width: isHovering ? 40 : 12,
           height: isHovering ? 40 : 12,
-          backgroundColor: isHovering ? 'transparent' : '#00E5FF',
-          border: isHovering ? '2px solid #00E5FF' : '0px solid transparent',
         }}
         transition={{ type: 'spring', stiffness: 400, damping: 28, mass: 0.5 }}
       />

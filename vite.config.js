@@ -22,12 +22,10 @@ export default defineConfig({
         manualChunks(id) {
           if (id.includes('node_modules')) {
             if (id.includes('firebase')) return 'vendor-firebase';
-            if (id.includes('lottie')) return 'vendor-lottie';
             if (id.includes('framer-motion')) return 'vendor-framer-motion';
-            if (id.includes('highlight.js')) return 'vendor-highlight';
-            if (id.includes('lucide-react')) return 'vendor-lucide';
-            if (id.includes('react')) return 'vendor-react';
-            return 'vendor';
+            if (id.includes('react-router-dom') || id.includes('react-router')) return 'vendor-router';
+            if (id.includes('react-dom') || id.includes('react/')) return 'vendor-react';
+            if (id.includes('remark') || id.includes('rehype') || id.includes('lowlight') || id.includes('highlight.js') || id.includes('markdown')) return 'vendor-markdown';
           }
         }
       }

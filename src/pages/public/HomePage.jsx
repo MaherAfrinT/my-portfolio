@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 // Lottie is imported dynamically via React.lazy below
-import * as LucideIcons from 'lucide-react';
+import { LucideIcons } from '../../lib/icon-map';
 import { Link } from 'react-router-dom';
 import { DEFAULT_SITE_CONFIG } from '../../lib/constants';
 import { Tag } from '../../components/ui/Tag';

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
-import * as LucideIcons from 'lucide-react';
+import { LucideIcons } from '../../lib/icon-map';
 import { db } from '../../firebase';
 import { useSiteConfig } from '../../contexts/SiteConfigContext';
 import { PageTransition } from '../../components/layout/PageTransition';

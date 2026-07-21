@@ -2,7 +2,7 @@ import React from 'react';
 import { PageTransition } from '../../components/layout/PageTransition';
 import { Button } from '../../components/ui/Button';
 import { Link } from 'react-router-dom';
-import * as LucideIcons from 'lucide-react';
+import { LucideIcons } from '../../lib/icon-map';
 
 export function UnderConstructionPage() {
   return (

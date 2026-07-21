@@ -7,7 +7,7 @@ import { Input } from '../../components/ui/Input';
 import { Textarea } from '../../components/ui/Textarea';
 import { Card, CardContent } from '../../components/ui/Card';
 import Circle from '@uiw/react-color-circle';
-import * as LucideIcons from 'lucide-react';
+import { LucideIcons } from '../../lib/icon-map';
 
 export function AdminSettings() {
   const [formData, setFormData] = useState(DEFAULT_SITE_CONFIG);

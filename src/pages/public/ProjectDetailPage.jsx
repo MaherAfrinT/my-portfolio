@@ -9,7 +9,7 @@ import { motion } from 'framer-motion';
 import { PageTransition } from '../../components/layout/PageTransition';
 import { Tag } from '../../components/ui/Tag';
 import { Button } from '../../components/ui/Button';
-import * as LucideIcons from 'lucide-react';
+import { LucideIcons } from '../../lib/icon-map';
 
 export function ProjectDetailPage() {
   const { id } = useParams();

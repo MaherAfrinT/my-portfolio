@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSiteConfig } from '../../contexts/SiteConfigContext';
-import * as LucideIcons from 'lucide-react';
+import { LucideIcons } from '../../lib/icon-map';
 
 export function UniversalFooter() {
   const { config } = useSiteConfig();

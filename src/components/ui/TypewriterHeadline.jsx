@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 export function TypewriterHeadline({
   words = ['Web Developer.', 'Digital Creator.'],
@@ -9,6 +9,11 @@ export function TypewriterHeadline({
   const [subIndex, setSubIndex] = useState(0);
   const [reverse, setReverse] = useState(false);
   const [blink, setBlink] = useState(true);
+
+  // Find longest word to reserve space and prevent CLS
+  const longestWord = useMemo(() => {
+    return words.reduce((a, b) => (a.length > b.length ? a : b), '');
+  }, [words]);
 
   // Blinking cursor
   useEffect(() => {
@@ -61,11 +66,21 @@ export function TypewriterHeadline({
   const currentWord = words[currentIndex] || '';
 
   return (
-    <span className="mt-2 block font-mono text-5xl font-black tracking-tight text-cyan-500 drop-shadow-[0_0_12px_rgba(0,255,204,0.6)] md:text-7xl dark:text-[#00ffcc]">
-      {currentWord.substring(0, subIndex)}
-      <span
-        className={`ml-2 inline-block h-[0.9em] w-[4px] bg-cyan-500 align-middle transition-opacity duration-100 dark:bg-[#00ffcc] ${blink ? 'opacity-100' : 'opacity-0'}`}
-      />
+    <span className="mt-2 relative block font-mono text-5xl font-black tracking-tight text-cyan-500 drop-shadow-[0_0_12px_rgba(0,255,204,0.6)] md:text-7xl dark:text-[#00ffcc]">
+      {/* Invisible placeholder to prevent layout shifts (CLS) */}
+      <span className="opacity-0 pointer-events-none select-none block w-full">
+        {longestWord}
+        {/* Invisible cursor for layout consistency */}
+        <span className="ml-2 inline-block h-[0.9em] w-[4px] align-middle" />
+      </span>
+      
+      {/* Actual typing text */}
+      <span className="absolute top-0 left-0 w-full h-full text-left">
+        {currentWord.substring(0, subIndex)}
+        <span
+          className={`ml-2 inline-block h-[0.9em] w-[4px] bg-cyan-500 align-middle transition-opacity duration-100 dark:bg-[#00ffcc] ${blink ? 'opacity-100' : 'opacity-0'}`}
+        />
+      </span>
     </span>
   );
 }

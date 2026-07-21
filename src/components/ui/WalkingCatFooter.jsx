@@ -13,26 +13,47 @@ export function WalkingCatFooter() {
   const containerRef = useRef(null);
 
   useEffect(() => {
+    let observer;
+    let isVisible = false;
+    let animationFrameId = null;
+
     const handleMouseMove = (e) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const catCenterX = rect.left + rect.width / 2;
-      const catCenterY = rect.top + rect.height / 2;
+      if (!isVisible || !containerRef.current) return;
+      if (animationFrameId) return;
 
-      const distance = Math.sqrt(
-        Math.pow(e.clientX - catCenterX, 2) +
-          Math.pow(e.clientY - catCenterY, 2)
-      );
+      animationFrameId = requestAnimationFrame(() => {
+        animationFrameId = null;
+        if (!containerRef.current) return;
+        const rect = containerRef.current.getBoundingClientRect();
+        const catCenterX = rect.left + rect.width / 2;
+        const catCenterY = rect.top + rect.height / 2;
 
-      setIsSitting((prev) => {
-        if (distance < 150 && !prev) return true;
-        if (distance >= 150 && prev) return false;
-        return prev;
+        const distance = Math.sqrt(
+          Math.pow(e.clientX - catCenterX, 2) +
+            Math.pow(e.clientY - catCenterY, 2)
+        );
+
+        setIsSitting((prev) => {
+          if (distance < 150 && !prev) return true;
+          if (distance >= 150 && prev) return false;
+          return prev;
+        });
       });
     };
 
+    if (containerRef.current) {
+      observer = new IntersectionObserver((entries) => {
+        isVisible = entries[0].isIntersecting;
+      }, { threshold: 0 });
+      observer.observe(containerRef.current);
+    }
+
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (observer) observer.disconnect();
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    };
   }, []);
 
   return (
@@ -46,27 +67,37 @@ export function WalkingCatFooter() {
         }
         
         @keyframes walk-animation {
-          from { background-position: 0 0; }
-          to { background-position: 0 -2400px; }
+          from { transform: translate(0px, 0px); }
+          to { transform: translate(0px, -2400px); }
         }
 
         @keyframes sit-animation {
-          from { background-position: -400px 0; }
-          to { background-position: -400px -1000px; }
+          from { transform: translate(-400px, 0px); }
+          to { transform: translate(-400px, -1200px); }
         }
 
-        .cat-sprite {
+        .cat-container {
           width: 400px;
           height: 200px;
-          background: url("${catSprite}") 0 0 no-repeat;
+          overflow: hidden;
+          position: relative;
         }
 
-        .walking {
+        .cat-image {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 1600px; /* full intrinsic width */
+          height: 2591px; /* full intrinsic height */
+          will-change: transform;
+        }
+
+        .walking .cat-image {
           animation: walk-animation 2s steps(12) infinite;
         }
 
-        .sitting {
-          animation: sit-animation 0.8s steps(5) forwards;
+        .sitting .cat-image {
+          animation: sit-animation 2s steps(6) infinite;
         }
 
         @keyframes treadmill {
@@ -80,6 +111,7 @@ export function WalkingCatFooter() {
           margin-left: -100%;
           /* Move right to give illusion of cat walking left */
           animation: treadmill 2s infinite linear;
+          will-change: transform;
         }
         
         .treadmill-paused {
@@ -111,9 +143,11 @@ export function WalkingCatFooter() {
         {/* The Cat - Wrapped to constrain height since we are scaling the 200px sprite down */}
         <div className="pointer-events-none relative z-10 mb-[2px] flex h-[80px] w-full items-end justify-center">
           <div
-            className={`cat-sprite absolute bottom-0 origin-bottom ${isSitting ? 'sitting' : 'walking'}`}
+            className={`cat-container absolute bottom-0 origin-bottom ${isSitting ? 'sitting' : 'walking'}`}
             style={{ transform: 'scale(0.45)' }}
-          />
+          >
+            <img src={catSprite} alt="cat sprite" className="cat-image max-w-none" />
+          </div>
         </div>
 
         {/* The Treadmill Ground & Paw Prints */}
