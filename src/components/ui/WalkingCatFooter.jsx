@@ -153,7 +153,7 @@ export function WalkingCatFooter() {
         {/* The Treadmill Ground & Paw Prints */}
         <div className="absolute bottom-0 left-0 flex h-16 w-full items-end overflow-hidden">
           {/* Fading Edges Mask */}
-          <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-white via-transparent to-white dark:from-[#0A0A0A] dark:via-transparent dark:to-[#0A0A0A]" />
+          <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-r from-[#F8F9FA] via-transparent to-[#F8F9FA] dark:from-[#0A0A0A] dark:via-transparent dark:to-[#0A0A0A]" />
 
           <div
             className={`treadmill-track relative z-0 ${isSitting ? 'treadmill-paused' : ''}`}

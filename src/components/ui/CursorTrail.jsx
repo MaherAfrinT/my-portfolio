@@ -65,6 +65,20 @@ export function CursorTrail() {
 
   return (
     <>
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+        :root {
+          --cursor-glow-inner: rgba(148, 163, 184, 0.25);
+          --cursor-glow-outer: rgba(203, 213, 225, 0.1);
+        }
+        .dark {
+          --cursor-glow-inner: rgba(0, 255, 204, 0.4);
+          --cursor-glow-outer: rgba(168, 85, 247, 0.15);
+        }
+      `,
+        }}
+      />
       {/* Soft Glow Spotlight */}
       <motion.div
         className="pointer-events-none fixed top-0 left-0 z-[-1] h-[600px] w-[600px] rounded-full opacity-40 blur-[80px] dark:opacity-30"
@@ -74,7 +88,7 @@ export function CursorTrail() {
           translateX: '-50%',
           translateY: '-50%',
           background:
-            'radial-gradient(circle, rgba(0, 255, 204, 0.4) 0%, rgba(168, 85, 247, 0.15) 35%, rgba(0,0,0,0) 65%)',
+            'radial-gradient(circle, var(--cursor-glow-inner) 0%, var(--cursor-glow-outer) 35%, rgba(0,0,0,0) 65%)',
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: isVisible ? 1 : 0 }}
