@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { collection, doc, getDocs, setDoc, deleteDoc, addDoc, query, orderBy } from 'firebase/firestore';
+import { collection, doc, getDocs, writeBatch, query, orderBy } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { Card, CardContent } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
@@ -13,6 +13,7 @@ export function AdminSkills() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
+  const [isDirty, setIsDirty] = useState(false);
 
   useEffect(() => {
     async function fetchSkills() {
@@ -34,32 +35,57 @@ export function AdminSkills() {
     fetchSkills();
   }, []);
 
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (isDirty) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [isDirty]);
+
   const handleSave = async () => {
+    for (const cat of skills) {
+      if (!cat.category || cat.category.trim() === '') {
+        setMessage('Error: Category name cannot be empty.');
+        setTimeout(() => setMessage(''), 3000);
+        return;
+      }
+    }
+
     setSaving(true);
     setMessage('');
     try {
+      const batch = writeBatch(db);
+
       const currentIds = skills.map((s) => s.id).filter(Boolean);
       const toDelete = initialSkills.filter((s) => s.id && !currentIds.includes(s.id));
 
       for (const cat of toDelete) {
-        await deleteDoc(doc(db, COLLECTIONS.SKILLS, cat.id));
+        batch.delete(doc(db, COLLECTIONS.SKILLS, cat.id));
       }
 
       const updatedSkills = [];
       for (let i = 0; i < skills.length; i++) {
         const cat = { ...skills[i], order: i };
-        let newId = cat.id;
+        let docRef;
         if (cat.id) {
-          await setDoc(doc(db, COLLECTIONS.SKILLS, cat.id), cat, { merge: true });
+          docRef = doc(db, COLLECTIONS.SKILLS, cat.id);
         } else {
-          const docRef = await addDoc(collection(db, COLLECTIONS.SKILLS), cat);
-          newId = docRef.id;
+          docRef = doc(collection(db, COLLECTIONS.SKILLS));
+          cat.id = docRef.id;
         }
-        updatedSkills.push({ ...cat, id: newId });
+        batch.set(docRef, cat, { merge: true });
+        updatedSkills.push(cat);
       }
+      
+      await batch.commit();
       
       setSkills(updatedSkills);
       setInitialSkills(updatedSkills);
+      setIsDirty(false);
       setMessage('Skills saved successfully!');
     } catch (error) {
       console.error('Error saving skills:', error);
@@ -75,22 +101,26 @@ export function AdminSkills() {
       ...skills,
       { category: 'New Category', iconName: 'Code', items: [] },
     ]);
+    setIsDirty(true);
   };
 
   const updateCategory = (index, field, value) => {
     const updated = [...skills];
     updated[index][field] = value;
     setSkills(updated);
+    setIsDirty(true);
   };
 
   const removeCategory = (index) => {
     setSkills(skills.filter((_, i) => i !== index));
+    setIsDirty(true);
   };
 
   const addItem = (catIndex) => {
     const updated = [...skills];
     updated[catIndex].items.push({ name: 'New Skill', icon: 'javascript' });
     setSkills(updated);
+    setIsDirty(true);
   };
 
   const updateItem = (catIndex, itemIndex, field, value) => {
@@ -102,6 +132,7 @@ export function AdminSkills() {
     item[field] = value;
     updated[catIndex].items[itemIndex] = item;
     setSkills(updated);
+    setIsDirty(true);
   };
 
   const removeItem = (catIndex, itemIndex) => {
@@ -110,6 +141,7 @@ export function AdminSkills() {
       (_, i) => i !== itemIndex
     );
     setSkills(updated);
+    setIsDirty(true);
   };
 
   if (loading) return <div>Loading...</div>;

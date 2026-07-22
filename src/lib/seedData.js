@@ -44,7 +44,7 @@ const DEFAULT_SKILLS = [
       { name: 'Penetration Testing', icon: 'kalilinux' },
       { name: 'Cryptography', icon: 'gnuprivacyguard' },
       { name: 'CI/CD Pipelines', icon: 'githubactions' },
-      { name: 'AWS & GCP', icon: 'amazonwebservices' },
+      { name: 'AWS & GCP', icon: 'amazonaws' },
     ],
   },
   {
@@ -188,7 +188,7 @@ const DEFAULT_CERTIFICATIONS = [
     fullName: 'Offensive Security Certified Professional',
     issuer: 'OffSec',
     description: 'A rigorous penetration testing certification that proves the ability to identify vulnerabilities, execute attacks, and perform post-exploitation tasks.\n\n### Skills Demonstrated:\n- Exploit Development\n- Privilege Escalation\n- Network Pivoting',
-    badgeUrl: 'https://upload.wikimedia.org/wikipedia/commons/2/29/Offensive_Security_logo.png',
+    badgeUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Offensive_Security_logo.svg/512px-Offensive_Security_logo.svg.png',
     verifyUrl: 'https://www.offensive-security.com',
     issuedDate: '2023-05',
     expiryDate: '',

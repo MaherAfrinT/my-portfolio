@@ -12,6 +12,7 @@ export function AdminManifesto() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
+  const [isDirty, setIsDirty] = useState(false);
 
   useEffect(() => {
     async function fetchConfig() {
@@ -39,32 +40,54 @@ export function AdminManifesto() {
     fetchConfig();
   }, []);
 
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (isDirty) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [isDirty]);
+
   const handleAddItem = () => {
     setManifestoItems([...manifestoItems, '']);
+    setIsDirty(true);
   };
 
   const handleRemoveItem = (index) => {
     setManifestoItems(manifestoItems.filter((_, i) => i !== index));
+    setIsDirty(true);
   };
 
   const handleChange = (index, value) => {
     const updated = [...manifestoItems];
     updated[index] = value;
     setManifestoItems(updated);
+    setIsDirty(true);
   };
 
   const handleSave = async (e) => {
     e.preventDefault();
+    const cleanedItems = manifestoItems.filter((item) => item.trim() !== '');
+
+    if (cleanedItems.length === 0) {
+      setMessage('Error: Manifesto cannot be completely empty.');
+      setTimeout(() => setMessage(''), 3000);
+      return;
+    }
+
     setSaving(true);
     setMessage('');
     try {
-      const cleanedItems = manifestoItems.filter((item) => item.trim() !== '');
       await setDoc(
         doc(db, COLLECTIONS.CONFIG, 'main'),
         { manifesto: cleanedItems },
         { merge: true }
       );
       setManifestoItems(cleanedItems);
+      setIsDirty(false);
       setMessage('Manifesto saved successfully!');
     } catch (err) {
       console.error('Failed to save manifesto', err);
