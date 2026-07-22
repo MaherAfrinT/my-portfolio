@@ -87,7 +87,7 @@ export function ProjectDetailPage() {
   return (
     <PageTransition>
       <Helmet>
-        <title>{`${project.title} | Projects`}</title>
+        <title>{project?.title ? `${project.title} | Projects` : 'Projects | Shahariar Sabbir'}</title>
         <meta name="description" content={project.shortDescription || `Details about ${project.title}`} />
       </Helmet>
       <div className="mx-auto max-w-5xl space-y-8 pb-24 pt-8">

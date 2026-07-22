@@ -70,7 +70,7 @@ export function HomePage() {
   return (
     <PageTransition>
       <Helmet>
-        <title>{`${config?.hero?.title || 'Portfolio'} | ${config?.hero?.subtitle}`}</title>
+        <title>{(config?.hero?.title && config?.hero?.subtitle) ? `${config.hero.title} | ${config.hero.subtitle}` : 'Shahariar Sabbir | Portfolio'}</title>
         <meta name="description" content={config?.hero?.description || 'Welcome to my portfolio'} />
       </Helmet>
       <div className="min-h-[calc(100vh-theme(spacing.16))] flex flex-col justify-center space-y-32 pb-24">

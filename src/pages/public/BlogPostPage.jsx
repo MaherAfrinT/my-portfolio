@@ -97,7 +97,7 @@ export function BlogPostPage() {
   return (
     <PageTransition>
       <Helmet>
-        <title>{`${post.title} | Blog`}</title>
+        <title>{post?.title ? `${post.title} | Blog` : 'Blog | Shahariar Sabbir'}</title>
         <meta name="description" content={post.excerpt || `Read ${post.title}`} />
       </Helmet>
       <div className="mx-auto max-w-3xl pt-12 pb-24 relative">
