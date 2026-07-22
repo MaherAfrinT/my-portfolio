@@ -1,37 +1,24 @@
-# React + Vite
+# 🚀 Shahariar Sabbir - Personal Portfolio & Journey Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to my digital garden! 🌱
 
-Currently, two official plugins are available:
+## 📖 About This Project
+I am currently an HSC candidate (Batch 2026) at REBMSC College, Rajshahi. I built this portfolio to document my 4-year journey from a high school student to a future Software Engineer. 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Instead of waiting until university graduation to create a portfolio, I decided to build in public from Day 1. This platform serves as a living document of my academic progress, university admission preparation, coding projects, and personal experiences.
 
-## React Compiler
+## ✨ Features
+* **🎓 Career & Education:** Tracking my academic milestones, starting from my SSC in 2024 and ongoing HSC.
+* **📓 Digital Journal & Blog:** Documenting daily learnings, exam experiences, and personal thoughts.
+* **💻 Projects:** Showcasing web applications and coding experiments as my skills grow.
+* **🛠️ Skills:** A real-time timeline of the technical and soft skills I am acquiring.
+* **🎯 Manifesto:** My personal goals, continuous learning mindset, and vision for the next four years.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ⚙️ Tech Stack
+This project was architected and deployed utilizing modern web technologies and AI coding agents:
+* **Frontend:** React 19, Vite, Tailwind CSS
+* **Backend & Hosting:** Firebase Hosting
+* **Development Tools:** AI Prompt Engineering
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-
-##How to update your website in the future
-
-
-Now that all the hard setup is completely finished, updating this website is incredibly easy.
-
-Open src/App.jsx in code editor.
-
-Scroll to the top and change the placeholder text in the PERSONAL_INFO, EXPERIENCE, and PROJECTS sections to  actual real-life information.
-
-Save the file.
-
-Open  terminal in /mnt/PROJECTS/my-portfolio and run these commands to push  updates live:
-
-Bash
-git add .
-git commit -m "Updated my personal info"
-git push
-npm run deploy
-
-Enjoy your brand new portfolio!
+## 💡 The Learning Outcome
+As a beginner, I leveraged AI tools to architect and deploy this application in just two days. This project gave me firsthand experience with modern deployment pipelines, cloud hosting, and frontend development structures. It stands as my very first step into the world of computer science and a tracker for everything I will achieve next.
