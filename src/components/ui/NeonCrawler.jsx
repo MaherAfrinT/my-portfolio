@@ -10,11 +10,33 @@ export function NeonCrawler() {
 
   const SEGMENTS = 5;
 
-  const xValues = Array(SEGMENTS).fill(0).map(() => useMotionValue(Math.random() * window.innerWidth));
-  const yValues = Array(SEGMENTS).fill(0).map(() => useMotionValue(Math.random() * window.innerHeight));
+  const x0 = useMotionValue(Math.random() * window.innerWidth);
+  const x1 = useMotionValue(Math.random() * window.innerWidth);
+  const x2 = useMotionValue(Math.random() * window.innerWidth);
+  const x3 = useMotionValue(Math.random() * window.innerWidth);
+  const x4 = useMotionValue(Math.random() * window.innerWidth);
+  const xValues = React.useMemo(() => [x0, x1, x2, x3, x4], [x0, x1, x2, x3, x4]);
 
-  const xSprings = xValues.map((val, i) => useSpring(val, { damping: 15 + i * 2, stiffness: 200 - i * 15, mass: 1 + i * 0.2 }));
-  const ySprings = yValues.map((val, i) => useSpring(val, { damping: 15 + i * 2, stiffness: 200 - i * 15, mass: 1 + i * 0.2 }));
+  const y0 = useMotionValue(Math.random() * window.innerHeight);
+  const y1 = useMotionValue(Math.random() * window.innerHeight);
+  const y2 = useMotionValue(Math.random() * window.innerHeight);
+  const y3 = useMotionValue(Math.random() * window.innerHeight);
+  const y4 = useMotionValue(Math.random() * window.innerHeight);
+  const yValues = React.useMemo(() => [y0, y1, y2, y3, y4], [y0, y1, y2, y3, y4]);
+
+  const sx0 = useSpring(x0, { damping: 15, stiffness: 200, mass: 1 });
+  const sx1 = useSpring(x1, { damping: 17, stiffness: 185, mass: 1.2 });
+  const sx2 = useSpring(x2, { damping: 19, stiffness: 170, mass: 1.4 });
+  const sx3 = useSpring(x3, { damping: 21, stiffness: 155, mass: 1.6 });
+  const sx4 = useSpring(x4, { damping: 23, stiffness: 140, mass: 1.8 });
+  const xSprings = [sx0, sx1, sx2, sx3, sx4];
+
+  const sy0 = useSpring(y0, { damping: 15, stiffness: 200, mass: 1 });
+  const sy1 = useSpring(y1, { damping: 17, stiffness: 185, mass: 1.2 });
+  const sy2 = useSpring(y2, { damping: 19, stiffness: 170, mass: 1.4 });
+  const sy3 = useSpring(y3, { damping: 21, stiffness: 155, mass: 1.6 });
+  const sy4 = useSpring(y4, { damping: 23, stiffness: 140, mass: 1.8 });
+  const ySprings = [sy0, sy1, sy2, sy3, sy4];
 
   const eyeOffsetX = useMotionValue(0);
   const eyeOffsetY = useMotionValue(0);

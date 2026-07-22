@@ -21,12 +21,13 @@ export function TypewriterHeadline({
     return () => clearTimeout(cursorTimeout);
   }, [blink]);
 
+  const wordsStr = words.join(',');
   // Reset state if words array changes
   useEffect(() => {
     setIndex(0);
     setSubIndex(0);
     setReverse(false);
-  }, [words.join(',')]);
+  }, [wordsStr]);
 
   // Typing logic
   useEffect(() => {
