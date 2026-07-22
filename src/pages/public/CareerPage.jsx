@@ -31,7 +31,7 @@ export function CareerPage() {
             {config.sectionVisibility?.experience !== false && (
               <a
                 href="#experience"
-                className="block font-medium text-slate-500 transition-colors hover:text-[#009bbf] dark:hover:text-cyan-500"
+                className="block font-medium text-slate-500 transition-colors hover:text-cyan-600 dark:hover:text-cyan-500"
               >
                 Experience
               </a>
@@ -53,7 +53,7 @@ export function CareerPage() {
             <Reveal>
               <header className="mb-12 pt-12">
                 <h1 className="mb-6 text-4xl font-extrabold md:text-5xl">
-                  <span className="bg-gradient-to-r from-[#009bbf] to-emerald-700 dark:from-purple-400 dark:to-pink-500 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-cyan-600 to-emerald-700 dark:from-purple-400 dark:to-pink-500 bg-clip-text text-transparent">
                     Career Journey
                   </span>
                 </h1>
@@ -65,7 +65,7 @@ export function CareerPage() {
 
             {expLoading ? (
               <div className="flex justify-center py-20">
-                <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-[#009bbf] dark:border-cyan-500"></div>
+                <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-cyan-600 dark:border-cyan-500"></div>
               </div>
             ) : expError ? (
               <div className="text-red-500">Error loading career data.</div>
@@ -85,23 +85,23 @@ export function CareerPage() {
                       className="relative flex w-full flex-col items-center md:flex-row"
                     >
                       {/* Node */}
-                      <div className="absolute left-8 z-10 flex h-12 w-12 -translate-x-1/2 transform items-center justify-center rounded-full border border-[#009bbf] dark:border-cyan-500 bg-white shadow-[#009bbf]/10 dark:shadow-[0_0_20px_rgba(0,255,204,0.3)] dark:bg-[#030712]">
-                        <span className={`font-mono font-bold tracking-tighter ${item.type === 'education' ? 'text-lg' : 'text-sm text-[#009bbf] dark:text-cyan-400'}`}>
+                      <div className="absolute left-8 z-10 flex h-12 w-12 -translate-x-1/2 transform items-center justify-center rounded-full border border-cyan-600 dark:border-cyan-500 bg-white shadow-cyan-600/10 dark:shadow-[0_0_20px_rgba(0,255,204,0.3)] dark:bg-[#030712]">
+                        <span className={`font-mono font-bold tracking-tighter ${item.type === 'education' ? 'text-lg' : 'text-sm text-cyan-600 dark:text-cyan-400'}`}>
                           {item.type === 'education' ? '🎓' : '<>'}
                         </span>
                       </div>
 
                       {/* Content */}
                       <div className="w-full pr-4 pl-24 text-left">
-                        <div className="glass-panel rounded-xl group relative overflow-hidden border border-slate-200 bg-white/80 p-8 shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:border-[#009bbf]/30 hover:shadow-[#009bbf]/10 dark:hover:border-cyan-500/50 dark:hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)] dark:border-slate-800 dark:bg-slate-900/40">
+                        <div className="glass-panel rounded-xl group relative overflow-hidden border border-slate-200 bg-white/80 p-8 shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:border-cyan-600/30 hover:shadow-cyan-600/10 dark:hover:border-cyan-500/50 dark:hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)] dark:border-slate-800 dark:bg-slate-900/40">
                           {/* Glow effect on hover */}
-                          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#009bbf]/5 to-emerald-700/5 dark:from-cyan-500/5 dark:to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-600/5 to-emerald-700/5 dark:from-cyan-500/5 dark:to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
                           <h3 className="mb-2 text-2xl font-bold text-[#0e2a36] dark:text-white">
                             {item.role}
                           </h3>
 
-                          <div className="mb-4 flex items-center justify-start gap-2 font-mono text-sm text-[#009bbf] dark:text-cyan-500">
+                          <div className="mb-4 flex items-center justify-start gap-2 font-mono text-sm text-cyan-600 dark:text-cyan-500">
                             {formatDate(item.startDate)}{' '}
                             <span className="text-[#566e7a]">-</span>{' '}
                             {item.current
@@ -181,7 +181,7 @@ export function CareerPage() {
             <Reveal>
               <header className="mb-12">
                 <h2 className="mb-6 text-3xl font-extrabold md:text-4xl">
-                  <span className="bg-gradient-to-r from-[#009bbf] to-emerald-700 dark:from-cyan-400 dark:to-purple-500 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-cyan-600 to-emerald-700 dark:from-cyan-400 dark:to-purple-500 bg-clip-text text-transparent">
                     Testimonials
                   </span>
                 </h2>
@@ -193,7 +193,7 @@ export function CareerPage() {
 
             {testLoading ? (
               <div className="flex justify-center py-20">
-                <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-[#009bbf] dark:border-cyan-500"></div>
+                <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-cyan-600 dark:border-cyan-500"></div>
               </div>
             ) : testError ? (
               <div className="text-red-500">Error loading testimonials.</div>
@@ -207,9 +207,9 @@ export function CareerPage() {
                     viewport={{ once: true }}
                     transition={{ delay: idx * 0.1 }}
                   >
-                    <div className="glass-panel rounded-xl group relative overflow-hidden p-8 shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:border-[#009bbf]/30 hover:shadow-[#009bbf]/10 dark:hover:border-cyan-500/50 dark:hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#009bbf]/5 to-emerald-700/5 dark:from-cyan-500/5 dark:to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                      <div className="absolute top-6 right-8 font-serif text-6xl leading-none text-[#009bbf]/10 dark:text-cyan-500/20">
+                    <div className="glass-panel rounded-xl group relative overflow-hidden p-8 shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:border-cyan-600/30 hover:shadow-cyan-600/10 dark:hover:border-cyan-500/50 dark:hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-600/5 to-emerald-700/5 dark:from-cyan-500/5 dark:to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                      <div className="absolute top-6 right-8 font-serif text-6xl leading-none text-cyan-600/10 dark:text-cyan-500/20">
                         "
                       </div>
                       <p className="relative z-10 mb-6 text-lg text-[#385361] italic dark:text-slate-300">
@@ -223,7 +223,7 @@ export function CareerPage() {
                             className="h-12 w-12 rounded-full object-cover"
                           />
                         ) : (
-                          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100 text-xl font-bold text-[#009bbf] dark:bg-cyan-900/30 dark:text-cyan-400">
+                          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100 text-xl font-bold text-cyan-600 dark:bg-cyan-900/30 dark:text-cyan-400">
                             {t.author.charAt(0)}
                           </div>
                         )}
@@ -243,7 +243,7 @@ export function CareerPage() {
                               href={t.referenceUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2 text-sm font-medium text-[#009bbf] hover:text-indigo-600 dark:text-cyan-400 dark:hover:text-cyan-300"
+                              className="inline-flex items-center gap-2 text-sm font-medium text-cyan-600 hover:text-indigo-600 dark:text-cyan-400 dark:hover:text-cyan-300"
                             >
                               View Reference Work
                               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -253,7 +253,7 @@ export function CareerPage() {
                           ) : (
                             <Link
                               to={t.referenceUrl}
-                              className="inline-flex items-center gap-2 text-sm font-medium text-[#009bbf] hover:text-indigo-600 dark:text-cyan-400 dark:hover:text-cyan-300"
+                              className="inline-flex items-center gap-2 text-sm font-medium text-cyan-600 hover:text-indigo-600 dark:text-cyan-400 dark:hover:text-cyan-300"
                             >
                               View Reference Work
                               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

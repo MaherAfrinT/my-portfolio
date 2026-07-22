@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'framer-motion';
 // Lottie is imported dynamically via React.lazy below
 import { LucideIcons } from '../../lib/icon-map';
@@ -68,6 +69,10 @@ export function HomePage() {
 
   return (
     <PageTransition>
+      <Helmet>
+        <title>{`${config?.hero?.title || 'Portfolio'} | ${config?.hero?.subtitle}`}</title>
+        <meta name="description" content={config?.hero?.description || 'Welcome to my portfolio'} />
+      </Helmet>
       <div className="min-h-[calc(100vh-theme(spacing.16))] flex flex-col justify-center space-y-32 pb-24">
         {/* Hero Section */}
         {config.sectionVisibility?.hero !== false && (
@@ -80,7 +85,7 @@ export function HomePage() {
             >
               <motion.p
                 variants={cardVariants}
-                className="font-mono text-lg text-[#009bbf] dark:text-[#00ffcc]"
+                className="font-mono text-lg text-cyan-600 dark:text-cyan-400"
               >
                 {config.greetingText || DEFAULT_SITE_CONFIG.greetingText}{' '}
                 {config.name}.
@@ -116,7 +121,7 @@ export function HomePage() {
                     rel="noopener noreferrer"
                     download
                     size="lg"
-                    className="flex items-center gap-2 border-none bg-[#009bbf] dark:bg-cyan-500 text-white dark:text-[#0e2a36] shadow-[#009bbf]/20 dark:shadow-[0_0_15px_rgba(0,255,204,0.3)] transition-transform hover:scale-105 hover:bg-[#0089a8] dark:hover:bg-cyan-600"
+                    className="flex items-center gap-2 border-none bg-cyan-600 dark:bg-cyan-500 text-white dark:text-[#0e2a36] shadow-cyan-600/20 dark:shadow-[0_0_15px_rgba(0,255,204,0.3)] transition-transform hover:scale-105 hover:bg-[#0089a8] dark:hover:bg-cyan-600"
                   >
                     <LucideIcons.Download className="h-4 w-4" /> Resume
                   </Button>
@@ -126,7 +131,7 @@ export function HomePage() {
                   to="/projects"
                   size="lg"
                   variant="outline"
-                  className="flex items-center gap-2 shadow-[#009bbf]/10 dark:shadow-[0_0_15px_rgba(0,255,204,0.1)] transition-transform hover:scale-105"
+                  className="flex items-center gap-2 shadow-cyan-600/10 dark:shadow-[0_0_15px_rgba(0,255,204,0.1)] transition-transform hover:scale-105"
                 >
                   View Projects <LucideIcons.ArrowUpRight className="h-4 w-4" />
                 </Button>
@@ -141,14 +146,14 @@ export function HomePage() {
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
                 <div className="relative h-64 w-64 md:h-96 md:w-96">
-                  <div className="animate-pulse-glow absolute inset-0 rounded-full bg-[#009bbf]/20 blur-3xl filter dark:bg-[#00ffcc]/10"></div>
+                  <div className="animate-pulse-glow absolute inset-0 rounded-full bg-cyan-600/20 blur-3xl filter dark:bg-cyan-400/10"></div>
                   <img
                     src={config.heroImageUrl}
                     alt={config.name || 'Hero'}
                     loading="lazy"
                     width="384"
                     height="384"
-                    className="relative z-10 h-full w-full rounded-full border-4 border-[#009bbf]/30 dark:border-cyan-500/30 object-cover shadow-[#009bbf]/20 dark:shadow-[0_0_30px_rgba(0,255,204,0.3)]"
+                    className="relative z-10 h-full w-full rounded-full border-4 border-cyan-600/30 dark:border-cyan-500/30 object-cover shadow-cyan-600/20 dark:shadow-[0_0_30px_rgba(0,255,204,0.3)]"
                   />
                 </div>
               </motion.div>
@@ -161,14 +166,14 @@ export function HomePage() {
           <section id="about" className="scroll-mt-24">
             <Reveal>
             <h2 className="mb-8 flex items-center font-mono text-3xl font-bold">
-              <span className="mr-4 text-[#009bbf] dark:text-[#00ffcc]">
+              <span className="mr-4 text-cyan-600 dark:text-cyan-400">
                 01.
               </span>{' '}
               About Me
             </h2>
             <div className="flex flex-col items-start gap-8 md:flex-row">
-              <div className="glass-panel rounded-xl group relative w-full flex-1 overflow-hidden p-8 shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:border-[#009bbf]/30 hover:shadow-[#009bbf]/10 dark:hover:border-cyan-500/50 dark:hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#009bbf]/5 to-emerald-700/5 dark:from-cyan-500/5 dark:to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              <div className="glass-panel rounded-xl group relative w-full flex-1 overflow-hidden p-8 shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:border-cyan-600/30 hover:shadow-cyan-600/10 dark:hover:border-cyan-500/50 dark:hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-600/5 to-emerald-700/5 dark:from-cyan-500/5 dark:to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                 <p className="relative z-10 text-lg leading-relaxed whitespace-pre-wrap text-[#385361] dark:text-slate-300">
                   {config.about || DEFAULT_SITE_CONFIG.about}
                 </p>
@@ -184,7 +189,7 @@ export function HomePage() {
                     src={config.aboutImageUrl}
                     alt="About Me"
                     loading="lazy"
-                    className="h-auto w-full rounded-2xl border-2 border-[#009bbf]/20 dark:border-cyan-500/20 object-cover shadow-xl shadow-[#009bbf]/20 dark:shadow-[0_0_20px_rgba(0,255,204,0.15)]"
+                    className="h-auto w-full rounded-2xl border-2 border-cyan-600/20 dark:border-cyan-500/20 object-cover shadow-xl shadow-cyan-600/20 dark:shadow-[0_0_20px_rgba(0,255,204,0.15)]"
                   />
                 </motion.div>
               )}
@@ -198,7 +203,7 @@ export function HomePage() {
           <section id="skills" className="scroll-mt-24">
             <Reveal>
             <h2 className="mb-8 flex items-center font-mono text-3xl font-bold">
-              <span className="mr-4 text-[#009bbf] dark:text-[#00ffcc]">
+              <span className="mr-4 text-cyan-600 dark:text-cyan-400">
                 02.
               </span>{' '}
               Skills
@@ -217,10 +222,10 @@ export function HomePage() {
 
                 return (
                   <motion.div key={idx} variants={cardVariants}>
-                    <div className="glass-panel rounded-xl group relative h-full overflow-hidden p-6 transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:border-[#009bbf]/30 hover:shadow-[#009bbf]/10 dark:hover:border-cyan-500/50 dark:hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#009bbf]/5 to-emerald-700/5 dark:from-cyan-500/5 dark:to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    <div className="glass-panel rounded-xl group relative h-full overflow-hidden p-6 transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:border-cyan-600/30 hover:shadow-cyan-600/10 dark:hover:border-cyan-500/50 dark:hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-600/5 to-emerald-700/5 dark:from-cyan-500/5 dark:to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                       <h3 className="relative z-10 mb-6 flex items-center gap-3 border-b border-slate-200 pb-4 text-xl font-bold text-[#0e2a36] dark:border-slate-800 dark:text-white">
-                        <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg bg-[#009bbf]/10 text-[#009bbf] dark:bg-cyan-500/10 dark:text-[#00ffcc]">
+                        <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg bg-cyan-600/10 text-cyan-600 dark:bg-cyan-500/10 dark:text-cyan-400">
                           {skillGroup.categoryImageUrl ? (
                             <img src={skillGroup.categoryImageUrl} alt={skillGroup.category} loading="lazy" className="h-full w-full object-cover" />
                           ) : (
@@ -261,7 +266,7 @@ export function HomePage() {
                                         'block';
                                     }}
                                   />
-                                  <span className="hidden h-1.5 w-1.5 rounded-full bg-[#009bbf] dark:bg-[#00ffcc]"></span>
+                                  <span className="hidden h-1.5 w-1.5 rounded-full bg-cyan-600 dark:bg-cyan-400"></span>
                                 </div>
                               ) : icon ? (
                                 <div className="flex h-8 w-8 items-center justify-center rounded bg-slate-100 p-1.5 dark:bg-slate-800">
@@ -277,7 +282,7 @@ export function HomePage() {
                                         'block';
                                     }}
                                   />
-                                  <span className="hidden h-1.5 w-1.5 rounded-full bg-[#009bbf] dark:bg-[#00ffcc]"></span>
+                                  <span className="hidden h-1.5 w-1.5 rounded-full bg-cyan-600 dark:bg-cyan-400"></span>
                                 </div>
                               ) : (
                                 <div className="flex h-8 w-8 items-center justify-center rounded">
@@ -306,7 +311,7 @@ export function HomePage() {
             <Reveal>
             <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
               <h2 className="flex items-center font-mono text-3xl font-bold">
-                <span className="mr-4 text-[#009bbf] dark:text-[#00ffcc]">
+                <span className="mr-4 text-cyan-600 dark:text-cyan-400">
                   03.
                 </span>{' '}
                 Certifications
@@ -319,7 +324,7 @@ export function HomePage() {
                     onClick={() => setIsCertDropdownOpen(!isCertDropdownOpen)}
                     className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all duration-300 ${
                       selectedCertTag
-                        ? 'border-[#009bbf]/50 bg-[#f0f9fb] text-[#009bbf] shadow-[#009bbf]/10 dark:border-cyan-500/50 dark:bg-cyan-500/10 dark:text-cyan-400 dark:shadow-[0_0_15px_rgba(6,182,212,0.2)]'
+                        ? 'border-cyan-600/50 bg-[#f0f9fb] text-cyan-600 shadow-cyan-600/10 dark:border-cyan-500/50 dark:bg-cyan-500/10 dark:text-cyan-400 dark:shadow-[0_0_15px_rgba(6,182,212,0.2)]'
                         : 'border-slate-200 bg-white text-[#566e7a] hover:border-slate-300 dark:border-[#333] dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:border-[#555]'
                     }`}
                   >
@@ -344,7 +349,7 @@ export function HomePage() {
                           onClick={() => { setSelectedCertTag(null); setIsCertDropdownOpen(false); }}
                           className={`flex w-full items-center rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors ${
                             selectedCertTag === null
-                              ? 'bg-[#f0f9fb] text-[#009bbf] dark:bg-cyan-500/15 dark:text-cyan-400'
+                              ? 'bg-[#f0f9fb] text-cyan-600 dark:bg-cyan-500/15 dark:text-cyan-400'
                               : 'text-[#566e7a] hover:bg-slate-100 dark:text-[#EDEDED] dark:hover:bg-[#222]'
                           }`}
                         >
@@ -356,7 +361,7 @@ export function HomePage() {
                             onClick={() => { setSelectedCertTag(tag); setIsCertDropdownOpen(false); }}
                             className={`flex w-full items-center rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors ${
                               selectedCertTag === tag
-                                ? 'bg-[#f0f9fb] text-[#009bbf] dark:bg-cyan-500/15 dark:text-cyan-400'
+                                ? 'bg-[#f0f9fb] text-cyan-600 dark:bg-cyan-500/15 dark:text-cyan-400'
                                 : 'text-[#566e7a] hover:bg-slate-100 dark:text-[#EDEDED] dark:hover:bg-[#222]'
                             }`}
                           >
@@ -374,7 +379,7 @@ export function HomePage() {
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     onClick={() => setSelectedCertTag(null)}
-                    className="flex items-center gap-1 rounded-full border border-[#009bbf]/30 bg-[#f0f9fb] px-3 py-1.5 text-xs font-medium text-[#009bbf] transition-colors hover:bg-indigo-100 dark:border-cyan-500/30 dark:bg-cyan-500/10 dark:text-cyan-400 dark:hover:bg-cyan-500/20"
+                    className="flex items-center gap-1 rounded-full border border-cyan-600/30 bg-[#f0f9fb] px-3 py-1.5 text-xs font-medium text-cyan-600 transition-colors hover:bg-indigo-100 dark:border-cyan-500/30 dark:bg-cyan-500/10 dark:text-cyan-400 dark:hover:bg-cyan-500/20"
                   >
                     {selectedCertTag}
                     <LucideIcons.X size={12} />
@@ -403,8 +408,8 @@ export function HomePage() {
                     transition={{ duration: 0.3 }}
                   >
                     <Link to={`/certifications/${cert.id}`}>
-                      <div className="glass-panel rounded-xl group relative flex h-full cursor-pointer flex-col overflow-hidden p-6 shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:border-[#009bbf]/30 hover:shadow-[#009bbf]/10 dark:hover:border-cyan-500/50 dark:hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
-                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#009bbf]/5 to-emerald-700/5 dark:from-cyan-500/5 dark:to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                      <div className="glass-panel rounded-xl group relative flex h-full cursor-pointer flex-col overflow-hidden p-6 shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:border-cyan-600/30 hover:shadow-cyan-600/10 dark:hover:border-cyan-500/50 dark:hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
+                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-600/5 to-emerald-700/5 dark:from-cyan-500/5 dark:to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
                         <div className="mb-4 flex items-start gap-4">
                           {cert.badgeUrl ? (
@@ -422,10 +427,10 @@ export function HomePage() {
                             </div>
                           )}
                           <div>
-                            <h3 className="line-clamp-1 text-xl font-bold text-[#0e2a36] transition-colors group-hover:text-[#009bbf] dark:group-hover:text-cyan-500 dark:text-white">
+                            <h3 className="line-clamp-1 text-xl font-bold text-[#0e2a36] transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-500 dark:text-white">
                               {cert.title}
                             </h3>
-                            <div className="mt-1 font-mono text-sm text-[#009bbf] dark:text-cyan-400">
+                            <div className="mt-1 font-mono text-sm text-cyan-600 dark:text-cyan-400">
                               {cert.issuer}
                             </div>
                           </div>
@@ -489,7 +494,7 @@ export function HomePage() {
           <section id="manifesto" className="scroll-mt-24">
             <Reveal>
             <h2 className="mb-8 flex items-center font-mono text-3xl font-bold">
-              <span className="mr-4 text-[#009bbf] dark:text-[#00ffcc]">
+              <span className="mr-4 text-cyan-600 dark:text-cyan-400">
                 04.
               </span>{' '}
               My Manifesto
@@ -508,10 +513,10 @@ export function HomePage() {
                     key={item.id || item.title}
                     variants={cardVariants}
                   >
-                    <div className="glass-panel rounded-xl group relative h-full overflow-hidden p-6 shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:border-[#009bbf]/30 hover:shadow-[#009bbf]/10 dark:hover:border-cyan-500/50 dark:hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#009bbf]/5 to-emerald-700/5 dark:from-cyan-500/5 dark:to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    <div className="glass-panel rounded-xl group relative h-full overflow-hidden p-6 shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:border-cyan-600/30 hover:shadow-cyan-600/10 dark:hover:border-cyan-500/50 dark:hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-600/5 to-emerald-700/5 dark:from-cyan-500/5 dark:to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                       <div className="relative z-10 flex items-start gap-4">
-                        <span className="shrink-0 font-mono text-3xl leading-none font-black text-[#009bbf]/30 dark:text-[#00ffcc]/30">
+                        <span className="shrink-0 font-mono text-3xl leading-none font-black text-cyan-600/30 dark:text-cyan-400/30">
                           {item.id || '—'}
                         </span>
                         <div>
@@ -529,10 +534,10 @@ export function HomePage() {
               </motion.div>
             ) : (
               /* String format — render as single quote block */
-              <div className="glass-panel rounded-xl group relative overflow-hidden p-8 text-center shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:border-[#009bbf]/30 hover:shadow-[#009bbf]/10 dark:hover:border-cyan-500/50 dark:hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)] md:p-12">
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#009bbf]/5 to-emerald-700/5 dark:from-cyan-500/5 dark:to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              <div className="glass-panel rounded-xl group relative overflow-hidden p-8 text-center shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:border-cyan-600/30 hover:shadow-cyan-600/10 dark:hover:border-cyan-500/50 dark:hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)] md:p-12">
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-600/5 to-emerald-700/5 dark:from-cyan-500/5 dark:to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                 <div className="relative z-10">
-                  <LucideIcons.Quote className="mx-auto mb-6 h-12 w-12 text-[#009bbf]/30 md:h-16 md:w-16 dark:text-[#00ffcc]/30" />
+                  <LucideIcons.Quote className="mx-auto mb-6 h-12 w-12 text-cyan-600/30 md:h-16 md:w-16 dark:text-cyan-400/30" />
                   <p className="text-xl leading-relaxed font-bold text-[#163847] italic md:text-3xl dark:text-slate-100">
                     "
                     {typeof config.manifesto === 'string' && config.manifesto
@@ -551,8 +556,8 @@ export function HomePage() {
         {config.sectionVisibility?.contactCTA !== false && (
           <section id="contact" className="scroll-mt-24 pb-24">
             <Reveal>
-            <div className="glass-panel rounded-3xl group relative overflow-hidden p-12 text-center shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:border-[#009bbf]/30 hover:shadow-[#009bbf]/10 dark:hover:border-cyan-500/50 dark:hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)] md:p-20">
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#009bbf]/5 to-emerald-700/5 dark:from-cyan-500/5 dark:to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+            <div className="glass-panel rounded-3xl group relative overflow-hidden p-12 text-center shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:border-cyan-600/30 hover:shadow-cyan-600/10 dark:hover:border-cyan-500/50 dark:hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)] md:p-20">
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-600/5 to-emerald-700/5 dark:from-cyan-500/5 dark:to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               <div className="relative z-10 flex flex-col items-center justify-center">
                 <div className="mb-6 flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white/50 px-4 py-2 dark:border-slate-800 dark:bg-slate-900/50">
                   <span className="relative flex h-2 w-2">

@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
 import { SiteConfigProvider } from './contexts/SiteConfigContext';
+import { HelmetProvider } from 'react-helmet-async';
 
 // Layouts
 import { PublicLayout } from './components/layout/PublicLayout';
@@ -56,8 +57,9 @@ const PageLoader = () => (
 
 function App() {
   return (
-    <ThemeProvider>
-      <AuthProvider>
+    <HelmetProvider>
+      <ThemeProvider>
+        <AuthProvider>
         <SiteConfigProvider>
           <BrowserRouter>
             <ScrollToTop />
@@ -152,6 +154,7 @@ function App() {
         </SiteConfigProvider>
       </AuthProvider>
     </ThemeProvider>
+    </HelmetProvider>
   );
 }
 

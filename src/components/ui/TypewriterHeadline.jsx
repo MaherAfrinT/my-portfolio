@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 export function TypewriterHeadline({
   words = ['Web Developer.', 'Digital Creator.'],
@@ -9,6 +10,7 @@ export function TypewriterHeadline({
   const [subIndex, setSubIndex] = useState(0);
   const [reverse, setReverse] = useState(false);
   const [blink, setBlink] = useState(true);
+  const prefersReducedMotion = useReducedMotion();
 
   // Find longest word to reserve space and prevent CLS
   const longestWord = useMemo(() => {
@@ -31,7 +33,7 @@ export function TypewriterHeadline({
 
   // Typing logic
   useEffect(() => {
-    if (!words || words.length === 0) return;
+    if (!words || words.length === 0 || prefersReducedMotion) return;
     
     // Safety check in case words array shrank
     const currentIndex = index >= words.length ? 0 : index;
@@ -60,7 +62,7 @@ export function TypewriterHeadline({
     );
 
     return () => clearTimeout(timeout);
-  }, [subIndex, reverse, index, words, speed, pause]);
+  }, [subIndex, reverse, index, words, speed, pause, prefersReducedMotion]);
 
   // Safety checks for render
   const currentIndex = index >= words.length ? 0 : index;
@@ -77,10 +79,12 @@ export function TypewriterHeadline({
       
       {/* Actual typing text */}
       <span className="absolute top-0 left-0 w-full h-full text-left">
-        {currentWord.substring(0, subIndex)}
-        <span
-          className={`ml-2 inline-block h-[0.9em] w-[4px] bg-[#009bbf] align-middle transition-opacity duration-100 dark:bg-cyan-500 ${blink ? 'opacity-100' : 'opacity-0'}`}
-        />
+        {prefersReducedMotion ? currentWord : currentWord.substring(0, subIndex)}
+        {!prefersReducedMotion && (
+          <span
+            className={`ml-2 inline-block h-[0.9em] w-[4px] bg-[#009bbf] align-middle transition-opacity duration-100 dark:bg-cyan-500 ${blink ? 'opacity-100' : 'opacity-0'}`}
+          />
+        )}
       </span>
     </span>
   );

@@ -73,7 +73,7 @@ export function Navbar() {
 
         <Link
           to="/"
-          className="relative z-10 whitespace-nowrap bg-gradient-to-r from-[#009bbf] to-emerald-700 bg-clip-text text-xl font-bold text-transparent transition-all duration-500 dark:from-cyan-500 dark:to-purple-500 hover:from-emerald-700 hover:to-indigo-700 dark:hover:from-purple-500 dark:hover:to-cyan-500"
+          className="relative z-10 whitespace-nowrap bg-gradient-to-r from-cyan-600 to-emerald-700 bg-clip-text text-xl font-bold text-transparent transition-all duration-500 dark:from-cyan-500 dark:to-purple-500 hover:from-emerald-700 hover:to-indigo-700 dark:hover:from-purple-500 dark:hover:to-cyan-500"
         >
           {config.name || 'Portfolio'}
         </Link>
@@ -87,7 +87,7 @@ export function Navbar() {
                 to={link.path}
                 className={`group relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ease-in-out ${
                   isActive
-                    ? 'text-[#009bbf] dark:text-cyan-300'
+                    ? 'text-cyan-600 dark:text-cyan-300'
                     : 'text-[#566e7a] hover:text-[#0e2a36] dark:text-slate-400 dark:hover:text-slate-200'
                 }`}
               >
@@ -100,7 +100,7 @@ export function Navbar() {
                 )}
                 <span className="relative z-10">{link.label}</span>
                 {!isActive && (
-                  <span className="absolute right-4 bottom-1 left-4 h-[2px] origin-left scale-x-0 rounded-full bg-[#009bbf] transition-transform duration-300 ease-out group-hover:scale-x-100 dark:bg-cyan-400" />
+                  <span className="absolute right-4 bottom-1 left-4 h-[2px] origin-left scale-x-0 rounded-full bg-cyan-600 transition-transform duration-300 ease-out group-hover:scale-x-100 dark:bg-cyan-400" />
                 )}
               </Link>
             );
@@ -136,7 +136,7 @@ export function Navbar() {
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={`rounded-xl px-4 py-3 text-sm font-medium ${
                     location.pathname === link.path
-                      ? 'bg-[#f0f9fb] text-[#009bbf] dark:bg-cyan-900/30 dark:text-cyan-400'
+                      ? 'bg-[#f0f9fb] text-cyan-600 dark:bg-cyan-900/30 dark:text-cyan-400'
                       : 'text-[#566e7a] hover:bg-slate-50 dark:text-[#EDEDED] dark:hover:bg-[#222222]'
                   }`}
                 >

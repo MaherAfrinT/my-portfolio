@@ -10,6 +10,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { LazyMarkdown } from '../../components/ui/LazyMarkdown';
+import { Helmet } from 'react-helmet-async';
 import { PageTransition } from '../../components/layout/PageTransition';
 import { Reveal } from '../../components/ui/Reveal';
 import { format } from 'date-fns';
@@ -95,6 +96,10 @@ export function BlogPostPage() {
 
   return (
     <PageTransition>
+      <Helmet>
+        <title>{`${post.title} | Blog`}</title>
+        <meta name="description" content={post.excerpt || `Read ${post.title}`} />
+      </Helmet>
       <div className="mx-auto max-w-3xl pt-12 pb-24 relative">
         <Reveal>
           <Link

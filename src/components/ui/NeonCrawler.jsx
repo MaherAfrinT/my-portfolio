@@ -2,11 +2,13 @@ import React, { useEffect, useState, useRef } from 'react';
 import { motion, useSpring, useMotionValue } from 'framer-motion';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 export function NeonCrawler() {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
   const isMobile = useMediaQuery('(max-width: 768px)');
+  const prefersReducedMotion = useReducedMotion();
 
   const SEGMENTS = 5;
 
@@ -161,7 +163,7 @@ export function NeonCrawler() {
     }, 1000);
   };
 
-  if (isMobile) return null;
+  if (isMobile || prefersReducedMotion) return null;
 
   return (
     <>
