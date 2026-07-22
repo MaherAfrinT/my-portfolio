@@ -54,12 +54,12 @@ export function AdminJournal() {
                 key={entry.id}
                 className="transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50"
               >
-                <td className="px-6 py-4 font-medium whitespace-nowrap text-slate-900 dark:text-white">
+                <td className="px-6 py-4 font-medium whitespace-nowrap text-[#0e2a36] dark:text-white">
                   {entry.date?.toDate
                     ? entry.date.toDate().toLocaleDateString()
                     : new Date(entry.date).toLocaleDateString()}
                 </td>
-                <td className="px-6 py-4 font-medium whitespace-nowrap text-slate-800 dark:text-slate-200">
+                <td className="px-6 py-4 font-medium whitespace-nowrap text-[#163847] dark:text-slate-200">
                   {entry.title || 'Untitled'}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -117,7 +117,7 @@ export function AdminJournal() {
             className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800"
           >
             <div className="mb-2 flex items-start justify-between">
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+              <h3 className="text-lg font-bold text-[#0e2a36] dark:text-white">
                 {entry.title || 'Untitled'}
               </h3>
               <button

@@ -112,7 +112,7 @@ export function AdminProjects() {
             <Button
               type="submit"
               isLoading={saving}
-              className="bg-cyan-500 text-slate-900 hover:bg-cyan-600"
+              className="bg-cyan-500 text-[#0e2a36] hover:bg-cyan-600"
             >
               Save Settings
             </Button>
@@ -123,33 +123,34 @@ export function AdminProjects() {
       <div className="grid gap-4">
         {projects.map((project) => (
           <Card key={project.id}>
-            <CardContent className="flex items-center justify-between p-4">
-              <div className="flex items-center space-x-4">
+            <CardContent className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 gap-4">
+              <div className="flex items-center space-x-4 w-full sm:w-auto">
                 {project.coverImage ? (
                   <img
                     src={project.coverImage}
                     alt=""
-                    className="h-16 w-16 rounded-md object-cover"
+                    className="h-16 w-16 flex-shrink-0 rounded-md object-cover"
                   />
                 ) : (
-                  <div className="flex h-16 w-16 items-center justify-center rounded-md bg-slate-200 text-xs text-slate-500 dark:bg-slate-700">
+                  <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-md bg-slate-200 text-xs text-slate-500 dark:bg-slate-700">
                     No Img
                   </div>
                 )}
-                <div>
-                  <h3 className="text-lg font-bold">{project.title}</h3>
-                  <div className="text-sm text-slate-500 dark:text-slate-400">
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-lg font-bold truncate">{project.title}</h3>
+                  <div className="text-sm text-slate-500 dark:text-slate-400 truncate">
                     {project.categories?.join(', ')}
                   </div>
                 </div>
               </div>
-              <div className="flex space-x-2">
+              <div className="flex space-x-2 w-full sm:w-auto justify-end">
                 <Button
                   as={Link}
                   to={`/admin/projects/${project.id}`}
                   variant="outline"
                   size="sm"
                   disabled={isDeleting}
+                  className="flex-1 sm:flex-none justify-center"
                 >
                   Edit
                 </Button>
@@ -158,6 +159,7 @@ export function AdminProjects() {
                   size="sm"
                   onClick={() => handleDelete(project.id, 'project')}
                   disabled={isDeleting}
+                  className="flex-1 sm:flex-none justify-center"
                 >
                   Delete
                 </Button>

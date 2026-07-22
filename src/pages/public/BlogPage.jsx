@@ -27,11 +27,11 @@ export function BlogPage() {
         <Reveal>
           <header className="pt-12">
             <h1 className="mb-6 text-4xl font-extrabold md:text-5xl">
-              <span className="bg-gradient-to-r from-[#00E5FF] to-transparent bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#009bbf] to-emerald-700 dark:from-[#00E5FF] dark:to-transparent bg-clip-text text-transparent">
                 Blog
               </span>
             </h1>
-            <p className="max-w-2xl text-xl text-slate-600 dark:text-slate-400">
+            <p className="max-w-2xl text-xl text-[#566e7a] dark:text-slate-400">
               Thoughts, tutorials, and deep dives into technology and design.
             </p>
           </header>
@@ -39,7 +39,7 @@ export function BlogPage() {
 
         {loading ? (
           <div className="flex justify-center py-20">
-            <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-cyan-500"></div>
+            <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-[#009bbf] dark:border-cyan-500"></div>
           </div>
         ) : error ? (
           <div className="text-red-500">
@@ -56,8 +56,8 @@ export function BlogPage() {
                   onClick={() => setFilter(tag)}
                   className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                     filter === tag
-                      ? 'text-[#00E5FF] border-b-2 border-[#00E5FF] bg-transparent rounded-none'
-                      : 'text-[#EDEDED] border-b-2 border-transparent hover:border-[#333333] bg-transparent rounded-none'
+                      ? 'text-[#009bbf] border-b-2 border-[#009bbf] dark:text-[#00E5FF] dark:border-[#00E5FF] bg-transparent rounded-none'
+                      : 'text-[#566e7a] dark:text-[#EDEDED] border-b-2 border-transparent hover:border-slate-300 dark:hover:border-[#333333] bg-transparent rounded-none'
                   }`}
                 >
                   {tag}
@@ -73,7 +73,7 @@ export function BlogPage() {
                     to={`/blog/${post.slug || post.id}`}
                     className="block break-inside-avoid"
                   >
-                    <div className="group relative h-full cursor-pointer overflow-hidden rounded-2xl border border-[#333333] bg-[#111111] shadow-xl hover:border-[#00E5FF] transition-colors">
+                    <div className="group relative h-full cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl transition-colors hover:border-[#009bbf] dark:hover:border-[#00E5FF] dark:border-[#333333] dark:bg-[#111111]">
                       {/* Image Container */}
                       <div className="relative aspect-[4/3] w-full overflow-hidden sm:aspect-auto sm:h-72">
                         {post.coverImage ? (
@@ -84,7 +84,7 @@ export function BlogPage() {
                             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                           />
                         ) : (
-                          <div className="flex h-full w-full items-center justify-center bg-[#111111] border border-[#333333]">
+                          <div className="flex h-full w-full items-center justify-center border border-slate-200 bg-slate-100 dark:border-[#333333] dark:bg-[#111111]">
                             <span className="text-4xl">📝</span>
                           </div>
                         )}
@@ -105,14 +105,14 @@ export function BlogPage() {
                                 )
                               : 'Draft'}
                         </div>
-                        <h3 className="mb-3 line-clamp-2 text-xl font-bold">
+                        <h3 className="mb-3 line-clamp-2 text-xl font-bold text-[#0e2a36] dark:text-white">
                           {post.title}
                         </h3>
                         <div className="flex flex-wrap gap-2">
                           {post.tags?.slice(0, 3).map((tag) => (
                             <span
                               key={tag}
-                              className="font-mono rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300"
+                              className="font-mono rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-[#566e7a] dark:bg-slate-800 dark:text-slate-300"
                             >
                               {tag}
                             </span>
@@ -121,8 +121,8 @@ export function BlogPage() {
                       </div>
 
                       {/* Glassmorphism Hover Overlay */}
-                      <div className="absolute inset-0 flex translate-y-full flex-col justify-end bg-black/60 p-6 backdrop-blur-md border-t border-[#00E5FF]/30 transition-transform duration-500 ease-out group-hover:translate-y-0">
-                        <div className="mb-2 font-mono text-sm font-medium text-cyan-300">
+                      <div className="absolute inset-0 flex translate-y-full flex-col justify-end bg-black/60 p-6 backdrop-blur-md border-t border-[#009bbf]/30 dark:border-[#00E5FF]/30 transition-transform duration-500 ease-out group-hover:translate-y-0">
+                        <div className="mb-2 font-mono text-sm font-medium text-indigo-300 dark:text-cyan-300">
                           {post.publishedAt?.toDate
                             ? format(post.publishedAt.toDate(), 'MMMM d, yyyy')
                             : 'Draft'}

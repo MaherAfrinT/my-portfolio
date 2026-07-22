@@ -12,17 +12,17 @@ export function Button({
   ...props
 }) {
   const baseStyles =
-    'inline-flex items-center justify-center rounded-md font-medium transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 disabled:pointer-events-none disabled:opacity-50';
+    'inline-flex items-center justify-center gap-2 rounded-md font-medium transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/20 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 disabled:pointer-events-none disabled:opacity-50';
 
   const variants = {
     primary:
       'bg-cyan-600 text-white hover:bg-cyan-700 dark:bg-cyan-500 dark:hover:bg-cyan-600 shadow-sm',
     secondary:
-      'bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700',
+      'bg-slate-100 text-[#0e2a36] hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700',
     outline:
       'border border-cyan-600 text-cyan-600 hover:bg-cyan-50 dark:border-cyan-500 dark:text-cyan-400 dark:hover:bg-cyan-950/30',
     ghost:
-      'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300',
+      'hover:bg-slate-100 dark:hover:bg-slate-800 text-[#385361] dark:text-slate-300',
     danger:
       'bg-red-500 text-white hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700',
   };
@@ -40,7 +40,7 @@ export function Button({
     <img
       src="/src/assets/parrotsec-logo.svg"
       alt="Loading"
-      className="mr-2 -ml-1 h-5 w-5 animate-spin drop-shadow-[0_0_8px_rgba(0,229,255,0.8)]"
+      className="h-5 w-5 animate-spin drop-shadow-[0_0_8px_rgba(0,229,255,0.8)]"
     />
   ) : null;
 

@@ -1,6 +1,6 @@
 /* Markdown Editor & Render Styles */
 .prose {
-  @apply text-slate-800 dark:text-slate-200 leading-relaxed max-w-none;
+  @apply text-slate-800 dark:text-slate-200 leading-[1.8] tracking-[0.01em] max-w-none;
 }
 .prose h1, .prose h2, .prose h3 {
   @apply font-bold mt-8 mb-4 text-slate-900 dark:text-white;

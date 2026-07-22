@@ -26,10 +26,10 @@ export function UniversalFooter() {
 
           {/* Sitemap */}
           <div className="flex flex-col items-center md:items-start">
-            <h3 className="mb-4 font-mono text-sm font-semibold tracking-wider text-slate-900 dark:text-white uppercase">
+            <h3 className="mb-4 font-mono text-sm font-semibold tracking-wider text-[#0e2a36] dark:text-white uppercase">
               Sitemap
             </h3>
-            <ul className="flex flex-col items-center space-y-3 text-sm text-slate-600 md:items-start dark:text-slate-400">
+            <ul className="flex flex-col items-center space-y-3 text-sm text-[#566e7a] md:items-start dark:text-slate-400">
               <li>
                 <Link to="/" className="transition-colors hover:text-cyan-500">
                   Home
@@ -60,7 +60,7 @@ export function UniversalFooter() {
 
           {/* Social Links */}
           <div className="flex flex-col items-center md:items-start">
-            <h3 className="mb-4 font-mono text-sm font-semibold tracking-wider text-slate-900 dark:text-white uppercase">
+            <h3 className="mb-4 font-mono text-sm font-semibold tracking-wider text-[#0e2a36] dark:text-white uppercase">
               Connect
             </h3>
             <div className="flex space-x-4">
@@ -73,7 +73,7 @@ export function UniversalFooter() {
                     href={social.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="group rounded-full bg-slate-100 p-3 text-slate-600 transition-all hover:bg-cyan-50 hover:text-cyan-600 dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:bg-[#222222] dark:hover:text-[#00E5FF]"
+                    className="group rounded-full bg-slate-100 p-3 text-[#566e7a] transition-all hover:bg-cyan-50 hover:text-cyan-600 dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:bg-[#222222] dark:hover:text-[#00E5FF]"
                     aria-label={social.platform || 'Social Link'}
                   >
                     <Icon size={20} className="transition-transform group-hover:scale-110" />
@@ -83,7 +83,7 @@ export function UniversalFooter() {
               {config.email && (
                 <a
                   href={`mailto:${config.email}`}
-                  className="group rounded-full bg-slate-100 p-3 text-slate-600 transition-all hover:bg-cyan-50 hover:text-cyan-600 dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:bg-[#222222] dark:hover:text-[#00E5FF]"
+                  className="group rounded-full bg-slate-100 p-3 text-[#566e7a] transition-all hover:bg-cyan-50 hover:text-cyan-600 dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:bg-[#222222] dark:hover:text-[#00E5FF]"
                   aria-label="Email"
                 >
                   <LucideIcons.Mail size={20} className="transition-transform group-hover:scale-110" />

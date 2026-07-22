@@ -29,11 +29,18 @@ export function AdminDashboard() {
           </Button>
           <Button
             onClick={async () => {
-              if (
-                window.confirm(
-                  'Are you sure you want to delete all seeded data? This cannot be undone.'
-                )
-              ) {
+              const Swal = (await import('sweetalert2')).default;
+              const result = await Swal.fire({
+                title: 'Are you sure?',
+                text: 'Are you sure you want to delete all seeded data? This cannot be undone.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#64748b',
+                confirmButtonText: 'Yes, delete it!'
+              });
+              
+              if (result.isConfirmed) {
                 const { deleteSeededData } = await import('../../lib/seedData');
                 await deleteSeededData();
               }

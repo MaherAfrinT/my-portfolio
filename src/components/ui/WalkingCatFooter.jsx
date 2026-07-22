@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSiteConfig } from '../../contexts/SiteConfigContext';
+import { motion, AnimatePresence } from 'framer-motion';
 import catSprite from '../../assets/cat_tiles.png';
 
 export function WalkingCatFooter() {
@@ -146,6 +147,24 @@ export function WalkingCatFooter() {
             className={`cat-container absolute bottom-0 origin-bottom ${isSitting ? 'sitting' : 'walking'}`}
             style={{ transform: 'scale(0.45)' }}
           >
+            <AnimatePresence>
+              {isSitting && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5, y: 10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.8, y: 10 }}
+                  transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+                  className="absolute right-20 top-10 z-50 rounded-2xl rounded-br-none border-4 border-[var(--cat-color)] bg-[#0A0A0A] px-6 py-3 font-mono text-3xl font-bold text-[var(--cat-color)] shadow-[0_0_15px_var(--cat-color)]"
+                >
+                  <motion.div
+                    animate={{ y: [0, -5, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    Meow!
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
             <img src={catSprite} alt="cat sprite" className="cat-image max-w-none" />
           </div>
         </div>
@@ -186,7 +205,7 @@ export function WalkingCatFooter() {
 
       {/* Message */}
       <p className="neon-text mt-8 max-w-sm px-4 text-center font-mono text-sm font-medium tracking-wide transition-all duration-700 md:text-base">
-        {isSitting ? 'Meow?' : message}
+        {isSitting ? '' : message}
       </p>
     </div>
   );

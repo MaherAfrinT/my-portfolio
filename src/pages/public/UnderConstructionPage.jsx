@@ -12,15 +12,15 @@ export function UnderConstructionPage() {
           <LucideIcons.Hammer className="h-12 w-12" />
         </div>
         <div className="space-y-4">
-          <h1 className="text-4xl font-extrabold md:text-5xl text-slate-900 dark:text-white">
+          <h1 className="text-4xl font-extrabold md:text-5xl text-[#0e2a36] dark:text-white">
             Page Under Construction
           </h1>
-          <p className="mx-auto max-w-lg text-lg text-slate-600 dark:text-slate-400">
+          <p className="mx-auto max-w-lg text-lg text-[#566e7a] dark:text-slate-400">
             This page is currently being built or doesn't exist yet. Please check back later!
           </p>
         </div>
         <div className="pt-4">
-          <Button as={Link} to="/" className="bg-cyan-500 text-slate-900 hover:bg-cyan-600">
+          <Button as={Link} to="/" className="bg-cyan-500 text-[#0e2a36] hover:bg-cyan-600">
             Return Home
           </Button>
         </div>

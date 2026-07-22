@@ -11,6 +11,34 @@ import { Tag } from '../../components/ui/Tag';
 import { Button } from '../../components/ui/Button';
 import { LucideIcons } from '../../lib/icon-map';
 
+const SkeletonLoader = () => (
+  <div className="mx-auto max-w-5xl space-y-8 pb-24 pt-8 animate-pulse">
+    <div className="h-4 w-32 rounded bg-slate-200 dark:bg-slate-800"></div>
+    <div className="h-[400px] w-full rounded-3xl bg-slate-200 dark:bg-slate-800"></div>
+    <div className="space-y-4">
+      <div className="h-12 w-2/3 rounded bg-slate-200 dark:bg-slate-800"></div>
+      <div className="h-4 w-full rounded bg-slate-200 dark:bg-slate-800"></div>
+      <div className="h-4 w-5/6 rounded bg-slate-200 dark:bg-slate-800"></div>
+      <div className="h-4 w-4/6 rounded bg-slate-200 dark:bg-slate-800"></div>
+    </div>
+  </div>
+);
+
+const NotFoundUI = ({ onBack }) => (
+  <PageTransition>
+    <div className="flex min-h-[50vh] flex-col items-center justify-center space-y-6">
+      <div className="flex h-20 w-20 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800">
+        <LucideIcons.FileQuestion className="h-10 w-10 text-slate-400" />
+      </div>
+      <h2 className="text-3xl font-bold text-[#0e2a36] dark:text-white">Content Not Found</h2>
+      <p className="text-slate-500 dark:text-slate-400">The project you are looking for does not exist or has been removed.</p>
+      <Button onClick={onBack}>
+        Back to Projects
+      </Button>
+    </div>
+  </PageTransition>
+);
+
 export function ProjectDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -21,7 +49,7 @@ export function ProjectDetailPage() {
   useEffect(() => {
     async function fetchProject() {
       try {
-        const docRef = doc(db, 'projects', id);
+        const docRef = doc(db, 'projects', String(id || ''));
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
@@ -40,28 +68,8 @@ export function ProjectDetailPage() {
     fetchProject();
   }, [id]);
 
-  if (loading) {
-    return (
-      <PageTransition>
-        <div className="flex min-h-[50vh] items-center justify-center">
-          <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-cyan-500"></div>
-        </div>
-      </PageTransition>
-    );
-  }
-
-  if (error || !project) {
-    return (
-      <PageTransition>
-        <div className="flex min-h-[50vh] flex-col items-center justify-center space-y-4">
-          <div className="text-xl text-red-500">{error}</div>
-          <Button onClick={() => navigate('/projects')}>
-            Back to Projects
-          </Button>
-        </div>
-      </PageTransition>
-    );
-  }
+  if (loading) return <SkeletonLoader />;
+  if (error || !project) return <NotFoundUI onBack={() => navigate('/projects')} />;
 
   const processTags = (data) => {
     if (!data) return [];
@@ -82,19 +90,19 @@ export function ProjectDetailPage() {
         <div className="flex items-center text-sm font-medium text-slate-500 dark:text-slate-400">
           <Link
             to="/"
-            className="flex items-center transition-colors hover:text-slate-900 dark:hover:text-white"
+            className="flex items-center transition-colors hover:text-[#0e2a36] dark:hover:text-white"
           >
             <LucideIcons.Home className="mr-1 h-4 w-4" />
           </Link>
           <LucideIcons.ChevronRight className="mx-2 h-4 w-4 shrink-0" />
           <Link
             to="/projects"
-            className="transition-colors hover:text-slate-900 dark:hover:text-white"
+            className="transition-colors hover:text-[#0e2a36] dark:hover:text-white"
           >
             Projects
           </Link>
           <LucideIcons.ChevronRight className="mx-2 h-4 w-4 shrink-0" />
-          <span className="truncate text-slate-900 dark:text-white">
+          <span className="truncate text-[#0e2a36] dark:text-white">
             {project.title}
           </span>
         </div>
@@ -119,7 +127,7 @@ export function ProjectDetailPage() {
           {/* Header Section */}
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-              <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 md:text-5xl dark:text-white">
+              <h1 className="text-4xl font-extrabold tracking-tight text-[#0e2a36] md:text-5xl dark:text-white">
                 {project.title}
               </h1>
               {project.liveUrl && (
@@ -140,7 +148,7 @@ export function ProjectDetailPage() {
             <div className="flex flex-col gap-8 md:flex-row">
               <div className="flex-1">
                 {project.summary && (
-                  <p className="text-lg leading-relaxed text-slate-600 dark:text-slate-400">
+                  <p className="text-lg leading-relaxed text-[#566e7a] dark:text-slate-400">
                     {project.summary}
                   </p>
                 )}
@@ -148,17 +156,17 @@ export function ProjectDetailPage() {
               <div className="flex flex-col gap-4 shrink-0 md:w-64">
                 {categories.length > 0 && (
                   <div>
-                    <h3 className="mb-2 text-sm font-semibold tracking-wider text-slate-900 dark:text-slate-200 uppercase">
+                    <h3 className="mb-2 text-sm font-semibold tracking-wider text-[#0e2a36] dark:text-slate-200 uppercase">
                       Categories
                     </h3>
-                    <p className="text-slate-600 dark:text-slate-400">
+                    <p className="text-[#566e7a] dark:text-slate-400">
                       {categories.join(', ')}
                     </p>
                   </div>
                 )}
                 {project.githubUrl && (
                   <div>
-                    <h3 className="mb-2 text-sm font-semibold tracking-wider text-slate-900 dark:text-slate-200 uppercase">
+                    <h3 className="mb-2 text-sm font-semibold tracking-wider text-[#0e2a36] dark:text-slate-200 uppercase">
                       Source Code
                     </h3>
                     <a
@@ -181,7 +189,7 @@ export function ProjectDetailPage() {
                 {techStack.map((tech) => (
                   <Tag
                     key={tech}
-                    className="rounded-full border border-slate-200 bg-slate-100 text-slate-800 px-3 py-1 text-sm dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300"
+                    className="rounded-full border border-slate-200 bg-slate-100 text-[#163847] px-3 py-1 text-sm dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300"
                   >
                     {tech}
                   </Tag>

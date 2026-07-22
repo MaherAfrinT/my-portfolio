@@ -95,13 +95,35 @@ export function AdminFooter() {
           </div>
           <CardContent className="space-y-6 pt-6">
             <div className="space-y-2">
-              <label className="text-sm font-medium">CTA Badge</label>
-              <Input
-                name="ctaBadge"
-                value={formData.ctaBadge || ''}
-                onChange={handleChange}
-                placeholder="Available for work"
-              />
+              <label className="text-sm font-medium">Available for Work</label>
+              <div className="flex items-center gap-3 mt-1">
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={formData.isAvailableForWork || false}
+                  onClick={() =>
+                    handleChange({
+                      target: {
+                        name: 'isAvailableForWork',
+                        value: !formData.isAvailableForWork,
+                      },
+                    })
+                  }
+                  className={`${
+                    formData.isAvailableForWork ? 'bg-cyan-500' : 'bg-slate-300 dark:bg-slate-700'
+                  } relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2`}
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`${
+                      formData.isAvailableForWork ? 'translate-x-5' : 'translate-x-0'
+                    } pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out`}
+                  />
+                </button>
+                <span className="text-sm text-slate-500 dark:text-slate-400">
+                  {formData.isAvailableForWork ? 'Active (Green Dot)' : 'Inactive (Red Dot)'}
+                </span>
+              </div>
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium">CTA Title</label>
@@ -227,7 +249,7 @@ export function AdminFooter() {
           <Button
             type="submit"
             isLoading={saving}
-            className="bg-cyan-500 text-slate-900 hover:bg-cyan-600"
+            className="bg-cyan-500 text-[#0e2a36] hover:bg-cyan-600"
           >
             Save Settings
           </Button>

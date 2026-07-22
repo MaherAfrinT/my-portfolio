@@ -30,10 +30,10 @@ export function AdminCareer() {
       <div className="grid gap-4">
         {career.map((item) => (
           <Card key={item.id}>
-            <CardContent className="flex items-center justify-between p-4">
-              <div>
-                <h3 className="text-lg font-bold">{item.role}</h3>
-                <div className="text-sm text-slate-500">
+            <CardContent className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 gap-4">
+              <div className="min-w-0 flex-1">
+                <h3 className="text-lg font-bold truncate">{item.role}</h3>
+                <div className="text-sm text-slate-500 truncate">
                   {item.company} |{' '}
                   {item.type === 'education' ? 'Education' : 'Experience'}
                 </div>
@@ -42,12 +42,13 @@ export function AdminCareer() {
                   {item.current ? 'Present' : formatDate(item.endDate)}
                 </div>
               </div>
-              <div className="flex space-x-2">
+              <div className="flex space-x-2 w-full sm:w-auto justify-end">
                 <Button
                   as={Link}
                   to={`/admin/career/${item.id}`}
                   variant="outline"
                   size="sm"
+                  className="flex-1 sm:flex-none justify-center"
                 >
                   Edit
                 </Button>
@@ -56,6 +57,7 @@ export function AdminCareer() {
                   size="sm"
                   onClick={() => handleDelete(item.id, 'career entry')}
                   disabled={isDeleting}
+                  className="flex-1 sm:flex-none justify-center"
                 >
                   Delete
                 </Button>

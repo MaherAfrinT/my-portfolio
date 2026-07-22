@@ -81,7 +81,7 @@ export function AdminManifesto() {
     <div className="max-w-4xl space-y-6 pb-24">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">My Manifesto</h1>
-        <Button onClick={handleAddItem} className="bg-cyan-500 text-slate-900 hover:bg-cyan-600">
+        <Button onClick={handleAddItem} className="bg-cyan-500 text-[#0e2a36] hover:bg-cyan-600">
           <Plus className="mr-2 h-4 w-4" />
           Add Paragraph
         </Button>
@@ -120,7 +120,7 @@ export function AdminManifesto() {
           <Button
             type="submit"
             isLoading={saving}
-            className="bg-cyan-500 text-slate-900 hover:bg-cyan-600"
+            className="bg-cyan-500 text-[#0e2a36] hover:bg-cyan-600"
           >
             Save Manifesto
           </Button>

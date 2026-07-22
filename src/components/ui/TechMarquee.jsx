@@ -76,7 +76,7 @@ export function TechMarquee({ items = [], speed = 40 }) {
               <div className="hidden h-12 w-12 items-center justify-center rounded-lg bg-slate-200 text-xs font-bold text-slate-500 md:h-16 md:w-16 dark:bg-slate-800">
                 {name.substring(0, 2).toUpperCase()}
               </div>
-              <span className="text-sm font-medium text-slate-600 dark:text-slate-400">
+              <span className="text-sm font-medium text-[#566e7a] dark:text-slate-400">
                 {name}
               </span>
             </div>

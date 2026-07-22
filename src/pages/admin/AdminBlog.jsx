@@ -51,7 +51,7 @@ export function AdminBlog() {
                 key={post.id}
                 className="transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50"
               >
-                <td className="px-6 py-4 font-medium whitespace-nowrap text-slate-900 dark:text-white">
+                <td className="px-6 py-4 font-medium whitespace-nowrap text-[#0e2a36] dark:text-white">
                   {post.title}
                 </td>
                 <td className="px-6 py-4">
@@ -59,7 +59,7 @@ export function AdminBlog() {
                     {post.tags?.map((tag) => (
                       <span
                         key={tag}
-                        className="inline-flex items-center rounded bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-800 dark:bg-slate-700 dark:text-slate-300"
+                        className="inline-flex items-center rounded bg-slate-100 px-2 py-0.5 text-xs font-medium text-[#163847] dark:bg-slate-700 dark:text-slate-300"
                       >
                         {tag}
                       </span>
@@ -124,7 +124,7 @@ export function AdminBlog() {
             className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800"
           >
             <div className="mb-2 flex items-start justify-between">
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+              <h3 className="text-lg font-bold text-[#0e2a36] dark:text-white">
                 {post.title}
               </h3>
               <button
@@ -140,7 +140,7 @@ export function AdminBlog() {
               {post.tags?.map((tag) => (
                 <span
                   key={tag}
-                  className="inline-flex items-center rounded bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-800 dark:bg-slate-700 dark:text-slate-300"
+                  className="inline-flex items-center rounded bg-slate-100 px-2 py-0.5 text-xs font-medium text-[#163847] dark:bg-slate-700 dark:text-slate-300"
                 >
                   {tag}
                 </span>

@@ -144,14 +144,14 @@ export function AdminBlogForm() {
                 <button
                   type="button"
                   onClick={() => setActiveTab('edit')}
-                  className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${activeTab === 'edit' ? 'bg-white shadow-sm dark:bg-slate-700' : 'text-slate-500 hover:text-slate-700'}`}
+                  className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${activeTab === 'edit' ? 'bg-white shadow-sm dark:bg-slate-700' : 'text-slate-500 hover:text-[#385361]'}`}
                 >
                   Edit
                 </button>
                 <button
                   type="button"
                   onClick={() => setActiveTab('preview')}
-                  className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${activeTab === 'preview' ? 'bg-white shadow-sm dark:bg-slate-700' : 'text-slate-500 hover:text-slate-700'}`}
+                  className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${activeTab === 'preview' ? 'bg-white shadow-sm dark:bg-slate-700' : 'text-slate-500 hover:text-[#385361]'}`}
                 >
                   Preview
                 </button>
@@ -221,7 +221,7 @@ export function AdminBlogForm() {
           />
           <label
             htmlFor="isPublished"
-            className="ml-2 text-sm font-medium text-slate-900 dark:text-slate-300"
+            className="ml-2 text-sm font-medium text-[#0e2a36] dark:text-slate-300"
           >
             Publish this post (make it visible to public)
           </label>

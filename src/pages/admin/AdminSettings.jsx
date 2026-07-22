@@ -242,30 +242,45 @@ export function AdminSettings() {
 
         <Card>
           <div className="border-b border-slate-200 px-6 pt-6 pb-2 dark:border-slate-800">
-            <h2 className="text-xl font-bold">Section Visibility</h2>
-            <p className="text-sm text-slate-500">Toggle which sections appear on the Home Page and Career Page.</p>
+            <h2 className="text-xl font-bold">Visibility Settings</h2>
+            <p className="text-sm text-slate-500">Toggle the visibility of sections, navigation bars, and buttons.</p>
           </div>
-          <CardContent className="space-y-4 pt-6">
-            {Object.keys(formData.sectionVisibility || DEFAULT_SITE_CONFIG.sectionVisibility || {}).map((sectionKey) => (
-              <label key={sectionKey} className="flex items-center space-x-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  className="h-4 w-4 rounded border-slate-300 text-cyan-500 focus:ring-cyan-500"
-                  checked={formData.sectionVisibility?.[sectionKey] ?? true}
-                  onChange={(e) => {
-                    setFormData(prev => ({
-                      ...prev,
-                      sectionVisibility: {
-                        ...(prev.sectionVisibility || DEFAULT_SITE_CONFIG.sectionVisibility),
-                        [sectionKey]: e.target.checked
-                      }
-                    }));
-                  }}
-                />
-                <span className="text-sm font-medium capitalize text-slate-700 dark:text-slate-300">
-                  {sectionKey.replace(/([A-Z])/g, ' $1').trim()} Section
-                </span>
-              </label>
+          <CardContent className="space-y-6 pt-6">
+            {Object.entries({
+              "Home Page Sections": ["hero", "about", "skills", "certifications", "contactCTA"],
+              "Career Page Sections": ["experience", "testimonials", "manifesto"],
+              "Layout & Navigation": ["topNavBar", "footer"],
+              "Buttons & Controls": ["resumeButton", "ctaButton", "themeToggleButton"],
+              "Other": Object.keys(formData.sectionVisibility || DEFAULT_SITE_CONFIG.sectionVisibility || {}).filter(
+                key => !["hero", "about", "skills", "certifications", "contactCTA", "experience", "testimonials", "manifesto", "topNavBar", "footer", "resumeButton", "ctaButton", "themeToggleButton"].includes(key)
+              )
+            }).filter(([_, keys]) => keys.length > 0).map(([category, keys]) => (
+              <div key={category} className="space-y-3">
+                <h3 className="text-md font-semibold text-[#163847] dark:text-slate-200">{category}</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {keys.map((sectionKey) => (
+                    <label key={sectionKey} className="flex items-center space-x-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        className="h-4 w-4 rounded border-slate-300 text-cyan-500 focus:ring-cyan-500"
+                        checked={formData.sectionVisibility?.[sectionKey] ?? DEFAULT_SITE_CONFIG.sectionVisibility?.[sectionKey] ?? true}
+                        onChange={(e) => {
+                          setFormData(prev => ({
+                            ...prev,
+                            sectionVisibility: {
+                              ...(prev.sectionVisibility || DEFAULT_SITE_CONFIG.sectionVisibility),
+                              [sectionKey]: e.target.checked
+                            }
+                          }));
+                        }}
+                      />
+                      <span className="text-sm font-medium capitalize text-[#385361] dark:text-slate-300">
+                        {sectionKey.replace(/([A-Z])/g, ' $1').trim()}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </div>
             ))}
           </CardContent>
         </Card>
@@ -301,7 +316,7 @@ export function AdminSettings() {
           <Button
             type="submit"
             isLoading={saving}
-            className="bg-cyan-500 text-slate-900 hover:bg-cyan-600"
+            className="bg-cyan-500 text-[#0e2a36] hover:bg-cyan-600"
           >
             Save Settings
           </Button>

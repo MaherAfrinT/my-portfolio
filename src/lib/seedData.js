@@ -1,7 +1,5 @@
 import {
   doc,
-  getDoc,
-  setDoc,
   collection,
   addDoc,
   getDocs,
@@ -11,9 +9,11 @@ import {
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import { COLLECTIONS } from './constants';
+import Swal from 'sweetalert2';
 
 const DEFAULT_SKILLS = [
   {
+    order: 0,
     category: 'Web Engineering',
     iconName: 'Globe',
     items: [
@@ -25,6 +25,7 @@ const DEFAULT_SKILLS = [
     ],
   },
   {
+    order: 1,
     category: 'Systems & Architecture',
     iconName: 'Terminal',
     items: [
@@ -36,6 +37,7 @@ const DEFAULT_SKILLS = [
     ],
   },
   {
+    order: 2,
     category: 'Security & Ops',
     iconName: 'Shield',
     items: [
@@ -46,6 +48,7 @@ const DEFAULT_SKILLS = [
     ],
   },
   {
+    order: 3,
     category: 'Tools & Environments',
     iconName: 'Wrench',
     items: [
@@ -274,26 +277,13 @@ const DEFAULT_JOURNAL_ENTRIES = [
  */
 export async function seedDatabase() {
   try {
-    // 1. Seed Config (Main Site Config)
-    // We only seed skills if it's currently empty, and use merge: true
-    // so we never overwrite existing scalar settings like Hero text.
-    const configRef = doc(db, 'config', 'main');
-    const configSnap = await getDoc(configRef);
-    const existingConfig = configSnap.exists() ? configSnap.data() : {};
-
-    if (!existingConfig.skills || existingConfig.skills.length === 0) {
-      await setDoc(configRef, {
-        skills: DEFAULT_SKILLS,
-        isSeeded: true // Flag to identify seeded data
-      }, { merge: true });
-    }
-
     let pastDays = 5;
 
     // Helper to seed a collection
     const seedCollection = async (collectionName, dataArray) => {
-      // Only populate empty collections so we don't overwrite/duplicate
-      const snapshot = await getDocs(collection(db, collectionName));
+      // Check if this collection already has seeded data. If so, skip it.
+      const q = query(collection(db, collectionName), where('isSeeded', '==', true));
+      const snapshot = await getDocs(q);
       if (!snapshot.empty) {
         return;
       }
@@ -320,11 +310,22 @@ export async function seedDatabase() {
     await seedCollection(COLLECTIONS.CERTIFICATIONS, DEFAULT_CERTIFICATIONS);
     await seedCollection(COLLECTIONS.BLOG, DEFAULT_BLOG_POSTS);
     await seedCollection(COLLECTIONS.JOURNAL, DEFAULT_JOURNAL_ENTRIES);
+    await seedCollection(COLLECTIONS.SKILLS, DEFAULT_SKILLS);
 
-    alert('Database seeded successfully!');
+    Swal.fire({
+      title: 'Success!',
+      text: 'Database seeded successfully!',
+      icon: 'success',
+      confirmButtonColor: '#06b6d4'
+    });
   } catch (error) {
     console.error('Error seeding database:', error);
-    alert('Error seeding database. Check console.');
+    Swal.fire({
+      title: 'Error!',
+      text: `Error seeding database: ${error.message}`,
+      icon: 'error',
+      confirmButtonColor: '#06b6d4'
+    });
   }
 }
 
@@ -344,24 +345,11 @@ export async function deleteSeededData() {
     COLLECTIONS.CERTIFICATIONS,
     COLLECTIONS.BLOG,
     COLLECTIONS.JOURNAL,
+    COLLECTIONS.SKILLS,
   ];
 
   try {
     let deletedCount = 0;
-
-    // 1. Safely remove seeded skills without deleting the user's config document
-    const configRef = doc(db, 'config', 'main');
-    const configSnap = await getDoc(configRef);
-    if (configSnap.exists()) {
-      const data = configSnap.data();
-      if (data.isSeeded === true) {
-        await setDoc(configRef, {
-          skills: [],
-          isSeeded: false
-        }, { merge: true });
-        deletedCount++;
-      }
-    }
 
     // 2. Delete all documents in collections where isSeeded === true
     for (const colName of collectionsToClean) {
@@ -375,9 +363,19 @@ export async function deleteSeededData() {
       }
     }
 
-    alert(`Successfully deleted ${deletedCount} seeded items.`);
+    Swal.fire({
+      title: 'Cleaned!',
+      text: `Successfully deleted ${deletedCount} seeded items.`,
+      icon: 'success',
+      confirmButtonColor: '#06b6d4'
+    });
   } catch (error) {
     console.error('Error deleting seeded data:', error);
-    alert('Error deleting seeded data. Check console.');
+    Swal.fire({
+      title: 'Error!',
+      text: `Error deleting seeded data: ${error.message}`,
+      icon: 'error',
+      confirmButtonColor: '#06b6d4'
+    });
   }
 }

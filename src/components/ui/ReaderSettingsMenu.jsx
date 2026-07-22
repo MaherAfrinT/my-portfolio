@@ -23,7 +23,7 @@ export function ReaderSettingsMenu() {
               </h3>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                className="text-slate-400 hover:text-[#566e7a] dark:hover:text-slate-200"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -38,14 +38,14 @@ export function ReaderSettingsMenu() {
                 <div className="flex items-center gap-4 rounded-xl border border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-950">
                   <button
                     onClick={() => updateSetting('fontSize', Math.max(12, settings.fontSize - 2))}
-                    className="flex flex-1 items-center justify-center rounded-lg py-2 text-slate-600 hover:bg-slate-200 dark:text-slate-400 dark:hover:bg-slate-800"
+                    className="flex flex-1 items-center justify-center rounded-lg py-2 text-[#566e7a] hover:bg-slate-200 dark:text-slate-400 dark:hover:bg-slate-800"
                   >
                     <Minus className="h-4 w-4" />
                   </button>
                   <span className="font-mono text-sm font-medium">{settings.fontSize}</span>
                   <button
                     onClick={() => updateSetting('fontSize', Math.min(32, settings.fontSize + 2))}
-                    className="flex flex-1 items-center justify-center rounded-lg py-2 text-slate-600 hover:bg-slate-200 dark:text-slate-400 dark:hover:bg-slate-800"
+                    className="flex flex-1 items-center justify-center rounded-lg py-2 text-[#566e7a] hover:bg-slate-200 dark:text-slate-400 dark:hover:bg-slate-800"
                   >
                     <Plus className="h-4 w-4" />
                   </button>

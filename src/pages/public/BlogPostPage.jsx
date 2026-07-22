@@ -17,6 +17,38 @@ import { ArrowLeft } from 'lucide-react';
 import { useReaderSettings } from '../../hooks/useReaderSettings';
 import { ReaderSettingsMenu } from '../../components/ui/ReaderSettingsMenu';
 
+const SkeletonLoader = () => (
+  <div className="mx-auto max-w-3xl pt-12 pb-24 space-y-8 animate-pulse">
+    <div className="h-4 w-32 rounded bg-slate-200 dark:bg-slate-800"></div>
+    <div className="h-16 w-3/4 rounded bg-slate-200 dark:bg-slate-800"></div>
+    <div className="h-4 w-48 rounded bg-slate-200 dark:bg-slate-800"></div>
+    <div className="aspect-video w-full rounded-2xl bg-slate-200 dark:bg-slate-800"></div>
+    <div className="space-y-4 pt-8">
+      <div className="h-4 w-full rounded bg-slate-200 dark:bg-slate-800"></div>
+      <div className="h-4 w-full rounded bg-slate-200 dark:bg-slate-800"></div>
+      <div className="h-4 w-5/6 rounded bg-slate-200 dark:bg-slate-800"></div>
+    </div>
+  </div>
+);
+
+const NotFoundUI = () => (
+  <PageTransition>
+    <div className="flex min-h-[50vh] flex-col items-center justify-center space-y-6 pt-12">
+      <div className="flex h-20 w-20 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800">
+        <div className="text-4xl text-slate-400">?</div>
+      </div>
+      <h2 className="text-3xl font-bold text-[#0e2a36] dark:text-white">Content Not Found</h2>
+      <p className="text-slate-500 dark:text-slate-400">The blog post you are looking for does not exist or has been removed.</p>
+      <Link
+        to="/blog"
+        className="rounded-full bg-cyan-500 px-6 py-2.5 font-medium text-white transition-colors hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+      >
+        Back to Blog
+      </Link>
+    </div>
+  </PageTransition>
+);
+
 export function BlogPostPage() {
   const { slug } = useParams();
   const [post, setPost] = useState(null);
@@ -27,7 +59,7 @@ export function BlogPostPage() {
   useEffect(() => {
     async function fetchPost() {
       try {
-        const q = query(collection(db, 'blogPosts'), where('slug', '==', slug));
+        const q = query(collection(db, 'blogPosts'), where('slug', '==', String(slug || '')));
         const querySnapshot = await getDocs(q);
 
         if (!querySnapshot.empty) {
@@ -37,7 +69,7 @@ export function BlogPostPage() {
           });
         } else {
           // Fallback: try fetching by ID just in case it's an old post without a slug
-          const docRef = doc(db, 'blogPosts', slug);
+          const docRef = doc(db, 'blogPosts', String(slug || ''));
           const docSnap = await getDoc(docRef);
           if (docSnap.exists()) {
             setPost({ id: docSnap.id, ...docSnap.data() });
@@ -56,26 +88,10 @@ export function BlogPostPage() {
     fetchPost();
   }, [slug]);
 
-  if (loading) {
-    return (
-      <div className="flex min-h-[70vh] items-center justify-center">
-        <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-cyan-500"></div>
-      </div>
-    );
-  }
 
-  if (error || !post) {
-    return (
-      <div className="flex min-h-[70vh] flex-col items-center justify-center space-y-4">
-        <h2 className="text-2xl font-bold text-red-500">
-          {error || 'Post not found'}
-        </h2>
-        <Link to="/blog" className="text-cyan-500 hover:underline">
-          ← Back to Blog
-        </Link>
-      </div>
-    );
-  }
+
+  if (loading) return <SkeletonLoader />;
+  if (error || !post) return <NotFoundUI />;
 
   return (
     <PageTransition>
@@ -101,7 +117,7 @@ export function BlogPostPage() {
                 </span>
               ))}
             </div>
-            <h1 className="mb-6 text-4xl leading-tight font-extrabold text-slate-900 md:text-5xl dark:text-white">
+            <h1 className="mb-6 text-4xl leading-tight font-extrabold text-[#0e2a36] md:text-5xl dark:text-white">
               {post.title}
             </h1>
             <div className="font-mono text-sm text-slate-500 dark:text-slate-400">

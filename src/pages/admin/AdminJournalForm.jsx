@@ -114,7 +114,7 @@ export function AdminJournalForm() {
               className={`px-6 py-3 text-sm font-medium transition-colors ${
                 activeTab === 'write'
                   ? 'border-b-2 border-cyan-500 bg-white text-cyan-600 dark:bg-slate-800 dark:text-cyan-400'
-                  : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                  : 'text-[#566e7a] hover:text-[#0e2a36] dark:text-slate-400 dark:hover:text-white'
               }`}
             >
               Write
@@ -125,7 +125,7 @@ export function AdminJournalForm() {
               className={`px-6 py-3 text-sm font-medium transition-colors ${
                 activeTab === 'preview'
                   ? 'border-b-2 border-cyan-500 bg-white text-cyan-600 dark:bg-slate-800 dark:text-cyan-400'
-                  : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                  : 'text-[#566e7a] hover:text-[#0e2a36] dark:text-slate-400 dark:hover:text-white'
               }`}
             >
               Preview

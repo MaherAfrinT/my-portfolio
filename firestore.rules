@@ -3,42 +3,47 @@ service cloud.firestore {
   match /databases/{database}/documents {
     
     function isAdmin() {
-      return request.auth != null && request.auth.token.email == "shahariar.sabbir.101@gmail.com";
+      return request.auth != null && request.auth.uid == 'YOUR_ADMIN_UID';
     }
 
     match /projects/{document} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write, update, delete: if isAdmin();
     }
     
     match /career/{document} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write, update, delete: if isAdmin();
     }
     
     match /config/{document} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write, update, delete: if isAdmin();
+    }
+
+    match /skills/{document} {
+      allow read: if true;
+      allow write, update, delete: if isAdmin();
     }
 
     match /testimonials/{document} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write, update, delete: if isAdmin();
     }
     
     match /blogPosts/{document} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write, update, delete: if isAdmin();
     }
     
     match /journalEntries/{document} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write, update, delete: if isAdmin();
     }
 
     match /certifications/{document} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write, update, delete: if isAdmin();
     }
     
     match /contactMessages/{document} {

@@ -30,32 +30,33 @@ export function AdminTestimonials() {
       <div className="grid gap-4">
         {testimonials.map((t) => (
           <Card key={t.id}>
-            <CardContent className="flex items-center justify-between p-4">
-              <div className="flex items-center space-x-4">
+            <CardContent className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 gap-4">
+              <div className="flex items-center space-x-4 w-full sm:w-auto min-w-0">
                 {t.avatarUrl ? (
                   <img
                     src={t.avatarUrl}
                     alt=""
-                    className="h-12 w-12 rounded-full object-cover"
+                    className="h-12 w-12 flex-shrink-0 rounded-full object-cover"
                   />
                 ) : (
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-200 text-xs text-slate-500 dark:bg-slate-700">
+                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-slate-200 text-xs text-slate-500 dark:bg-slate-700">
                     {t.author.charAt(0)}
                   </div>
                 )}
-                <div>
-                  <h3 className="text-lg font-bold">{t.author}</h3>
-                  <div className="text-sm text-slate-500 dark:text-slate-400">
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-lg font-bold truncate">{t.author}</h3>
+                  <div className="text-sm text-slate-500 dark:text-slate-400 truncate">
                     {t.position}
                   </div>
                 </div>
               </div>
-              <div className="flex space-x-2">
+              <div className="flex space-x-2 w-full sm:w-auto justify-end">
                 <Button
                   as={Link}
                   to={`/admin/testimonials/${t.id}`}
                   variant="outline"
                   size="sm"
+                  className="flex-1 sm:flex-none justify-center"
                 >
                   Edit
                 </Button>
@@ -64,6 +65,7 @@ export function AdminTestimonials() {
                   size="sm"
                   onClick={() => handleDelete(t.id, 'testimonial')}
                   disabled={isDeleting}
+                  className="flex-1 sm:flex-none justify-center"
                 >
                   Delete
                 </Button>

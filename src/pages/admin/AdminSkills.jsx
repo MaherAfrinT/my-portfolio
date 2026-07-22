@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { collection, doc, getDocs, setDoc, deleteDoc, addDoc, query, orderBy } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { Card, CardContent } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Plus, Trash2 } from 'lucide-react';
-import { DEFAULT_SITE_CONFIG, COLLECTIONS } from '../../lib/constants';
+import { COLLECTIONS } from '../../lib/constants';
 
 export function AdminSkills() {
   const [skills, setSkills] = useState([]);
+  const [initialSkills, setInitialSkills] = useState([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
@@ -16,14 +17,14 @@ export function AdminSkills() {
   useEffect(() => {
     async function fetchSkills() {
       try {
-        const docRef = doc(db, COLLECTIONS.CONFIG, 'main');
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          setSkills(data.skills || []);
-        } else {
-          setSkills(DEFAULT_SITE_CONFIG.skills || []);
-        }
+        const q = query(collection(db, COLLECTIONS.SKILLS), orderBy('order', 'asc'));
+        const querySnapshot = await getDocs(q);
+        const fetchedSkills = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setSkills(fetchedSkills);
+        setInitialSkills(fetchedSkills);
       } catch (err) {
         console.error('Failed to load skills', err);
       } finally {
@@ -37,7 +38,28 @@ export function AdminSkills() {
     setSaving(true);
     setMessage('');
     try {
-      await setDoc(doc(db, COLLECTIONS.CONFIG, 'main'), { skills }, { merge: true });
+      const currentIds = skills.map((s) => s.id).filter(Boolean);
+      const toDelete = initialSkills.filter((s) => s.id && !currentIds.includes(s.id));
+
+      for (const cat of toDelete) {
+        await deleteDoc(doc(db, COLLECTIONS.SKILLS, cat.id));
+      }
+
+      const updatedSkills = [];
+      for (let i = 0; i < skills.length; i++) {
+        const cat = { ...skills[i], order: i };
+        let newId = cat.id;
+        if (cat.id) {
+          await setDoc(doc(db, COLLECTIONS.SKILLS, cat.id), cat, { merge: true });
+        } else {
+          const docRef = await addDoc(collection(db, COLLECTIONS.SKILLS), cat);
+          newId = docRef.id;
+        }
+        updatedSkills.push({ ...cat, id: newId });
+      }
+      
+      setSkills(updatedSkills);
+      setInitialSkills(updatedSkills);
       setMessage('Skills saved successfully!');
     } catch (error) {
       console.error('Error saving skills:', error);
@@ -99,7 +121,7 @@ export function AdminSkills() {
         <Button
           onClick={handleSave}
           isLoading={saving}
-          className="bg-cyan-500 font-bold text-slate-900 hover:bg-cyan-600"
+          className="bg-cyan-500 font-bold text-[#0e2a36] hover:bg-cyan-600"
         >
           Save Changes
         </Button>

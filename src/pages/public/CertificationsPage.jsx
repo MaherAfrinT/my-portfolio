@@ -47,7 +47,7 @@ export function CertificationsPage() {
                 Certifications
               </span>
             </h1>
-            <p className="max-w-2xl text-xl text-slate-600 dark:text-slate-400">
+            <p className="max-w-2xl text-xl text-[#566e7a] dark:text-slate-400">
               A comprehensive list of my professional credentials and
               achievements.
             </p>
@@ -63,7 +63,7 @@ export function CertificationsPage() {
                 className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all duration-300 ${
                   selectedTag
                     ? 'border-cyan-500/50 bg-cyan-500/10 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.2)]'
-                    : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 dark:border-[#333] dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:border-[#555]'
+                    : 'border-slate-200 bg-white text-[#566e7a] hover:border-slate-300 dark:border-[#333] dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:border-[#555]'
                 }`}
               >
                 <Filter size={14} />
@@ -88,7 +88,7 @@ export function CertificationsPage() {
                       className={`flex w-full items-center rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors ${
                         selectedTag === null
                           ? 'bg-cyan-500/15 text-cyan-400'
-                          : 'text-slate-600 hover:bg-slate-100 dark:text-[#EDEDED] dark:hover:bg-[#222]'
+                          : 'text-[#566e7a] hover:bg-slate-100 dark:text-[#EDEDED] dark:hover:bg-[#222]'
                       }`}
                     >
                       All
@@ -100,7 +100,7 @@ export function CertificationsPage() {
                         className={`flex w-full items-center rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors ${
                           selectedTag === tag
                             ? 'bg-cyan-500/15 text-cyan-400'
-                            : 'text-slate-600 hover:bg-slate-100 dark:text-[#EDEDED] dark:hover:bg-[#222]'
+                            : 'text-[#566e7a] hover:bg-slate-100 dark:text-[#EDEDED] dark:hover:bg-[#222]'
                         }`}
                       >
                         {tag}
@@ -167,7 +167,7 @@ export function CertificationsPage() {
                           </div>
                         )}
                         <div>
-                          <h3 className="line-clamp-1 text-xl font-bold text-slate-900 transition-colors group-hover:text-cyan-500 dark:text-white">
+                          <h3 className="line-clamp-1 text-xl font-bold text-[#0e2a36] transition-colors group-hover:text-cyan-500 dark:text-white">
                             {cert.title}
                           </h3>
                           <div className="mt-1 font-mono text-sm text-cyan-600 dark:text-cyan-400">
@@ -176,7 +176,7 @@ export function CertificationsPage() {
                         </div>
                       </div>
 
-                      <p className="mb-6 line-clamp-2 flex-grow text-sm text-slate-600 dark:text-slate-400">
+                      <p className="mb-6 line-clamp-2 flex-grow text-sm text-[#566e7a] dark:text-slate-400">
                         {cert.fullName}
                       </p>
 
@@ -184,13 +184,13 @@ export function CertificationsPage() {
                         {cert.tags?.slice(0, 3).map((tag, idx) => (
                           <Tag
                             key={idx}
-                            className="border-none bg-slate-100 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-300"
+                            className="border-none bg-slate-100 text-xs text-[#566e7a] dark:bg-slate-800 dark:text-slate-300"
                           >
                             {tag}
                           </Tag>
                         ))}
                         {cert.tags?.length > 3 && (
-                          <Tag className="border-none bg-slate-100 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+                          <Tag className="border-none bg-slate-100 text-xs text-[#566e7a] dark:bg-slate-800 dark:text-slate-300">
                             +{cert.tags.length - 3}
                           </Tag>
                         )}

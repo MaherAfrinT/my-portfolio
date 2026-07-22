@@ -45,14 +45,14 @@ export function MarkdownEditor({ value, onChange, minHeight = '400px' }) {
         <button
           type="button"
           onClick={() => setIsPreview(false)}
-          className={`px-4 py-2 text-sm font-medium ${!isPreview ? 'border-t-2 border-cyan-500 bg-white text-cyan-600 dark:bg-slate-900 dark:text-cyan-400' : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'}`}
+          className={`px-4 py-2 text-sm font-medium ${!isPreview ? 'border-t-2 border-cyan-500 bg-white text-cyan-600 dark:bg-slate-900 dark:text-cyan-400' : 'text-[#566e7a] hover:text-[#0e2a36] dark:text-slate-400 dark:hover:text-slate-200'}`}
         >
           Write
         </button>
         <button
           type="button"
           onClick={() => setIsPreview(true)}
-          className={`px-4 py-2 text-sm font-medium ${isPreview ? 'border-t-2 border-cyan-500 bg-white text-cyan-600 dark:bg-slate-900 dark:text-cyan-400' : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'}`}
+          className={`px-4 py-2 text-sm font-medium ${isPreview ? 'border-t-2 border-cyan-500 bg-white text-cyan-600 dark:bg-slate-900 dark:text-cyan-400' : 'text-[#566e7a] hover:text-[#0e2a36] dark:text-slate-400 dark:hover:text-slate-200'}`}
         >
           Preview
         </button>

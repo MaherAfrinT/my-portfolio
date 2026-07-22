@@ -9,6 +9,7 @@ import { PublicLayout } from './components/layout/PublicLayout';
 import { AdminLayout } from './components/layout/AdminLayout';
 import { ProtectedRoute } from './components/layout/ProtectedRoute';
 import { ScrollToTop } from './components/layout/ScrollToTop';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 // Public Pages
 const HomePage = React.lazy(() => import('./pages/public/HomePage').then(m => ({ default: m.HomePage })));
@@ -17,6 +18,7 @@ const CareerPage = React.lazy(() => import('./pages/public/CareerPage').then(m =
 const BlogPage = React.lazy(() => import('./pages/public/BlogPage').then(m => ({ default: m.BlogPage })));
 const BlogPostPage = React.lazy(() => import('./pages/public/BlogPostPage').then(m => ({ default: m.BlogPostPage })));
 const JournalPage = React.lazy(() => import('./pages/public/JournalPage').then(m => ({ default: m.JournalPage })));
+const JournalDetailPage = React.lazy(() => import('./pages/public/JournalDetailPage').then(m => ({ default: m.JournalDetailPage })));
 const LoginPage = React.lazy(() => import('./pages/public/LoginPage').then(m => ({ default: m.LoginPage })));
 const CertificationsPage = React.lazy(() => import('./pages/public/CertificationsPage').then(m => ({ default: m.CertificationsPage })));
 const CertificationDetailPage = React.lazy(() => import('./pages/public/CertificationDetailPage').then(m => ({ default: m.CertificationDetailPage })));
@@ -33,6 +35,7 @@ const AdminCareerForm = React.lazy(() => import('./pages/admin/AdminCareerForm')
 const AdminMessages = React.lazy(() => import('./pages/admin/AdminMessages').then(m => ({ default: m.AdminMessages })));
 const AdminSettings = React.lazy(() => import('./pages/admin/AdminSettings').then(m => ({ default: m.AdminSettings })));
 const AdminFooter = React.lazy(() => import('./pages/admin/AdminFooter').then(m => ({ default: m.AdminFooter })));
+const AdminContactPage = React.lazy(() => import('./pages/admin/AdminContactPage').then(m => ({ default: m.AdminContactPage })));
 const AdminManifesto = React.lazy(() => import('./pages/admin/AdminManifesto').then(m => ({ default: m.AdminManifesto })));
 const AdminTestimonials = React.lazy(() => import('./pages/admin/AdminTestimonials').then(m => ({ default: m.AdminTestimonials })));
 const AdminTestimonialForm = React.lazy(() => import('./pages/admin/AdminTestimonialForm').then(m => ({ default: m.AdminTestimonialForm })));
@@ -62,24 +65,25 @@ function App() {
               <Routes>
                 {/* Public Routes */}
                 <Route element={<PublicLayout />}>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/projects" element={<ProjectsPage />} />
-                  <Route path="/projects/:id" element={<ProjectDetailPage />} />
-                  <Route path="/career" element={<CareerPage />} />
-                  <Route path="/blog" element={<BlogPage />} />
-                  <Route path="/blog/:slug" element={<BlogPostPage />} />
-                  <Route path="/journal" element={<JournalPage />} />
+                  <Route path="/" element={<ErrorBoundary><HomePage /></ErrorBoundary>} />
+                  <Route path="/projects" element={<ErrorBoundary><ProjectsPage /></ErrorBoundary>} />
+                  <Route path="/projects/:id" element={<ErrorBoundary><ProjectDetailPage /></ErrorBoundary>} />
+                  <Route path="/career" element={<ErrorBoundary><CareerPage /></ErrorBoundary>} />
+                  <Route path="/blog" element={<ErrorBoundary><BlogPage /></ErrorBoundary>} />
+                  <Route path="/blog/:slug" element={<ErrorBoundary><BlogPostPage /></ErrorBoundary>} />
+                  <Route path="/journal" element={<ErrorBoundary><JournalPage /></ErrorBoundary>} />
+                  <Route path="/journal/:id" element={<ErrorBoundary><JournalDetailPage /></ErrorBoundary>} />
                   <Route
                     path="/certifications"
-                    element={<CertificationsPage />}
+                    element={<ErrorBoundary><CertificationsPage /></ErrorBoundary>}
                   />
                   <Route
                     path="/certifications/:id"
-                    element={<CertificationDetailPage />}
+                    element={<ErrorBoundary><CertificationDetailPage /></ErrorBoundary>}
                   />
-                  <Route path="/contact" element={<ContactPage />} />
-                  <Route path="/login" element={<LoginPage />} />
-                  <Route path="*" element={<UnderConstructionPage />} />
+                  <Route path="/contact" element={<ErrorBoundary><ContactPage /></ErrorBoundary>} />
+                  <Route path="/login" element={<ErrorBoundary><LoginPage /></ErrorBoundary>} />
+                  <Route path="*" element={<ErrorBoundary><UnderConstructionPage /></ErrorBoundary>} />
                 </Route>
 
                 {/* Admin Protected Routes */}
@@ -134,6 +138,7 @@ function App() {
                     <Route path="manifesto" element={<AdminManifesto />} />
                     <Route path="settings" element={<AdminSettings />} />
                     <Route path="footer" element={<AdminFooter />} />
+                    <Route path="contact-page" element={<AdminContactPage />} />
 
                     {/* Catchall admin */}
                     <Route path="*" element={<Navigate to="/admin" replace />} />

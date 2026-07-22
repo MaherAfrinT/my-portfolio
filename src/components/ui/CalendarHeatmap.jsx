@@ -6,6 +6,7 @@ import {
   startOfDay,
   getDay,
 } from 'date-fns';
+import { motion } from 'framer-motion';
 
 export function CalendarHeatmap({ entries = [] }) {
   // intensity colors from 0 to 4
@@ -110,8 +111,11 @@ export function CalendarHeatmap({ entries = [] }) {
                     );
 
                   return (
-                    <div
+                    <motion.div
                       key={day.dateStr}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: (wIndex * 7 + dIndex) * 0.003, duration: 0.5, ease: 'easeOut' }}
                       title={`${format(day.date, 'MMM d, yyyy')}${day.count > 0 ? `\n${day.count} entry${day.count !== 1 ? 's' : ''}` : '\nNo entries'}`}
                       className={`h-3 w-3 rounded-sm transition-colors duration-200 ${colorScale[day.intensity]}`}
                     />

@@ -6,7 +6,7 @@
 
 @theme {
   /* Typography */
-  --font-sans: "Inter", sans-serif;
+  --font-sans: "Inter", "Noto Sans Bengali", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 
   /* Theme Variables */
@@ -29,7 +29,7 @@ html {
 }
 
 body {
-  @apply bg-[#F8F9FA] text-slate-800 dark:bg-[#0A0A0A] dark:text-slate-200 transition-colors duration-500 selection:bg-[#00E5FF] selection:text-[#0A0A0A];
+  @apply bg-[#F4F7F8] text-[#163847] dark:bg-[#0A0A0A] dark:text-slate-200 transition-colors duration-500 selection:bg-[#00E5FF] selection:text-[#0A0A0A];
 }
 
 .glass-panel {

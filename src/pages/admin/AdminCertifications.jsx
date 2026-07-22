@@ -22,7 +22,7 @@ export function AdminCertifications() {
     <div className="space-y-6">
       <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
+          <h1 className="text-2xl font-bold text-[#0e2a36] dark:text-white">
             Certifications
           </h1>
           <p className="mt-1 text-sm text-slate-500">
@@ -51,7 +51,7 @@ export function AdminCertifications() {
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+      <div className="hidden md:block overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
         {certifications?.length === 0 ? (
           <div className="p-8 text-center text-slate-500">
             No certifications added yet. Click the button above to add one.
@@ -61,19 +61,19 @@ export function AdminCertifications() {
             <table className="w-full border-collapse text-left">
               <thead>
                 <tr className="border-b border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-800/50">
-                  <th className="p-4 font-semibold text-slate-600 dark:text-slate-300">
+                  <th className="p-4 font-semibold text-[#566e7a] dark:text-slate-300">
                     Badge
                   </th>
-                  <th className="p-4 font-semibold text-slate-600 dark:text-slate-300">
+                  <th className="p-4 font-semibold text-[#566e7a] dark:text-slate-300">
                     Title
                   </th>
-                  <th className="p-4 font-semibold text-slate-600 dark:text-slate-300">
+                  <th className="p-4 font-semibold text-[#566e7a] dark:text-slate-300">
                     Issuer
                   </th>
-                  <th className="p-4 font-semibold text-slate-600 dark:text-slate-300">
+                  <th className="p-4 font-semibold text-[#566e7a] dark:text-slate-300">
                     Date
                   </th>
-                  <th className="p-4 font-semibold text-slate-600 dark:text-slate-300">
+                  <th className="p-4 font-semibold text-[#566e7a] dark:text-slate-300">
                     Actions
                   </th>
                 </tr>
@@ -98,17 +98,17 @@ export function AdminCertifications() {
                       )}
                     </td>
                     <td className="p-4">
-                      <div className="font-medium text-slate-900 dark:text-white">
+                      <div className="font-medium text-[#0e2a36] dark:text-white">
                         {cert.title}
                       </div>
                       <div className="max-w-[200px] truncate text-xs text-slate-500">
                         {cert.fullName}
                       </div>
                     </td>
-                    <td className="p-4 text-slate-600 dark:text-slate-400">
+                    <td className="p-4 text-[#566e7a] dark:text-slate-400">
                       {cert.issuer}
                     </td>
-                    <td className="p-4 text-slate-600 dark:text-slate-400">
+                    <td className="p-4 text-[#566e7a] dark:text-slate-400">
                       {cert.issuedDate}
                     </td>
                     <td className="p-4">
@@ -137,6 +137,74 @@ export function AdminCertifications() {
                 ))}
               </tbody>
             </table>
+          </div>
+        )}
+      </div>
+
+      <div className="block space-y-4 md:hidden">
+        {certifications?.map((cert) => (
+          <div
+            key={cert.id}
+            className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+          >
+            <div className="mb-4 flex items-start gap-4">
+              {cert.badgeUrl ? (
+                <img
+                  src={cert.badgeUrl}
+                  alt={cert.title}
+                  className="h-12 w-12 flex-shrink-0 rounded bg-slate-100 object-contain p-1 dark:bg-slate-800"
+                />
+              ) : (
+                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded bg-slate-100 text-xl dark:bg-slate-800">
+                  🏆
+                </div>
+              )}
+              <div className="min-w-0 flex-1">
+                <h3 className="font-bold text-[#0e2a36] dark:text-white truncate">
+                  {cert.title}
+                </h3>
+                <div className="text-sm text-slate-500 truncate">
+                  {cert.fullName}
+                </div>
+              </div>
+            </div>
+            
+            <div className="mb-4 grid grid-cols-2 gap-2 text-sm text-[#566e7a] dark:text-slate-400">
+              <div>
+                <span className="block text-xs font-semibold text-slate-400">Issuer</span>
+                <span className="truncate block">{cert.issuer}</span>
+              </div>
+              <div>
+                <span className="block text-xs font-semibold text-slate-400">Date</span>
+                <span className="truncate block">{cert.issuedDate}</span>
+              </div>
+            </div>
+
+            <div className="flex space-x-2 w-full">
+              <Button
+                as={Link}
+                to={`/admin/certifications/${cert.id}`}
+                variant="outline"
+                size="sm"
+                className="flex-1 justify-center"
+              >
+                Edit
+              </Button>
+              <Button
+                variant="danger"
+                size="sm"
+                onClick={() => handleDelete(cert.id, 'certification')}
+                disabled={isDeleting}
+                className="flex-1 justify-center"
+              >
+                Delete
+              </Button>
+            </div>
+          </div>
+        ))}
+        {certifications?.length === 0 && (
+          <div className="py-8 text-center text-slate-500">
+            No certifications added yet. Click the button above to add one.
           </div>
         )}
       </div>

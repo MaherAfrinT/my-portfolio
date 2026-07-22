@@ -45,7 +45,7 @@ export function AdminMessages() {
                   <div className="mb-4 text-sm text-slate-400">
                     {formatDate(msg.createdAt)}
                   </div>
-                  <p className="rounded-md bg-slate-50 p-4 whitespace-pre-wrap text-slate-700 dark:bg-slate-800/50 dark:text-slate-300">
+                  <p className="rounded-md bg-slate-50 p-4 whitespace-pre-wrap text-[#385361] dark:bg-slate-800/50 dark:text-slate-300">
                     {msg.message}
                   </p>
                 </div>

@@ -68,10 +68,10 @@ export function HomePage() {
 
   return (
     <PageTransition>
-      <div className="space-y-32 pb-24">
+      <div className="min-h-[calc(100vh-theme(spacing.16))] flex flex-col justify-center space-y-32 pb-24">
         {/* Hero Section */}
         {config.sectionVisibility?.hero !== false && (
-          <section className="flex min-h-[85vh] flex-col items-center justify-between gap-12 pt-12 md:flex-row md:pt-20">
+          <section className="flex flex-col items-center justify-between gap-12 md:flex-row">
             <motion.div
               className="flex-1 space-y-6"
               variants={containerVariants}
@@ -80,13 +80,13 @@ export function HomePage() {
             >
               <motion.p
                 variants={cardVariants}
-                className="font-mono text-lg text-cyan-400 dark:text-[#00ffcc]"
+                className="font-mono text-lg text-[#009bbf] dark:text-[#00ffcc]"
               >
                 {config.greetingText || DEFAULT_SITE_CONFIG.greetingText}{' '}
                 {config.name}.
               </motion.p>
               <motion.h1 variants={cardVariants} className="flex flex-col gap-1 min-h-[160px] md:min-h-[180px]">
-                <span className="text-4xl font-extrabold tracking-tight text-slate-900 md:text-6xl dark:text-white">
+                <span className="text-4xl font-extrabold tracking-tight text-[#0e2a36] md:text-6xl dark:text-white">
                   {config.heroPrefix || DEFAULT_SITE_CONFIG.heroPrefix}
                 </span>
                 <TypewriterHeadline
@@ -97,7 +97,7 @@ export function HomePage() {
               </motion.h1>
               <motion.div
                 variants={cardVariants}
-                className="max-w-xl pt-4 text-base leading-relaxed text-slate-700 md:text-lg dark:text-slate-300"
+                className="max-w-xl pt-4 text-base leading-relaxed text-[#385361] md:text-lg dark:text-slate-300"
               >
                 <KineticText
                   text={config.tagline || DEFAULT_SITE_CONFIG.tagline}
@@ -108,23 +108,25 @@ export function HomePage() {
                 variants={cardVariants}
                 className="flex flex-wrap gap-4 pt-8"
               >
-                <Button
-                  as="a"
-                  href={config.resumeUrl || '#'}
-                  target={config.resumeUrl ? '_blank' : '_self'}
-                  rel="noopener noreferrer"
-                  download
-                  size="lg"
-                  className="flex items-center gap-2 border-none bg-cyan-500 text-slate-900 shadow-[0_0_15px_rgba(0,255,204,0.3)] transition-transform hover:scale-105 hover:bg-cyan-600"
-                >
-                  <LucideIcons.Download className="h-4 w-4" /> Resume
-                </Button>
+                {config.sectionVisibility?.resumeButton !== false && (
+                  <Button
+                    as="a"
+                    href={config.resumeUrl || '#'}
+                    target={config.resumeUrl ? '_blank' : '_self'}
+                    rel="noopener noreferrer"
+                    download
+                    size="lg"
+                    className="flex items-center gap-2 border-none bg-[#009bbf] dark:bg-cyan-500 text-white dark:text-[#0e2a36] shadow-[#009bbf]/20 dark:shadow-[0_0_15px_rgba(0,255,204,0.3)] transition-transform hover:scale-105 hover:bg-[#0089a8] dark:hover:bg-cyan-600"
+                  >
+                    <LucideIcons.Download className="h-4 w-4" /> Resume
+                  </Button>
+                )}
                 <Button
                   as={Link}
                   to="/projects"
                   size="lg"
                   variant="outline"
-                  className="flex items-center gap-2 shadow-[0_0_15px_rgba(0,255,204,0.1)] transition-transform hover:scale-105"
+                  className="flex items-center gap-2 shadow-[#009bbf]/10 dark:shadow-[0_0_15px_rgba(0,255,204,0.1)] transition-transform hover:scale-105"
                 >
                   View Projects <LucideIcons.ArrowUpRight className="h-4 w-4" />
                 </Button>
@@ -139,14 +141,14 @@ export function HomePage() {
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
                 <div className="relative h-64 w-64 md:h-96 md:w-96">
-                  <div className="animate-pulse-glow absolute inset-0 rounded-full bg-cyan-500/20 blur-3xl filter dark:bg-[#00ffcc]/10"></div>
+                  <div className="animate-pulse-glow absolute inset-0 rounded-full bg-[#009bbf]/20 blur-3xl filter dark:bg-[#00ffcc]/10"></div>
                   <img
                     src={config.heroImageUrl}
                     alt={config.name || 'Hero'}
                     loading="lazy"
                     width="384"
                     height="384"
-                    className="relative z-10 h-full w-full rounded-full border-4 border-cyan-500/30 object-cover shadow-[0_0_30px_rgba(0,255,204,0.3)]"
+                    className="relative z-10 h-full w-full rounded-full border-4 border-[#009bbf]/30 dark:border-cyan-500/30 object-cover shadow-[#009bbf]/20 dark:shadow-[0_0_30px_rgba(0,255,204,0.3)]"
                   />
                 </div>
               </motion.div>
@@ -159,15 +161,15 @@ export function HomePage() {
           <section id="about" className="scroll-mt-24">
             <Reveal>
             <h2 className="mb-8 flex items-center font-mono text-3xl font-bold">
-              <span className="mr-4 text-cyan-500 dark:text-[#00ffcc]">
+              <span className="mr-4 text-[#009bbf] dark:text-[#00ffcc]">
                 01.
               </span>{' '}
               About Me
             </h2>
             <div className="flex flex-col items-start gap-8 md:flex-row">
-              <div className="glass-panel rounded-xl group relative w-full flex-1 overflow-hidden p-8 shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:border-cyan-500/50 hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                <p className="relative z-10 text-lg leading-relaxed whitespace-pre-wrap text-slate-700 dark:text-slate-300">
+              <div className="glass-panel rounded-xl group relative w-full flex-1 overflow-hidden p-8 shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:border-[#009bbf]/30 hover:shadow-[#009bbf]/10 dark:hover:border-cyan-500/50 dark:hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#009bbf]/5 to-emerald-700/5 dark:from-cyan-500/5 dark:to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                <p className="relative z-10 text-lg leading-relaxed whitespace-pre-wrap text-[#385361] dark:text-slate-300">
                   {config.about || DEFAULT_SITE_CONFIG.about}
                 </p>
               </div>
@@ -182,7 +184,7 @@ export function HomePage() {
                     src={config.aboutImageUrl}
                     alt="About Me"
                     loading="lazy"
-                    className="h-auto w-full rounded-2xl border-2 border-cyan-500/20 object-cover shadow-xl shadow-[0_0_20px_rgba(0,255,204,0.15)]"
+                    className="h-auto w-full rounded-2xl border-2 border-[#009bbf]/20 dark:border-cyan-500/20 object-cover shadow-xl shadow-[#009bbf]/20 dark:shadow-[0_0_20px_rgba(0,255,204,0.15)]"
                   />
                 </motion.div>
               )}
@@ -196,7 +198,7 @@ export function HomePage() {
           <section id="skills" className="scroll-mt-24">
             <Reveal>
             <h2 className="mb-8 flex items-center font-mono text-3xl font-bold">
-              <span className="mr-4 text-cyan-500 dark:text-[#00ffcc]">
+              <span className="mr-4 text-[#009bbf] dark:text-[#00ffcc]">
                 02.
               </span>{' '}
               Skills
@@ -215,10 +217,10 @@ export function HomePage() {
 
                 return (
                   <motion.div key={idx} variants={cardVariants}>
-                    <div className="glass-panel rounded-xl group relative h-full overflow-hidden p-6 transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:border-cyan-500/50 hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                      <h3 className="relative z-10 mb-6 flex items-center gap-3 border-b border-slate-200 pb-4 text-xl font-bold text-slate-900 dark:border-slate-800 dark:text-white">
-                        <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg bg-cyan-500/10 text-cyan-500 dark:text-[#00ffcc]">
+                    <div className="glass-panel rounded-xl group relative h-full overflow-hidden p-6 transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:border-[#009bbf]/30 hover:shadow-[#009bbf]/10 dark:hover:border-cyan-500/50 dark:hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#009bbf]/5 to-emerald-700/5 dark:from-cyan-500/5 dark:to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                      <h3 className="relative z-10 mb-6 flex items-center gap-3 border-b border-slate-200 pb-4 text-xl font-bold text-[#0e2a36] dark:border-slate-800 dark:text-white">
+                        <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg bg-[#009bbf]/10 text-[#009bbf] dark:bg-cyan-500/10 dark:text-[#00ffcc]">
                           {skillGroup.categoryImageUrl ? (
                             <img src={skillGroup.categoryImageUrl} alt={skillGroup.category} loading="lazy" className="h-full w-full object-cover" />
                           ) : (
@@ -227,7 +229,7 @@ export function HomePage() {
                         </span>
                         {skillGroup.category}
                       </h3>
-                      <ul className="space-y-4">
+                      <ul className="space-y-1">
                         {skillGroup.items.map((item, itemIdx) => {
                           const isLegacy = typeof item === 'string';
                           // Handle all possible object shapes: {name,icon}, {title,id,desc}, etc.
@@ -243,12 +245,10 @@ export function HomePage() {
                           return (
                             <motion.li
                               key={itemIdx}
-                              className="group flex items-center gap-3"
-                              whileHover={{ x: 5 }}
-                              transition={{ type: 'spring', stiffness: 300 }}
+                              className="group/item flex items-center gap-3 p-2 rounded-lg transition-all duration-300 hover:translate-x-1 hover:bg-slate-100 dark:hover:bg-white/5"
                             >
                               {imageUrl ? (
-                                <div className="flex h-8 w-8 items-center justify-center rounded bg-slate-100 p-1.5 transition-colors group-hover:bg-cyan-500/20 dark:bg-slate-800">
+                                <div className="flex h-8 w-8 items-center justify-center rounded bg-slate-100 p-1.5 dark:bg-slate-800">
                                   <img
                                     src={imageUrl}
                                     alt={name}
@@ -261,10 +261,10 @@ export function HomePage() {
                                         'block';
                                     }}
                                   />
-                                  <span className="hidden h-1.5 w-1.5 rounded-full bg-cyan-500 dark:bg-[#00ffcc]"></span>
+                                  <span className="hidden h-1.5 w-1.5 rounded-full bg-[#009bbf] dark:bg-[#00ffcc]"></span>
                                 </div>
                               ) : icon ? (
-                                <div className="flex h-8 w-8 items-center justify-center rounded bg-slate-100 p-1.5 transition-colors group-hover:bg-cyan-500/20 dark:bg-slate-800">
+                                <div className="flex h-8 w-8 items-center justify-center rounded bg-slate-100 p-1.5 dark:bg-slate-800">
                                   <img
                                     src={`https://cdn.simpleicons.org/${icon}/00ffcc`}
                                     alt={name}
@@ -277,14 +277,14 @@ export function HomePage() {
                                         'block';
                                     }}
                                   />
-                                  <span className="hidden h-1.5 w-1.5 rounded-full bg-cyan-500 dark:bg-[#00ffcc]"></span>
+                                  <span className="hidden h-1.5 w-1.5 rounded-full bg-[#009bbf] dark:bg-[#00ffcc]"></span>
                                 </div>
                               ) : (
                                 <div className="flex h-8 w-8 items-center justify-center rounded">
-                                  <span className="h-1.5 w-1.5 rounded-full bg-cyan-500 opacity-50 transition-opacity group-hover:opacity-100 dark:bg-[#00ffcc]"></span>
+                                  <span className="h-1.5 w-1.5 rounded-full bg-slate-400 dark:bg-slate-500 transition-colors group-hover/item:bg-blue-600 dark:group-hover/item:bg-blue-400"></span>
                                 </div>
                               )}
-                              <span className="text-sm font-medium text-slate-600 transition-colors group-hover:text-cyan-500 dark:text-slate-300 dark:group-hover:text-[#00ffcc]">
+                              <span className="text-sm font-medium font-mono text-[#163847] dark:text-slate-200">
                                 {name}
                               </span>
                             </motion.li>
@@ -306,7 +306,7 @@ export function HomePage() {
             <Reveal>
             <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
               <h2 className="flex items-center font-mono text-3xl font-bold">
-                <span className="mr-4 text-cyan-500 dark:text-[#00ffcc]">
+                <span className="mr-4 text-[#009bbf] dark:text-[#00ffcc]">
                   03.
                 </span>{' '}
                 Certifications
@@ -319,8 +319,8 @@ export function HomePage() {
                     onClick={() => setIsCertDropdownOpen(!isCertDropdownOpen)}
                     className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all duration-300 ${
                       selectedCertTag
-                        ? 'border-cyan-500/50 bg-cyan-500/10 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.2)]'
-                        : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 dark:border-[#333] dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:border-[#555]'
+                        ? 'border-[#009bbf]/50 bg-[#f0f9fb] text-[#009bbf] shadow-[#009bbf]/10 dark:border-cyan-500/50 dark:bg-cyan-500/10 dark:text-cyan-400 dark:shadow-[0_0_15px_rgba(6,182,212,0.2)]'
+                        : 'border-slate-200 bg-white text-[#566e7a] hover:border-slate-300 dark:border-[#333] dark:bg-dark-surface dark:text-[#EDEDED] dark:hover:border-[#555]'
                     }`}
                   >
                     <LucideIcons.Filter size={14} />
@@ -344,8 +344,8 @@ export function HomePage() {
                           onClick={() => { setSelectedCertTag(null); setIsCertDropdownOpen(false); }}
                           className={`flex w-full items-center rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors ${
                             selectedCertTag === null
-                              ? 'bg-cyan-500/15 text-cyan-400'
-                              : 'text-slate-600 hover:bg-slate-100 dark:text-[#EDEDED] dark:hover:bg-[#222]'
+                              ? 'bg-[#f0f9fb] text-[#009bbf] dark:bg-cyan-500/15 dark:text-cyan-400'
+                              : 'text-[#566e7a] hover:bg-slate-100 dark:text-[#EDEDED] dark:hover:bg-[#222]'
                           }`}
                         >
                           All
@@ -356,8 +356,8 @@ export function HomePage() {
                             onClick={() => { setSelectedCertTag(tag); setIsCertDropdownOpen(false); }}
                             className={`flex w-full items-center rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors ${
                               selectedCertTag === tag
-                                ? 'bg-cyan-500/15 text-cyan-400'
-                                : 'text-slate-600 hover:bg-slate-100 dark:text-[#EDEDED] dark:hover:bg-[#222]'
+                                ? 'bg-[#f0f9fb] text-[#009bbf] dark:bg-cyan-500/15 dark:text-cyan-400'
+                                : 'text-[#566e7a] hover:bg-slate-100 dark:text-[#EDEDED] dark:hover:bg-[#222]'
                             }`}
                           >
                             {tag}
@@ -374,7 +374,7 @@ export function HomePage() {
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     onClick={() => setSelectedCertTag(null)}
-                    className="flex items-center gap-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1.5 text-xs font-medium text-cyan-400 transition-colors hover:bg-cyan-500/20"
+                    className="flex items-center gap-1 rounded-full border border-[#009bbf]/30 bg-[#f0f9fb] px-3 py-1.5 text-xs font-medium text-[#009bbf] transition-colors hover:bg-indigo-100 dark:border-cyan-500/30 dark:bg-cyan-500/10 dark:text-cyan-400 dark:hover:bg-cyan-500/20"
                   >
                     {selectedCertTag}
                     <LucideIcons.X size={12} />
@@ -403,8 +403,8 @@ export function HomePage() {
                     transition={{ duration: 0.3 }}
                   >
                     <Link to={`/certifications/${cert.id}`}>
-                      <div className="glass-panel rounded-xl group relative flex h-full cursor-pointer flex-col overflow-hidden p-6 shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:border-cyan-500/50 hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
-                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                      <div className="glass-panel rounded-xl group relative flex h-full cursor-pointer flex-col overflow-hidden p-6 shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:border-[#009bbf]/30 hover:shadow-[#009bbf]/10 dark:hover:border-cyan-500/50 dark:hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
+                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#009bbf]/5 to-emerald-700/5 dark:from-cyan-500/5 dark:to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
                         <div className="mb-4 flex items-start gap-4">
                           {cert.badgeUrl ? (
@@ -422,16 +422,16 @@ export function HomePage() {
                             </div>
                           )}
                           <div>
-                            <h3 className="line-clamp-1 text-xl font-bold text-slate-900 transition-colors group-hover:text-cyan-500 dark:text-white">
+                            <h3 className="line-clamp-1 text-xl font-bold text-[#0e2a36] transition-colors group-hover:text-[#009bbf] dark:group-hover:text-cyan-500 dark:text-white">
                               {cert.title}
                             </h3>
-                            <div className="mt-1 font-mono text-sm text-cyan-600 dark:text-cyan-400">
+                            <div className="mt-1 font-mono text-sm text-[#009bbf] dark:text-cyan-400">
                               {cert.issuer}
                             </div>
                           </div>
                         </div>
 
-                        <p className="mb-6 line-clamp-2 flex-grow text-sm text-slate-600 dark:text-slate-400">
+                        <p className="mb-6 line-clamp-2 flex-grow text-sm text-[#566e7a] dark:text-slate-400">
                           {cert.fullName}
                         </p>
 
@@ -439,13 +439,13 @@ export function HomePage() {
                           {cert.tags?.slice(0, 3).map((tag, idx) => (
                             <Tag
                               key={idx}
-                              className="border-none bg-slate-100 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-300"
+                              className="border-none bg-slate-100 text-xs text-[#566e7a] dark:bg-slate-800 dark:text-slate-300"
                             >
                               {tag}
                             </Tag>
                           ))}
                           {cert.tags?.length > 3 && (
-                            <Tag className="border-none bg-slate-100 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+                            <Tag className="border-none bg-slate-100 text-xs text-[#566e7a] dark:bg-slate-800 dark:text-slate-300">
                               +{cert.tags.length - 3}
                             </Tag>
                           )}
@@ -489,7 +489,7 @@ export function HomePage() {
           <section id="manifesto" className="scroll-mt-24">
             <Reveal>
             <h2 className="mb-8 flex items-center font-mono text-3xl font-bold">
-              <span className="mr-4 text-cyan-500 dark:text-[#00ffcc]">
+              <span className="mr-4 text-[#009bbf] dark:text-[#00ffcc]">
                 04.
               </span>{' '}
               My Manifesto
@@ -508,17 +508,17 @@ export function HomePage() {
                     key={item.id || item.title}
                     variants={cardVariants}
                   >
-                    <div className="glass-panel rounded-xl group relative h-full overflow-hidden p-6 shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:border-cyan-500/50 hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    <div className="glass-panel rounded-xl group relative h-full overflow-hidden p-6 shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] hover:border-[#009bbf]/30 hover:shadow-[#009bbf]/10 dark:hover:border-cyan-500/50 dark:hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#009bbf]/5 to-emerald-700/5 dark:from-cyan-500/5 dark:to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                       <div className="relative z-10 flex items-start gap-4">
-                        <span className="shrink-0 font-mono text-3xl leading-none font-black text-cyan-500/30 dark:text-[#00ffcc]/30">
+                        <span className="shrink-0 font-mono text-3xl leading-none font-black text-[#009bbf]/30 dark:text-[#00ffcc]/30">
                           {item.id || '—'}
                         </span>
                         <div>
-                          <h3 className="mb-2 text-lg font-bold text-slate-900 dark:text-white">
+                          <h3 className="mb-2 text-lg font-bold text-[#0e2a36] dark:text-white">
                             {item.title}
                           </h3>
-                          <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                          <p className="text-sm leading-relaxed text-[#566e7a] dark:text-slate-400">
                             {item.desc}
                           </p>
                         </div>
@@ -529,11 +529,11 @@ export function HomePage() {
               </motion.div>
             ) : (
               /* String format — render as single quote block */
-              <div className="glass-panel rounded-xl group relative overflow-hidden p-8 text-center shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:border-cyan-500/50 hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)] md:p-12">
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              <div className="glass-panel rounded-xl group relative overflow-hidden p-8 text-center shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:border-[#009bbf]/30 hover:shadow-[#009bbf]/10 dark:hover:border-cyan-500/50 dark:hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)] md:p-12">
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#009bbf]/5 to-emerald-700/5 dark:from-cyan-500/5 dark:to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                 <div className="relative z-10">
-                  <LucideIcons.Quote className="mx-auto mb-6 h-12 w-12 text-cyan-500/30 md:h-16 md:w-16 dark:text-[#00ffcc]/30" />
-                  <p className="text-xl leading-relaxed font-bold text-slate-800 italic md:text-3xl dark:text-slate-100">
+                  <LucideIcons.Quote className="mx-auto mb-6 h-12 w-12 text-[#009bbf]/30 md:h-16 md:w-16 dark:text-[#00ffcc]/30" />
+                  <p className="text-xl leading-relaxed font-bold text-[#163847] italic md:text-3xl dark:text-slate-100">
                     "
                     {typeof config.manifesto === 'string' && config.manifesto
                       ? config.manifesto
@@ -551,28 +551,30 @@ export function HomePage() {
         {config.sectionVisibility?.contactCTA !== false && (
           <section id="contact" className="scroll-mt-24 pb-24">
             <Reveal>
-            <div className="glass-panel rounded-3xl group relative overflow-hidden p-12 text-center shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:border-cyan-500/50 hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)] md:p-20">
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+            <div className="glass-panel rounded-3xl group relative overflow-hidden p-12 text-center shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:border-[#009bbf]/30 hover:shadow-[#009bbf]/10 dark:hover:border-cyan-500/50 dark:hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)] md:p-20">
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#009bbf]/5 to-emerald-700/5 dark:from-cyan-500/5 dark:to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               <div className="relative z-10 flex flex-col items-center justify-center">
                 <div className="mb-6 flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white/50 px-4 py-2 dark:border-slate-800 dark:bg-slate-900/50">
                   <span className="relative flex h-2 w-2">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
                   </span>
-                  <span className="text-xs font-medium text-slate-600 dark:text-slate-400">
+                  <span className="text-xs font-medium text-[#566e7a] dark:text-slate-400">
                     {config.ctaBadge || 'Available for work'}
                   </span>
                 </div>
-                <h2 className="mb-8 max-w-2xl text-4xl font-extrabold text-slate-900 md:text-6xl dark:text-white">
+                <h2 className="mb-8 max-w-2xl text-4xl font-extrabold text-[#0e2a36] md:text-6xl dark:text-white">
                   {config.ctaTitle || "Let's create your next big idea."}
                 </h2>
-                <Button
-                  as={Link}
-                  to="/contact"
-                  className="rounded-full border border-slate-800 bg-transparent px-8 py-6 text-lg font-medium text-slate-900 transition-all hover:bg-slate-900 hover:text-white dark:border-slate-200 dark:text-white dark:hover:bg-white dark:hover:text-slate-900"
-                >
-                  {config.ctaButtonText || 'Contact Me'}
-                </Button>
+                {config.sectionVisibility?.ctaButton !== false && (
+                  <Button
+                    as={Link}
+                    to="/contact"
+                    className="rounded-full border border-slate-800 bg-transparent px-8 py-6 text-lg font-medium text-[#0e2a36] transition-all hover:bg-slate-900 hover:text-white dark:border-slate-200 dark:text-white dark:hover:bg-white dark:hover:text-[#0e2a36]"
+                  >
+                    {config.ctaButtonText || 'Contact Me'}
+                  </Button>
+                )}
               </div>
             </div>
           </Reveal>

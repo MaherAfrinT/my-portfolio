@@ -45,7 +45,7 @@ export function ProjectsPage() {
                 {config.projectsPageTitle || DEFAULT_SITE_CONFIG.projectsPageTitle}
               </span>
             </h1>
-            <p className="max-w-2xl text-xl text-slate-600 dark:text-slate-400">
+            <p className="max-w-2xl text-xl text-[#566e7a] dark:text-slate-400">
               {config.projectsPageSubtitle || DEFAULT_SITE_CONFIG.projectsPageSubtitle}
             </p>
           </header>
@@ -75,7 +75,7 @@ export function ProjectsPage() {
                   variants={cardVariants}
                   className="group relative"
                 >
-                  <Link to={`/projects/${project.id}`} className="block h-full">
+                  <Link to={`/projects/${String(project.id || '')}`} className="block h-full">
                     <Card className="relative flex h-full flex-col overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:border-cyan-500/50 hover:shadow-[0_8px_30px_rgba(0,255,204,0.15)]">
                       <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                       <CardImage src={project.coverImage} alt={project.title} />
@@ -83,7 +83,7 @@ export function ProjectsPage() {
                         <h3 className="mb-2 text-2xl font-bold">
                           {project.title}
                         </h3>
-                        <p className="mb-4 line-clamp-3 flex-1 text-slate-600 dark:text-slate-400">
+                        <p className="mb-4 line-clamp-3 flex-1 text-[#566e7a] dark:text-slate-400">
                           {project.summary || 'No summary provided.'}
                         </p>
 

@@ -10,13 +10,17 @@ export function SiteConfigProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let unsubscribeConfig = () => {};
+    let unsubscribeSkills = () => {};
+
     // Listen to real-time updates for site config
-    const unsubscribe = onSnapshot(
+    unsubscribeConfig = onSnapshot(
       doc(db, 'config', 'main'),
       (docSnap) => {
-        if (docSnap.exists()) {
-          setConfig({ ...DEFAULT_SITE_CONFIG, ...docSnap.data() });
-        }
+        setConfig((prev) => ({
+          ...prev,
+          ...(docSnap.exists() ? docSnap.data() : {}),
+        }));
         setLoading(false);
       },
       (error) => {
@@ -25,7 +29,28 @@ export function SiteConfigProvider({ children }) {
       }
     );
 
-    return () => unsubscribe();
+    // Listen to real-time updates for skills collection
+    import('firebase/firestore').then(({ collection, query, orderBy }) => {
+      const q = query(collection(db, 'skills'), orderBy('order', 'asc'));
+      unsubscribeSkills = onSnapshot(
+        q,
+        (snapshot) => {
+          const fetchedSkills = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setConfig((prev) => ({ ...prev, skills: fetchedSkills }));
+        },
+        (error) => {
+          console.error('Error fetching skills:', error);
+        }
+      );
+    });
+
+    return () => {
+      unsubscribeConfig();
+      unsubscribeSkills();
+    };
   }, []);
 
   return (

@@ -16,9 +16,26 @@ export function ContactPage() {
     message: '',
   });
   const [status, setStatus] = useState('idle');
+  const [loadTime, setLoadTime] = useState(Date.now());
+  const [botcheck, setBotcheck] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Honeypot check
+    if (botcheck) {
+      // Silently reject if honeypot is filled
+      setStatus('success');
+      return;
+    }
+
+    // Time trap check (3 seconds)
+    if (Date.now() - loadTime < 3000) {
+      // Silently reject if submitted too quickly
+      setStatus('success');
+      return;
+    }
+
     if (!formData.name || !formData.email || !formData.message) return;
 
     setStatus('submitting');
@@ -42,10 +59,8 @@ export function ContactPage() {
         <Reveal>
           <header className="mb-12">
             <h1 className="mb-4 text-4xl font-extrabold md:text-6xl">
-              <span className="text-slate-900 dark:text-white">
-                Let's start a project
-                <br />
-                together
+              <span className="text-[#0e2a36] dark:text-white whitespace-pre-line">
+                {config.contactPageTitle || "Let's start a project\ntogether"}
               </span>
             </h1>
           </header>
@@ -56,7 +71,7 @@ export function ContactPage() {
           <Reveal delay={0.1}>
             <div className="relative">
               {status === 'success' ? (
-                <div className="flex h-full flex-col items-center justify-center rounded-2xl bg-slate-900/5 p-12 text-center dark:bg-white/5">
+                <div className="flex h-full flex-col items-center justify-center rounded-3xl bg-white/5 dark:bg-black/20 backdrop-blur-md border border-white/10 dark:border-white/5 shadow-xl p-12 text-center">
                   <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-green-500 dark:bg-green-900/30">
                     <LucideIcons.Check className="h-8 w-8" />
                   </div>
@@ -67,14 +82,25 @@ export function ContactPage() {
                     Thanks for reaching out. I'll get back to you soon.
                   </p>
                   <Button
-                    className="mt-8 bg-cyan-500 text-slate-900 hover:bg-cyan-600"
+                    className="mt-8 bg-cyan-500 text-[#0e2a36] hover:bg-cyan-600"
                     onClick={() => setStatus('idle')}
                   >
                     Send Another
                   </Button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6 rounded-3xl bg-white/5 dark:bg-black/20 backdrop-blur-md border border-white/10 dark:border-white/5 shadow-xl p-8">
+                  {/* Honeypot field - hidden from users but visible to bots */}
+                  <input
+                    type="text"
+                    name="botcheck"
+                    style={{ display: 'none' }}
+                    tabIndex="-1"
+                    autoComplete="off"
+                    value={botcheck}
+                    onChange={(e) => setBotcheck(e.target.value)}
+                  />
+
                   <div className="space-y-2">
                     <label
                       htmlFor="name"
@@ -89,7 +115,7 @@ export function ContactPage() {
                       onChange={(e) =>
                         setFormData({ ...formData, name: e.target.value })
                       }
-                      className="w-full rounded-2xl border border-slate-200 bg-transparent px-4 py-3 text-slate-900 outline-none transition-colors focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 dark:border-slate-800 dark:text-white"
+                      className="w-full rounded-2xl border border-slate-200 bg-transparent px-4 py-3 text-[#0e2a36] outline-none transition-colors focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 dark:border-slate-800 dark:text-white"
                       required
                     />
                   </div>
@@ -108,7 +134,7 @@ export function ContactPage() {
                       onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
                       }
-                      className="w-full rounded-2xl border border-slate-200 bg-transparent px-4 py-3 text-slate-900 outline-none transition-colors focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 dark:border-slate-800 dark:text-white"
+                      className="w-full rounded-2xl border border-slate-200 bg-transparent px-4 py-3 text-[#0e2a36] outline-none transition-colors focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 dark:border-slate-800 dark:text-white"
                       required
                     />
                   </div>
@@ -126,7 +152,7 @@ export function ContactPage() {
                       onChange={(e) =>
                         setFormData({ ...formData, message: e.target.value })
                       }
-                      className="min-h-[160px] w-full resize-none rounded-2xl border border-slate-200 bg-transparent px-4 py-3 text-slate-900 outline-none transition-colors focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 dark:border-slate-800 dark:text-white"
+                      className="min-h-[160px] w-full resize-none rounded-2xl border border-slate-200 bg-transparent px-4 py-3 text-[#0e2a36] outline-none transition-colors focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 dark:border-slate-800 dark:text-white"
                       required
                     />
                   </div>
@@ -140,7 +166,7 @@ export function ContactPage() {
                   <button
                     type="submit"
                     disabled={status === 'submitting'}
-                    className="flex items-center gap-2 rounded-full bg-[#1A1A1A] px-8 py-3 font-medium text-white transition-all hover:bg-black focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-slate-200"
+                    className="flex items-center gap-2 rounded-full bg-[#1A1A1A] px-8 py-3 font-medium text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-cyan-500/20 hover:bg-black focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-70 dark:bg-white dark:text-black dark:hover:bg-slate-200"
                   >
                     {status === 'submitting' ? 'Sending...' : 'Submit'}
                     <LucideIcons.ArrowRight className="h-4 w-4" />
@@ -153,21 +179,11 @@ export function ContactPage() {
           {/* Right Side: Profile Card */}
           <Reveal delay={0.2}>
             <div className="flex h-full flex-col justify-center">
-              <div className="rounded-3xl bg-[#F8F9FA] p-8 dark:bg-[#111111]">
-                <div className="mb-6 flex items-center gap-2">
-                  <span className="relative flex h-3 w-3">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
-                    <span className="relative inline-flex h-3 w-3 rounded-full bg-green-500"></span>
-                  </span>
-                  <span className="text-sm font-medium text-slate-500 dark:text-slate-400">
-                    Available for work
-                  </span>
-                </div>
-
-                {config.heroImageUrl ? (
+              <div className="rounded-3xl bg-white/5 dark:bg-black/20 backdrop-blur-md border border-white/10 dark:border-white/5 shadow-xl p-8">
+                {config.contactPageImage || config.heroImageUrl ? (
                   <div className="mb-6 h-20 w-20 overflow-hidden rounded-full border-2 border-slate-200 dark:border-slate-800">
                     <img
-                      src={config.heroImageUrl}
+                      src={config.contactPageImage || config.heroImageUrl}
                       alt={config.name}
                       className="h-full w-full object-cover"
                     />
@@ -178,10 +194,8 @@ export function ContactPage() {
                   </div>
                 )}
 
-                <p className="mb-8 text-lg leading-relaxed text-slate-700 dark:text-slate-300">
-                  My inbox is always open. Whether you have a project or just
-                  want to say Hi. I would love to hear from you. Feel free to
-                  contact me and I'll get back to you.
+                <p className="mb-8 text-lg leading-relaxed text-[#385361] dark:text-slate-300 whitespace-pre-line">
+                  {config.contactPageText || "My inbox is always open. Whether you have a project or just want to say Hi. I would love to hear from you. Feel free to contact me and I'll get back to you."}
                 </p>
 
               </div>

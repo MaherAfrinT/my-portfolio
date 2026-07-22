@@ -16,14 +16,23 @@ export const DEFAULT_SITE_CONFIG = {
   projectsPageTitle: 'Selected Works',
   projectsPageSubtitle: 'A collection of my recent projects, experiments, and open-source contributions.',
   sectionVisibility: {
+    // Home Page
     hero: true,
     about: true,
     skills: true,
     certifications: true,
-    manifesto: true,
     contactCTA: true,
+    // Career Page
     experience: true,
     testimonials: true,
+    manifesto: true,
+    // Layout & Navigation
+    topNavBar: true,
+    footer: true,
+    // Buttons & Controls
+    resumeButton: true,
+    ctaButton: true,
+    themeToggleButton: true,
   },
   socialLinks: [
     { id: '1', platform: 'GitHub', url: 'https://github.com/', iconName: 'Github' },
@@ -39,11 +48,13 @@ export const DEFAULT_SITE_CONFIG = {
     { id: '6', path: '/contact', label: 'Contact' },
     { id: '7', path: '/admin', label: 'Admin' },
   ],
-  ctaBadge: 'Available for work',
+  isAvailableForWork: true,
   ctaTitle: "Let's create your next big idea.",
   ctaButtonText: 'Contact Me',
   catAccentColor: '#FFFF00',
   catMessage: "You've reached the end! The developer is out walking his cat.",
+  contactPageTitle: "Let's start a project\ntogether",
+  contactPageText: "My inbox is always open. Whether you have a project or just want to say Hi. I would love to hear from you. Feel free to contact me and I'll get back to you."
 };
 
 export const COLLECTIONS = {
@@ -55,5 +66,6 @@ export const COLLECTIONS = {
   TESTIMONIALS: 'testimonials',
   USERS: 'users',
   CONFIG: 'config',
-  MESSAGES: 'contactMessages'
+  MESSAGES: 'contactMessages',
+  SKILLS: 'skills'
 };

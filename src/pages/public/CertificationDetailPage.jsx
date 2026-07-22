@@ -51,7 +51,7 @@ export function CertificationDetailPage() {
     return (
       <PageTransition>
         <div className="flex min-h-[50vh] flex-col items-center justify-center space-y-4">
-          <div className="text-xl text-red-500">{error}</div>
+          <div className="text-xl text-red-500">{error?.message || String(error)}</div>
           <Button onClick={() => navigate('/certifications')}>
             Back to Certifications
           </Button>
@@ -145,11 +145,11 @@ export function CertificationDetailPage() {
                   </span>
                 </div>
 
-                <h1 className="mb-2 text-4xl font-black text-slate-900 md:text-5xl dark:text-white">
+                <h1 className="mb-2 text-4xl font-black text-[#0e2a36] md:text-5xl dark:text-white">
                   {cert.title}
                 </h1>
 
-                <h2 className="mb-6 text-xl font-medium text-slate-600 md:text-2xl dark:text-slate-400">
+                <h2 className="mb-6 text-xl font-medium text-[#566e7a] md:text-2xl dark:text-slate-400">
                   {cert.fullName}
                 </h2>
 
@@ -158,7 +158,7 @@ export function CertificationDetailPage() {
                     <div className="mb-1 text-xs tracking-wider text-slate-500 uppercase">
                       Issuer
                     </div>
-                    <div className="flex items-center font-medium text-slate-900 dark:text-white">
+                    <div className="flex items-center font-medium text-[#0e2a36] dark:text-white">
                       <svg
                         className="mr-2 h-4 w-4 text-cyan-500"
                         fill="none"
@@ -179,7 +179,7 @@ export function CertificationDetailPage() {
                     <div className="mb-1 text-xs tracking-wider text-slate-500 uppercase">
                       Date
                     </div>
-                    <div className="flex items-center font-medium text-slate-900 dark:text-white">
+                    <div className="flex items-center font-medium text-[#0e2a36] dark:text-white">
                       <svg
                         className="mr-2 h-4 w-4 text-cyan-500"
                         fill="none"
@@ -214,7 +214,7 @@ export function CertificationDetailPage() {
                       {cert.tags.map((tag) => (
                         <Tag
                           key={tag}
-                          className="bg-slate-100 text-slate-700 dark:bg-dark-surface dark:text-slate-300"
+                          className="bg-slate-100 text-[#385361] dark:bg-dark-surface dark:text-slate-300"
                         >
                           {tag}
                         </Tag>

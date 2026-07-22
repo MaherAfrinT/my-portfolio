@@ -9,7 +9,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="rounded-full bg-slate-200 p-2 text-slate-800 transition-colors focus:ring-2 focus:ring-cyan-500 focus:outline-none dark:bg-slate-800 dark:text-slate-200"
+      className="rounded-full bg-slate-200 p-2 text-[#163847] transition-colors focus:ring-2 focus:ring-cyan-500 focus:outline-none dark:bg-slate-800 dark:text-slate-200"
       aria-label="Toggle Theme"
     >
       <motion.div
