@@ -80,6 +80,8 @@ export function BlogPage() {
                           <img
                             src={post.coverImage}
                             alt={post.title}
+                            width={384}
+                            height={288}
                             loading="lazy"
                             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                           />

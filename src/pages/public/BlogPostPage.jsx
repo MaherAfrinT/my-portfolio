@@ -142,6 +142,8 @@ export function BlogPostPage() {
               <img
                 src={post.coverImage}
                 alt={post.title}
+                width={768}
+                height={432}
                 className="h-full w-full object-cover"
               />
             </div>

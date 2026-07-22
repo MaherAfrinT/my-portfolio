@@ -124,6 +124,8 @@ export function ProjectDetailPage() {
               <img
                 src={project.coverImage}
                 alt={project.title}
+                width={1024}
+                height={576}
                 className="w-full object-cover max-h-[60vh]"
               />
             </div>

@@ -185,6 +185,8 @@ export function ContactPage() {
                     <img
                       src={config.contactPageImage || config.heroImageUrl}
                       alt={config.name}
+                      width={80}
+                      height={80}
                       className="h-full w-full object-cover"
                     />
                   </div>

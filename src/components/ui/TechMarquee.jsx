@@ -55,6 +55,8 @@ export function TechMarquee({ items = [], speed = 40 }) {
                 <img
                   src={item.imageUrl}
                   alt={name}
+                  width={64}
+                  height={64}
                   className="h-12 w-12 object-contain md:h-16 md:w-16"
                   onError={(e) => {
                     e.target.style.display = 'none';
@@ -65,6 +67,8 @@ export function TechMarquee({ items = [], speed = 40 }) {
                 <img
                   src={`https://cdn.simpleicons.org/${iconSlug}`}
                   alt={name}
+                  width={64}
+                  height={64}
                   className="h-12 w-12 object-contain md:h-16 md:w-16"
                   onError={(e) => {
                     // Fallback if icon isn't found

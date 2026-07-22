@@ -220,6 +220,8 @@ export function CareerPage() {
                           <img
                             src={t.avatarUrl}
                             alt={t.author}
+                            width={48}
+                            height={48}
                             className="h-12 w-12 rounded-full object-cover"
                           />
                         ) : (

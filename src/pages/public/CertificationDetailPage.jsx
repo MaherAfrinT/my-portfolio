@@ -100,6 +100,8 @@ export function CertificationDetailPage() {
                     <img
                       src={cert.badgeUrl}
                       alt={cert.title}
+                      width={192}
+                      height={192}
                       className="max-h-full max-w-full object-contain"
                     />
                   ) : (

@@ -135,6 +135,7 @@ export function ReaderSettingsMenu() {
 
       <button
         onClick={() => setIsOpen(!isOpen)}
+        aria-label="Toggle Reader Settings"
         className="flex h-12 w-12 items-center justify-center rounded-full bg-cyan-500 text-white shadow-xl transition-transform hover:scale-110 hover:bg-cyan-600 active:scale-95"
       >
         <Settings2 className="h-5 w-5" />

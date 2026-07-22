@@ -158,6 +158,8 @@ export function CertificationsPage() {
                             <img
                               src={cert.badgeUrl}
                               alt={cert.title}
+                              width={64}
+                              height={64}
                               className="max-h-full max-w-full object-contain"
                             />
                           </div>
@@ -167,9 +169,9 @@ export function CertificationsPage() {
                           </div>
                         )}
                         <div>
-                          <h3 className="line-clamp-1 text-xl font-bold text-[#0e2a36] transition-colors group-hover:text-cyan-500 dark:text-white">
+                          <h2 className="line-clamp-1 text-xl font-bold text-[#0e2a36] group-hover:text-cyan-500 dark:text-white">
                             {cert.title}
-                          </h3>
+                          </h2>
                           <div className="mt-1 font-mono text-sm text-cyan-600 dark:text-cyan-400">
                             {cert.issuer}
                           </div>

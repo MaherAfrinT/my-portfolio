@@ -165,7 +165,7 @@ export function WalkingCatFooter() {
                 </motion.div>
               )}
             </AnimatePresence>
-            <img src={catSprite} alt="cat sprite" className="cat-image max-w-none" />
+            <img src={catSprite} alt="cat sprite" width={1600} height={2591} className="cat-image max-w-none" />
           </div>
         </div>
 

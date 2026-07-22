@@ -22,6 +22,8 @@ export function CardImage({ src, alt, className }) {
         <img
           src={src}
           alt={alt}
+          width={400}
+          height={192}
           loading="lazy"
           className={cn(
             'h-full w-full object-cover transition-transform duration-500 group-hover:scale-105',

@@ -40,6 +40,8 @@ export function Button({
     <img
       src="/src/assets/parrotsec-logo.svg"
       alt="Loading"
+      width={20}
+      height={20}
       className="h-5 w-5 animate-spin drop-shadow-[0_0_8px_rgba(0,229,255,0.8)]"
     />
   ) : null;
