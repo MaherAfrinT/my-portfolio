@@ -1,6 +1,6 @@
 import {
   Code, Github, Twitter, Linkedin, Facebook, Instagram, Youtube, Link, Mail,
-  FileText, Download, ArrowUpRight, Filter, ChevronDown, X, Quote, Server,
+  FileText, Download, ArrowUpRight, Filter, ChevronDown, ChevronRight, X, Quote, Server,
   Database, Globe, Smartphone, Palette, Figma, Terminal, Briefcase, GraduationCap,
   Award, MapPin, Calendar, ExternalLink, Plus, Trash2, Edit2, Check, Copy,
   AlertCircle, Info, Settings, User, Image, Monitor, Moon, Sun, ArrowRight,
@@ -16,7 +16,7 @@ import {
 
 export const LucideIcons = {
   Code, Github, Twitter, Linkedin, Facebook, Instagram, Youtube, Link, Mail,
-  FileText, Download, ArrowUpRight, Filter, ChevronDown, X, Quote, Server,
+  FileText, Download, ArrowUpRight, Filter, ChevronDown, ChevronRight, X, Quote, Server,
   Database, Globe, Smartphone, Palette, Figma, Terminal, Briefcase, GraduationCap,
   Award, MapPin, Calendar, ExternalLink, Plus, Trash2, Edit2, Check, Copy,
   AlertCircle, Info, Settings, User, Image, Monitor, Moon, Sun, ArrowRight,
