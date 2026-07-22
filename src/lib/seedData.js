@@ -274,15 +274,29 @@ const DEFAULT_JOURNAL_ENTRIES = [
 export async function seedDatabase() {
   try {
     // 1. Seed Config (Main Site Config)
-    // We don't mark the main config as `isSeed` since we don't want to delete the site config.
-    await setDoc(doc(db, 'config', 'main'), {
-      skills: DEFAULT_SKILLS,
-    });
+    // We only seed skills if it's currently empty, and use merge: true
+    // so we never overwrite existing scalar settings like Hero text.
+    const configRef = doc(db, 'config', 'main');
+    const configSnap = await getDoc(configRef);
+    const existingConfig = configSnap.exists() ? configSnap.data() : {};
+
+    if (!existingConfig.skills || existingConfig.skills.length === 0) {
+      await setDoc(configRef, {
+        skills: DEFAULT_SKILLS,
+        isSeeded: true // Flag to identify seeded data
+      }, { merge: true });
+    }
 
     let pastDays = 5;
 
     // Helper to seed a collection
     const seedCollection = async (collectionName, dataArray) => {
+      // Only populate empty collections so we don't overwrite/duplicate
+      const snapshot = await getDocs(collection(db, collectionName));
+      if (!snapshot.empty) {
+        return;
+      }
+
       for (const item of dataArray) {
         pastDays++;
         // Create an artificial past date for ordering
@@ -291,7 +305,7 @@ export async function seedDatabase() {
 
         await addDoc(collection(db, collectionName), {
           ...item,
-          isSeed: true, // Flag to identify seeded data
+          isSeeded: true, // Flag to identify seeded data
           createdAt: mockDate.toISOString(),
           publishedAt: mockDate.toISOString(),
           date: mockDate.toISOString(), // For journal entries
@@ -333,9 +347,25 @@ export async function deleteSeededData() {
 
   try {
     let deletedCount = 0;
+
+    // 1. Safely remove seeded skills without deleting the user's config document
+    const configRef = doc(db, 'config', 'main');
+    const configSnap = await getDoc(configRef);
+    if (configSnap.exists()) {
+      const data = configSnap.data();
+      if (data.isSeeded === true) {
+        await setDoc(configRef, {
+          skills: [],
+          isSeeded: false
+        }, { merge: true });
+        deletedCount++;
+      }
+    }
+
+    // 2. Delete all documents in collections where isSeeded === true
     for (const colName of collectionsToClean) {
       const colRef = collection(db, colName);
-      const q = query(colRef, where('isSeed', '==', true));
+      const q = query(colRef, where('isSeeded', '==', true));
       const snapshot = await getDocs(q);
 
       for (const document of snapshot.docs) {
