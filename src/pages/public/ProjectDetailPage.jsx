@@ -6,7 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
+import { SEO } from '../../components/SEO';
 import { PageTransition } from '../../components/layout/PageTransition';
 import { Tag } from '../../components/ui/Tag';
 import { Button } from '../../components/ui/Button';
@@ -86,10 +86,11 @@ export function ProjectDetailPage() {
 
   return (
     <PageTransition>
-      <Helmet>
-        <title>{project?.title ? `${project.title} | Projects` : 'Projects | Shahariar Sabbir'}</title>
-        <meta name="description" content={project.shortDescription || `Details about ${project.title}`} />
-      </Helmet>
+      <SEO 
+        title={project.title}
+        description={project.summary || project.shortDescription || `Project details for ${project.title}`}
+        image={project.coverImage}
+      />
       <div className="mx-auto max-w-5xl space-y-8 pb-24 pt-8">
         {/* Breadcrumbs */}
         <div className="flex items-center text-sm font-medium text-slate-500 dark:text-slate-400">

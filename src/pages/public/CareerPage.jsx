@@ -8,6 +8,7 @@ import { Tag } from '../../components/ui/Tag';
 import { Reveal } from '../../components/ui/Reveal';
 import { useSiteConfig } from '../../contexts/SiteConfigContext';
 import { WalkingCatFooter } from '../../components/ui/WalkingCatFooter';
+import { DEFAULT_SITE_CONFIG } from '../../lib/constants';
 
 export function CareerPage() {
   const { config } = useSiteConfig();
@@ -33,7 +34,7 @@ export function CareerPage() {
                 href="#experience"
                 className="block font-medium text-slate-500 transition-colors hover:text-cyan-600 dark:hover:text-cyan-500"
               >
-                Experience
+                {config.experienceTabTitle || DEFAULT_SITE_CONFIG.experienceTabTitle}
               </a>
             )}
             {config.sectionVisibility?.testimonials !== false && (
@@ -41,7 +42,7 @@ export function CareerPage() {
                 href="#testimonials"
                 className="block font-medium text-slate-500 transition-colors hover:text-emerald-700 dark:hover:text-purple-500"
               >
-                Testimonials
+                {config.testimonialsTabTitle || DEFAULT_SITE_CONFIG.testimonialsTabTitle}
               </a>
             )}
           </div>
@@ -54,11 +55,11 @@ export function CareerPage() {
               <header className="mb-12 pt-12">
                 <h1 className="mb-6 text-4xl font-extrabold md:text-5xl">
                   <span className="bg-gradient-to-r from-cyan-600 to-emerald-700 dark:from-purple-400 dark:to-pink-500 bg-clip-text text-transparent">
-                    Career Journey
+                    {config.careerPageTitle || DEFAULT_SITE_CONFIG.careerPageTitle}
                   </span>
                 </h1>
                 <p className="max-w-2xl text-xl text-[#566e7a] dark:text-slate-400">
-                  My professional journey and education.
+                  {config.careerPageSubtitle || DEFAULT_SITE_CONFIG.careerPageSubtitle}
                 </p>
               </header>
             </Reveal>
@@ -182,11 +183,11 @@ export function CareerPage() {
               <header className="mb-12">
                 <h2 className="mb-6 text-3xl font-extrabold md:text-4xl">
                   <span className="bg-gradient-to-r from-cyan-600 to-emerald-700 dark:from-cyan-400 dark:to-purple-500 bg-clip-text text-transparent">
-                    Testimonials
+                    {config.testimonialsSectionTitle || DEFAULT_SITE_CONFIG.testimonialsSectionTitle}
                   </span>
                 </h2>
                 <p className="max-w-2xl text-lg text-[#566e7a] dark:text-slate-400">
-                  What people say about working with me.
+                  {config.testimonialsSectionSubtitle || DEFAULT_SITE_CONFIG.testimonialsSectionSubtitle}
                 </p>
               </header>
             </Reveal>

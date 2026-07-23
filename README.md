@@ -37,3 +37,7 @@ The website features a fully functional, secure Admin Dashboard built with Fireb
 * **Skills:** The Skills section uses SimpleIcons for logos. When adding a skill, enter the exact slug from [SimpleIcons.org](https://simpleicons.org/) (e.g., `react`, `nodedotjs`) for the logo to appear perfectly.
 * **Manifesto:** You can easily append or edit paragraphs for your manifesto in the admin settings. Changes reflect instantly on the frontend.
 * **Atomic Saves:** The dashboard includes an "Unsaved Changes" guard and uses Firebase Batch Writes to ensure your data stays consistent, even if your connection drops mid-save!
+
+### SEO & Performance (Lighthouse) Guidelines:
+* **Open Graph Preview Image:** To ensure your portfolio looks great when shared on social media (LinkedIn, Twitter, Discord, etc.), place a file named exactly `og-image.jpg` inside the `public/` directory. This image acts as the preview card for your main portfolio link.
+* **Image Optimization:** Lighthouse performance scores are heavily impacted by large images (especially the Largest Contentful Paint - typically the main profile picture). Before uploading images via the Admin panel or placing them in the config, **compress them**. Using tools like [Squoosh](https://squoosh.app/) to resize and compress images down to ~50-100KB will guarantee 95+ performance scores!

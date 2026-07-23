@@ -3,7 +3,6 @@ export const ADMIN_EMAIL = 'shahariar.sabbir.101@gmail.com';
 
 
 export const DEFAULT_SITE_CONFIG = {
-  name: 'Shahariar Sabbir',
   greetingText: 'Hi, my name is',
   heroPrefix: 'I am',
   typewriterWords: ['a Learner.', 'a Web Developer.', 'a Problem Solver.'],
@@ -15,6 +14,16 @@ export const DEFAULT_SITE_CONFIG = {
     'I am a full-stack developer passionate about creating interactive and beautiful user experiences.',
   projectsPageTitle: 'Selected Works',
   projectsPageSubtitle: 'A collection of my recent projects, experiments, and open-source contributions.',
+  blogPageTitle: 'Blog',
+  blogPageSubtitle: 'Thoughts, tutorials, and deep dives into technology and design.',
+  journalPageTitle: 'Journal',
+  journalPageSubtitle: 'Philosophical thoughts, code musings, and micro-updates.',
+  careerPageTitle: 'Career Journey',
+  careerPageSubtitle: 'My professional journey and education.',
+  experienceTabTitle: 'Experience',
+  testimonialsTabTitle: 'Testimonials',
+  testimonialsSectionTitle: 'Testimonials',
+  testimonialsSectionSubtitle: 'What people say about working with me.',
   sectionVisibility: {
     // Home Page
     hero: true,

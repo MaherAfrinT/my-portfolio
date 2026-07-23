@@ -138,25 +138,14 @@ export function AdminSettings() {
             <h2 className="text-xl font-bold">General</h2>
           </div>
           <CardContent className="space-y-6 pt-6">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Greeting Text</label>
-                <Input
-                  name="greetingText"
-                  value={formData.greetingText}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Your Name</label>
-                <Input
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Greeting Text</label>
+              <Input
+                name="greetingText"
+                value={formData.greetingText}
+                onChange={handleChange}
+                required
+              />
             </div>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">

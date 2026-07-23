@@ -34,7 +34,7 @@ export function AboutSection({ config }) {
                 alt="About Me"
                 width={400}
                 height={400}
-                loading="lazy"
+                fetchPriority="high"
                 className="h-auto w-full rounded-2xl border-2 border-cyan-600/20 dark:border-cyan-500/20 object-cover shadow-xl shadow-cyan-600/20 dark:shadow-[0_0_20px_rgba(0,255,204,0.15)]"
               />
             </motion.div>

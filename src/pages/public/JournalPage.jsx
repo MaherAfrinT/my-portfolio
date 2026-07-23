@@ -10,6 +10,8 @@ import { LazyMarkdown } from '../../components/ui/LazyMarkdown';
 import { WalkingCatFooter } from '../../components/ui/WalkingCatFooter';
 import { useReaderSettings } from '../../hooks/useReaderSettings';
 import { ReaderSettingsMenu } from '../../components/ui/ReaderSettingsMenu';
+import { useSiteConfig } from '../../contexts/SiteConfigContext';
+import { DEFAULT_SITE_CONFIG } from '../../lib/constants';
 
 export function JournalPage() {
   const {
@@ -18,6 +20,7 @@ export function JournalPage() {
     error,
   } = useFirestoreCollection('journalEntries', 'date', 'desc');
 
+  const { config } = useSiteConfig();
   const { getReaderStyles } = useReaderSettings();
 
   // Filter out drafts
@@ -31,11 +34,11 @@ export function JournalPage() {
           <header className="pt-12">
             <h1 className="mb-6 text-4xl font-extrabold md:text-5xl">
               <span className="bg-gradient-to-r from-[#009bbf] to-emerald-700 dark:from-cyan-400 dark:to-purple-500 bg-clip-text text-transparent">
-                Journal
+                {config.journalPageTitle || DEFAULT_SITE_CONFIG.journalPageTitle}
               </span>
             </h1>
             <p className="mb-12 max-w-2xl text-xl text-[#566e7a] dark:text-slate-400">
-              Philosophical thoughts, code musings, and micro-updates.
+              {config.journalPageSubtitle || DEFAULT_SITE_CONFIG.journalPageSubtitle}
             </p>
           </header>
         </Reveal>

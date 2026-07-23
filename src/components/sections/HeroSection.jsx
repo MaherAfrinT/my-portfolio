@@ -39,8 +39,7 @@ export function HeroSection({ config }) {
           variants={cardVariants}
           className="font-mono text-lg text-cyan-600 dark:text-cyan-400"
         >
-          {config.greetingText || DEFAULT_SITE_CONFIG.greetingText}{' '}
-          {config.name}.
+          {config.greetingText || DEFAULT_SITE_CONFIG.greetingText}
         </motion.p>
         <motion.h1 variants={cardVariants} className="flex flex-col gap-1 min-h-[160px] md:min-h-[180px]">
           <span className="text-4xl font-extrabold tracking-tight text-[#0e2a36] md:text-6xl dark:text-white">

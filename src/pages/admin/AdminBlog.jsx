@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
 import { useFirestoreCollection } from '../../hooks/useFirestoreCollection';
 import { useAdminDelete } from '../../hooks/useAdminDelete';
 import { COLLECTIONS } from '../../lib/constants';
 import { Button } from '../../components/ui/Button';
+import { Card, CardContent } from '../../components/ui/Card';
+import { Input } from '../../components/ui/Input';
+import { Textarea } from '../../components/ui/Textarea';
 import { Trash2 } from 'lucide-react';
 
 export function AdminBlog() {
@@ -15,7 +20,60 @@ export function AdminBlog() {
 
   const { handleDelete, isDeleting } = useAdminDelete(COLLECTIONS.BLOG);
 
-  if (loading) return <div>Loading posts...</div>;
+  const [formData, setFormData] = useState({
+    blogPageTitle: '',
+    blogPageSubtitle: ''
+  });
+  const [configLoading, setConfigLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState('');
+
+  React.useEffect(() => {
+    async function fetchConfig() {
+      try {
+        const docRef = doc(db, COLLECTIONS.CONFIG, 'main');
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          setFormData({
+            blogPageTitle: data.blogPageTitle || '',
+            blogPageSubtitle: data.blogPageSubtitle || '',
+          });
+        }
+      } catch (err) {
+        console.error('Failed to load config', err);
+      } finally {
+        setConfigLoading(false);
+      }
+    }
+    fetchConfig();
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSaveSettings = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    setMessage('');
+    try {
+      await setDoc(doc(db, COLLECTIONS.CONFIG, 'main'), formData, { merge: true });
+      setMessage('Settings saved!');
+    } catch (err) {
+      console.error('Failed to save config', err);
+      setMessage('Failed to save settings.');
+    } finally {
+      setSaving(false);
+      setTimeout(() => setMessage(''), 3000);
+    }
+  };
+
+  if (loading || configLoading) return <div>Loading posts...</div>;
   if (fetchError) return <div className="text-red-500">Error: {fetchError.message}</div>;
 
   return (
@@ -26,6 +84,42 @@ export function AdminBlog() {
           New Post
         </Button>
       </div>
+
+      <Card className="mb-8">
+        <div className="border-b border-slate-200 px-6 pt-6 pb-2 dark:border-slate-800 flex items-center justify-between">
+          <h2 className="text-xl font-bold">Blog Page Settings</h2>
+          {message && <span className="text-sm font-bold text-green-500">{message}</span>}
+        </div>
+        <CardContent className="pt-6">
+          <form onSubmit={handleSaveSettings} className="space-y-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Blog Page Title</label>
+              <Input
+                name="blogPageTitle"
+                value={formData.blogPageTitle}
+                onChange={handleChange}
+                placeholder="Blog"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Blog Page Subtitle</label>
+              <Textarea
+                name="blogPageSubtitle"
+                value={formData.blogPageSubtitle}
+                onChange={handleChange}
+                placeholder="Thoughts, tutorials, and deep dives into technology and design."
+              />
+            </div>
+            <Button
+              type="submit"
+              isLoading={saving}
+              className="bg-cyan-500 text-[#0e2a36] hover:bg-cyan-600"
+            >
+              Save Settings
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
 
       <div className="hidden md:block overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800">
         <table className="w-full text-left">

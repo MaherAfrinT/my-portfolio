@@ -21,7 +21,7 @@
   /* Override Tailwind cyan with Parrot Cyan */
   --color-cyan-400: #33F0FF;
   --color-cyan-500: #00E5FF;
-  --color-cyan-600: #00B8CC;
+  --color-cyan-600: #00788C; /* Darkened for better contrast */
 }
 
 html {

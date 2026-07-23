@@ -5,6 +5,8 @@ import { motion } from 'framer-motion';
 import { PageTransition } from '../../components/layout/PageTransition';
 import { Reveal } from '../../components/ui/Reveal';
 import { WalkingCatFooter } from '../../components/ui/WalkingCatFooter';
+import { useSiteConfig } from '../../contexts/SiteConfigContext';
+import { DEFAULT_SITE_CONFIG } from '../../lib/constants';
 import { format } from 'date-fns';
 
 export function BlogPage() {
@@ -13,6 +15,7 @@ export function BlogPage() {
     loading,
     error,
   } = useFirestoreCollection('blogPosts', 'publishedAt', 'desc');
+  const { config } = useSiteConfig();
   const [filter, setFilter] = useState('All');
 
   // Extract unique tags
@@ -28,11 +31,11 @@ export function BlogPage() {
           <header className="pt-12">
             <h1 className="mb-6 text-4xl font-extrabold md:text-5xl">
               <span className="bg-gradient-to-r from-cyan-600 to-emerald-700 dark:from-[#00E5FF] dark:to-transparent bg-clip-text text-transparent">
-                Blog
+                {config.blogPageTitle || DEFAULT_SITE_CONFIG.blogPageTitle}
               </span>
             </h1>
             <p className="max-w-2xl text-xl text-[#566e7a] dark:text-slate-400">
-              Thoughts, tutorials, and deep dives into technology and design.
+              {config.blogPageSubtitle || DEFAULT_SITE_CONFIG.blogPageSubtitle}
             </p>
           </header>
         </Reveal>
