@@ -20,7 +20,7 @@ export function Button({
     secondary:
       'bg-slate-100 text-[#0e2a36] hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700',
     outline:
-      'relative overflow-hidden z-0 border border-cyan-800 text-cyan-900 before:absolute before:inset-0 before:z-[-1] before:bg-gradient-to-r before:from-blue-600 before:via-cyan-400 before:to-fuchsia-500 before:transition-transform before:duration-300 before:ease-out before:scale-y-0 before:origin-bottom hover:before:scale-y-100 hover:text-white hover:border-transparent dark:border-cyan-400 dark:text-cyan-300 dark:before:from-cyan-400 dark:before:via-fuchsia-400 dark:before:to-pink-400 dark:hover:text-[#0e2a36]',
+      'border border-cyan-800 text-cyan-900 hover:text-cyan-600 hover:border-cyan-600 dark:border-cyan-400 dark:text-cyan-300 dark:hover:text-cyan-200 dark:hover:border-cyan-300',
     ghost:
       'hover:bg-slate-100 dark:hover:bg-slate-800 text-[#385361] dark:text-slate-300',
     danger:
