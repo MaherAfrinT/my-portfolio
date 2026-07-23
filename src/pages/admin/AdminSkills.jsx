@@ -47,12 +47,18 @@ export function AdminSkills() {
   }, [isDirty]);
 
   const handleSave = async () => {
+    let hasEmptyCategory = false;
     for (const cat of skills) {
       if (!cat.category || cat.category.trim() === '') {
-        setMessage('Error: Category name cannot be empty.');
-        setTimeout(() => setMessage(''), 3000);
-        return;
+        hasEmptyCategory = true;
       }
+    }
+
+    if (hasEmptyCategory) {
+      const confirmSave = window.confirm(
+        'One or more categories have an empty name. Are you sure you want to save?'
+      );
+      if (!confirmSave) return;
     }
 
     setSaving(true);

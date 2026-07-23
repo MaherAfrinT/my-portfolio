@@ -81,11 +81,11 @@ export function useAdminCareerForm(id) {
           : formData.endDate
             ? Timestamp.fromDate(new Date(formData.endDate))
             : null,
-        skills: formData.skills
+        skills: (formData.skills || '')
           .split(',')
           .map((s) => s.trim())
           .filter(Boolean),
-        achievements: formData.achievements
+        achievements: (formData.achievements || '')
           .split('\n')
           .map((a) => a.trim())
           .filter(Boolean),

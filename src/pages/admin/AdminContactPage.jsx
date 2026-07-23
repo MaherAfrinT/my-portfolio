@@ -41,6 +41,18 @@ export function AdminContactPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const emptyFields = [];
+    if (!formData.contactPageTitle?.trim()) emptyFields.push('Page Title');
+    if (!formData.contactPageText?.trim()) emptyFields.push('Profile Description Text');
+
+    if (emptyFields.length > 0) {
+      const confirmSave = window.confirm(
+        `The following fields are empty:\n- ${emptyFields.join('\n- ')}\n\nAre you sure you want to save anyway?`
+      );
+      if (!confirmSave) return;
+    }
+
     setSaving(true);
     setMessage('');
     try {

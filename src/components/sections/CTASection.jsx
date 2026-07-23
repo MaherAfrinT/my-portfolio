@@ -14,11 +14,19 @@ export function CTASection({ config }) {
           <div className="relative z-10 flex flex-col items-center justify-center">
             <div className="mb-6 flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white/50 px-4 py-2 dark:border-slate-800 dark:bg-slate-900/50">
               <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
+                {config.isAvailableForWork !== false ? (
+                  <>
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
+                  </>
+                ) : (
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500"></span>
+                )}
               </span>
               <span className="text-xs font-medium text-[#566e7a] dark:text-slate-400">
-                {config.ctaBadge || 'Available for work'}
+                {config.isAvailableForWork !== false 
+                  ? (config.ctaBadge || 'Available for work')
+                  : 'Not available for work'}
               </span>
             </div>
             <h2 className="mb-8 max-w-2xl text-4xl font-extrabold text-[#0e2a36] md:text-6xl dark:text-white">

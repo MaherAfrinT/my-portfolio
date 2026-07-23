@@ -19,6 +19,21 @@ export function AdminTestimonialForm() {
     navigate
   } = useAdminTestimonialForm(id);
 
+  const onFormSubmit = (e) => {
+    e.preventDefault();
+    const emptyFields = [];
+    if (!formData.author?.trim()) emptyFields.push('Author Name');
+    if (!formData.quote?.trim()) emptyFields.push('Quote');
+
+    if (emptyFields.length > 0) {
+      const confirmSave = window.confirm(
+        `The following fields are empty:\n- ${emptyFields.join('\n- ')}\n\nAre you sure you want to save anyway?`
+      );
+      if (!confirmSave) return;
+    }
+    handleSubmit(e);
+  };
+
   if (loading) return <div>Loading...</div>;
 
   return (
@@ -39,7 +54,7 @@ export function AdminTestimonialForm() {
         <div className="rounded-md bg-red-100 p-4 text-red-700">{error}</div>
       )}
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={onFormSubmit}>
         <Card>
           <div className="border-b border-slate-200 px-6 pt-6 pb-2 dark:border-slate-800">
             <h2 className="text-xl font-bold">Testimonial Details</h2>
@@ -49,9 +64,8 @@ export function AdminTestimonialForm() {
               <label className="text-sm font-medium">Author Name</label>
               <Input
                 name="author"
-                value={formData.author}
+                value={formData.author || ''}
                 onChange={handleChange}
-                required
                 placeholder="Jane Doe"
               />
             </div>
@@ -60,7 +74,7 @@ export function AdminTestimonialForm() {
               <label className="text-sm font-medium">Position / Company</label>
               <Input
                 name="position"
-                value={formData.position}
+                value={formData.position || ''}
                 onChange={handleChange}
                 placeholder="CEO at TechCorp"
               />
@@ -70,7 +84,7 @@ export function AdminTestimonialForm() {
               <label className="text-sm font-medium">Avatar URL</label>
               <Input
                 name="avatarUrl"
-                value={formData.avatarUrl}
+                value={formData.avatarUrl || ''}
                 onChange={handleChange}
                 placeholder="https://example.com/avatar.jpg"
               />
@@ -86,7 +100,7 @@ export function AdminTestimonialForm() {
               <label className="text-sm font-medium">Reference Work URL</label>
               <Input
                 name="referenceUrl"
-                value={formData.referenceUrl}
+                value={formData.referenceUrl || ''}
                 onChange={handleChange}
                 placeholder="https://example.com or /projects/my-project"
               />
@@ -99,9 +113,8 @@ export function AdminTestimonialForm() {
               <label className="text-sm font-medium">Quote</label>
               <Textarea
                 name="quote"
-                value={formData.quote}
+                value={formData.quote || ''}
                 onChange={handleChange}
-                required
                 className="min-h-[150px]"
                 placeholder="What they said..."
               />

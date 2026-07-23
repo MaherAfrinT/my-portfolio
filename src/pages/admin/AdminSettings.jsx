@@ -100,6 +100,21 @@ export function AdminSettings() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const emptyFields = [];
+    if (!formData.greetingText?.trim()) emptyFields.push('Greeting Text');
+    if (!formData.heroPrefix?.trim()) emptyFields.push('Hero Prefix');
+    if (!typewriterStr.trim()) emptyFields.push('Typewriter Words');
+    if (!formData.tagline?.trim()) emptyFields.push('Tagline');
+    if (!formData.about?.trim()) emptyFields.push('About Text');
+
+    if (emptyFields.length > 0) {
+      const confirmSave = window.confirm(
+        `The following fields are empty:\n- ${emptyFields.join('\n- ')}\n\nAre you sure you want to save anyway?`
+      );
+      if (!confirmSave) return;
+    }
+
     setSaving(true);
     setMessage('');
     try {
@@ -142,9 +157,8 @@ export function AdminSettings() {
               <label className="text-sm font-medium">Greeting Text</label>
               <Input
                 name="greetingText"
-                value={formData.greetingText}
+                value={formData.greetingText || ''}
                 onChange={handleChange}
-                required
               />
             </div>
 
@@ -153,9 +167,8 @@ export function AdminSettings() {
                 <label className="text-sm font-medium">Hero Prefix</label>
                 <Input
                   name="heroPrefix"
-                  value={formData.heroPrefix}
+                  value={formData.heroPrefix || ''}
                   onChange={handleChange}
-                  required
                 />
               </div>
               <div className="space-y-2">
@@ -166,7 +179,6 @@ export function AdminSettings() {
                   value={typewriterStr}
                   onChange={(e) => setTypewriterStr(e.target.value)}
                   className="min-h-[100px]"
-                  required
                 />
               </div>
             </div>
@@ -202,7 +214,7 @@ export function AdminSettings() {
               <label className="text-sm font-medium">Tagline</label>
               <Input
                 name="tagline"
-                value={formData.tagline}
+                value={formData.tagline || ''}
                 onChange={handleChange}
               />
             </div>
@@ -212,7 +224,7 @@ export function AdminSettings() {
               </label>
               <Input
                 name="resumeUrl"
-                value={formData.resumeUrl}
+                value={formData.resumeUrl || ''}
                 onChange={handleChange}
                 placeholder="https://drive.google.com/..."
               />
@@ -221,7 +233,7 @@ export function AdminSettings() {
               <label className="text-sm font-medium">About Text</label>
               <Textarea
                 name="about"
-                value={formData.about}
+                value={formData.about || ''}
                 onChange={handleChange}
                 className="min-h-[100px]"
               />

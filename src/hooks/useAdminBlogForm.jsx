@@ -100,7 +100,7 @@ export function useAdminBlogForm(id) {
             .replace(/[^a-z0-9]+/g, '-')
             .replace(/(^-|-$)+/g, ''),
         content: formData.content,
-        tags: formData.tags
+        tags: (formData.tags || '')
           .split(',')
           .map((t) => t.trim())
           .filter(Boolean),

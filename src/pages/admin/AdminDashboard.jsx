@@ -19,8 +19,16 @@ export function AdminDashboard() {
         <div className="flex gap-4">
           <Button
             onClick={async () => {
-              const { seedDatabase } = await import('../../lib/seedData');
-              await seedDatabase();
+              try {
+                const { seedDatabase } = await import('../../lib/seedData');
+                await seedDatabase();
+                const Swal = (await import('sweetalert2')).default;
+                Swal.fire('Success', 'Database seeded successfully', 'success');
+              } catch (err) {
+                console.error(err);
+                const Swal = (await import('sweetalert2')).default;
+                Swal.fire('Error', 'Failed to seed database', 'error');
+              }
             }}
             variant="outline"
             className="border-cyan-500 text-cyan-500 hover:bg-cyan-50 dark:hover:bg-cyan-900/20"
@@ -41,8 +49,14 @@ export function AdminDashboard() {
               });
               
               if (result.isConfirmed) {
-                const { deleteSeededData } = await import('../../lib/seedData');
-                await deleteSeededData();
+                try {
+                  const { deleteSeededData } = await import('../../lib/seedData');
+                  await deleteSeededData();
+                  Swal.fire('Deleted!', 'Seeded data has been deleted.', 'success');
+                } catch (err) {
+                  console.error(err);
+                  Swal.fire('Error', 'Failed to delete seed data', 'error');
+                }
               }
             }}
             variant="outline"

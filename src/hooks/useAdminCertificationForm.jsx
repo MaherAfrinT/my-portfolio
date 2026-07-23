@@ -60,18 +60,18 @@ export function useAdminCertificationForm(id) {
     e.preventDefault();
     setError(null);
 
-    if (!isValidUrl(formData.badgeUrl)) {
+    if (formData.badgeUrl && !isValidUrl(formData.badgeUrl)) {
       setError('Invalid Badge URL');
       return;
     }
-    if (!isValidUrl(formData.verifyUrl)) {
+    if (formData.verifyUrl && !isValidUrl(formData.verifyUrl)) {
       setError('Invalid Verification URL');
       return;
     }
 
     setLoading(true);
     try {
-      const tagsArray = formData.tags
+      const tagsArray = (formData.tags || '')
         .split(',')
         .map((t) => t.trim())
         .filter((t) => t.length > 0);

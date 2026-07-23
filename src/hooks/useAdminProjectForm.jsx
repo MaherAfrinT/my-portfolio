@@ -66,19 +66,15 @@ export function useAdminProjectForm(id) {
     setError(null);
 
     // Validation
-    if (!formData.title) {
-      setError('Title is required');
-      return;
-    }
-    if (!isValidUrl(formData.githubUrl)) {
+    if (formData.githubUrl && !isValidUrl(formData.githubUrl)) {
       setError('Invalid GitHub URL');
       return;
     }
-    if (!isValidUrl(formData.liveUrl)) {
+    if (formData.liveUrl && !isValidUrl(formData.liveUrl)) {
       setError('Invalid Live URL');
       return;
     }
-    if (!isValidUrl(formData.coverImage)) {
+    if (formData.coverImage && !isValidUrl(formData.coverImage)) {
       setError('Invalid Cover Image URL');
       return;
     }
@@ -87,11 +83,11 @@ export function useAdminProjectForm(id) {
     try {
       const dataToSave = {
         ...formData,
-        categories: formData.categories
+        categories: (formData.categories || '')
           .split(',')
           .map((s) => s.trim())
           .filter(Boolean),
-        techStack: formData.techStack
+        techStack: (formData.techStack || '')
           .split(',')
           .map((s) => s.trim())
           .filter(Boolean),

@@ -73,9 +73,10 @@ export function AdminManifesto() {
     const cleanedItems = manifestoItems.filter((item) => item.trim() !== '');
 
     if (cleanedItems.length === 0) {
-      setMessage('Error: Manifesto cannot be completely empty.');
-      setTimeout(() => setMessage(''), 3000);
-      return;
+      const confirmSave = window.confirm(
+        'All manifesto paragraphs are empty. Are you sure you want to save an empty manifesto?'
+      );
+      if (!confirmSave) return;
     }
 
     setSaving(true);

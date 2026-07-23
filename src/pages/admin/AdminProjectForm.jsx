@@ -22,6 +22,22 @@ export function AdminProjectForm() {
     navigate
   } = useAdminProjectForm(id);
 
+  const onFormSubmit = (e) => {
+    e.preventDefault();
+    const emptyFields = [];
+    if (!formData.title?.trim()) emptyFields.push('Title');
+    if (!formData.summary?.trim()) emptyFields.push('Summary');
+    if (!formData.description?.trim()) emptyFields.push('Full Description');
+
+    if (emptyFields.length > 0) {
+      const confirmSave = window.confirm(
+        `The following fields are empty:\n- ${emptyFields.join('\n- ')}\n\nAre you sure you want to save anyway?`
+      );
+      if (!confirmSave) return;
+    }
+    handleSubmit(e);
+  };
+
   if (loading) return <div>Loading...</div>;
 
   return (
@@ -37,16 +53,15 @@ export function AdminProjectForm() {
 
       {error && <div className="text-red-500 font-medium">{error}</div>}
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={onFormSubmit} className="space-y-6">
         <Card>
           <CardContent className="space-y-6">
             <div className="space-y-2">
               <label className="text-sm font-medium">Title *</label>
               <Input
                 name="title"
-                value={formData.title}
+                value={formData.title || ''}
                 onChange={handleChange}
-                required
               />
             </div>
 
@@ -56,7 +71,7 @@ export function AdminProjectForm() {
               </label>
               <Textarea
                 name="summary"
-                value={formData.summary}
+                value={formData.summary || ''}
                 onChange={handleChange}
               />
             </div>
@@ -66,7 +81,7 @@ export function AdminProjectForm() {
                 <label className="text-sm font-medium">GitHub URL</label>
                 <Input
                   name="githubUrl"
-                  value={formData.githubUrl}
+                  value={formData.githubUrl || ''}
                   onChange={handleChange}
                 />
               </div>
@@ -74,7 +89,7 @@ export function AdminProjectForm() {
                 <label className="text-sm font-medium">Live URL</label>
                 <Input
                   name="liveUrl"
-                  value={formData.liveUrl}
+                  value={formData.liveUrl || ''}
                   onChange={handleChange}
                 />
               </div>
@@ -87,7 +102,7 @@ export function AdminProjectForm() {
                 </label>
                 <Input
                   name="categories"
-                  value={formData.categories}
+                  value={formData.categories || ''}
                   onChange={handleChange}
                   placeholder="Web, Mobile, Open Source"
                 />
@@ -98,7 +113,7 @@ export function AdminProjectForm() {
                 </label>
                 <Input
                   name="techStack"
-                  value={formData.techStack}
+                  value={formData.techStack || ''}
                   onChange={handleChange}
                   placeholder="React, Firebase, Tailwind"
                 />
@@ -109,7 +124,7 @@ export function AdminProjectForm() {
               <label className="text-sm font-medium">Cover Image URL</label>
               <Input
                 name="coverImage"
-                value={formData.coverImage}
+                value={formData.coverImage || ''}
                 onChange={handleChange}
                 placeholder="https://imgur.com/... or https://unsplash.com/..."
               />
@@ -141,7 +156,7 @@ export function AdminProjectForm() {
                 Full Description (Markdown)
               </label>
               <MarkdownEditor
-                value={formData.description}
+                value={formData.description || ''}
                 onChange={(val) =>
                   setFormData((prev) => ({ ...prev, description: val }))
                 }

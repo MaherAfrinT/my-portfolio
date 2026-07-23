@@ -15,6 +15,22 @@ export function AdminCertificationForm() {
     navigate
   } = useAdminCertificationForm(id);
 
+  const onFormSubmit = (e) => {
+    e.preventDefault();
+    const emptyFields = [];
+    if (!formData.title?.trim()) emptyFields.push('Short Title');
+    if (!formData.fullName?.trim()) emptyFields.push('Full Name');
+    if (!formData.issuer?.trim()) emptyFields.push('Issuer');
+    if (!formData.description?.trim()) emptyFields.push('Description');
+
+    if (emptyFields.length > 0) {
+      const confirmSave = window.confirm(
+        `The following fields are empty:\n- ${emptyFields.join('\n- ')}\n\nAre you sure you want to save anyway?`
+      );
+      if (!confirmSave) return;
+    }
+    handleSubmit(e);
+  };
 
   return (
     <div className="max-w-4xl space-y-6">
@@ -49,7 +65,7 @@ export function AdminCertificationForm() {
       </div>
 
       <form
-        onSubmit={handleSubmit}
+        onSubmit={onFormSubmit}
         className="space-y-8 rounded-xl border border-slate-200 bg-white p-6 shadow-sm md:p-8 dark:border-slate-800 dark:bg-slate-900"
       >
         {error && (
@@ -64,9 +80,8 @@ export function AdminCertificationForm() {
             <input
               type="text"
               name="title"
-              value={formData.title}
+              value={formData.title || ''}
               onChange={handleChange}
-              required
               className="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2 focus:ring-2 focus:ring-cyan-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800"
             />
           </div>
@@ -78,9 +93,8 @@ export function AdminCertificationForm() {
             <input
               type="text"
               name="fullName"
-              value={formData.fullName}
+              value={formData.fullName || ''}
               onChange={handleChange}
-              required
               className="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2 focus:ring-2 focus:ring-cyan-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800"
             />
           </div>
@@ -92,9 +106,8 @@ export function AdminCertificationForm() {
             <input
               type="text"
               name="issuer"
-              value={formData.issuer}
+              value={formData.issuer || ''}
               onChange={handleChange}
-              required
               className="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2 focus:ring-2 focus:ring-cyan-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800"
             />
           </div>
@@ -106,7 +119,7 @@ export function AdminCertificationForm() {
             <input
               type="text"
               name="tags"
-              value={formData.tags}
+              value={formData.tags || ''}
               onChange={handleChange}
               placeholder="Networking, Cloud, Security"
               className="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2 focus:ring-2 focus:ring-cyan-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800"
@@ -120,7 +133,7 @@ export function AdminCertificationForm() {
             <input
               type="text"
               name="issuedDate"
-              value={formData.issuedDate}
+              value={formData.issuedDate || ''}
               onChange={handleChange}
               className="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2 focus:ring-2 focus:ring-cyan-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800"
             />
@@ -133,7 +146,7 @@ export function AdminCertificationForm() {
             <input
               type="text"
               name="expiryDate"
-              value={formData.expiryDate}
+              value={formData.expiryDate || ''}
               onChange={handleChange}
               className="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2 focus:ring-2 focus:ring-cyan-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800"
             />
@@ -151,7 +164,7 @@ export function AdminCertificationForm() {
             <input
               type="url"
               name="badgeUrl"
-              value={formData.badgeUrl}
+              value={formData.badgeUrl || ''}
               onChange={handleChange}
               placeholder="https://i.imgur.com/..."
               className="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2 focus:ring-2 focus:ring-cyan-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800"
@@ -181,7 +194,7 @@ export function AdminCertificationForm() {
             <input
               type="url"
               name="verifyUrl"
-              value={formData.verifyUrl}
+              value={formData.verifyUrl || ''}
               onChange={handleChange}
               placeholder="https://www.credly.com/badges/..."
               className="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-2 focus:ring-2 focus:ring-cyan-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800"
@@ -195,9 +208,8 @@ export function AdminCertificationForm() {
           </label>
           <textarea
             name="description"
-            value={formData.description}
+            value={formData.description || ''}
             onChange={handleChange}
-            required
             rows={10}
             className="w-full rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 font-mono text-sm focus:ring-2 focus:ring-cyan-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800"
             placeholder="Write a detailed description of what you learned, the exam requirements, etc."

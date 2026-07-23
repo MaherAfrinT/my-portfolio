@@ -22,6 +22,22 @@ export function AdminJournalForm() {
   const [activeTab, setActiveTab] = useState('write'); // 'write' or 'preview'
   const categories = ['Philosophy', 'Code', 'Life', 'Update', 'Thoughts'];
 
+  const onFormSubmit = (e) => {
+    e.preventDefault();
+    const emptyFields = [];
+    if (!formData.title?.trim()) emptyFields.push('Title');
+    if (!formData.date?.trim()) emptyFields.push('Date');
+    if (!formData.content?.trim()) emptyFields.push('Content');
+
+    if (emptyFields.length > 0) {
+      const confirmSave = window.confirm(
+        `The following fields are empty:\n- ${emptyFields.join('\n- ')}\n\nAre you sure you want to save anyway?`
+      );
+      if (!confirmSave) return;
+    }
+    handleSubmit(e);
+  };
+
   if (loading) return <div>Loading...</div>;
 
   return (
@@ -42,7 +58,7 @@ export function AdminJournalForm() {
       )}
 
       <form
-        onSubmit={handleSubmit}
+        onSubmit={onFormSubmit}
         className="space-y-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8 dark:border-slate-700 dark:bg-slate-800"
       >
         {/* Basic Info */}
@@ -52,10 +68,9 @@ export function AdminJournalForm() {
             <input
               type="text"
               name="title"
-              value={formData.title}
+              value={formData.title || ''}
               onChange={handleChange}
               placeholder="E.g., Thoughts on Declarative UI..."
-              required
               className="w-full rounded-lg border border-slate-300 bg-transparent px-4 py-2 focus:ring-2 focus:ring-cyan-500 focus:outline-none dark:border-slate-600"
             />
           </div>
@@ -65,9 +80,8 @@ export function AdminJournalForm() {
             <input
               type="date"
               name="date"
-              value={formData.date}
+              value={formData.date || ''}
               onChange={handleChange}
-              required
               className="w-full rounded-lg border border-slate-300 bg-transparent px-4 py-2 focus:ring-2 focus:ring-cyan-500 focus:outline-none dark:border-slate-600"
             />
           </div>
@@ -136,10 +150,9 @@ export function AdminJournalForm() {
             {activeTab === 'write' ? (
               <textarea
                 name="content"
-                value={formData.content}
+                value={formData.content || ''}
                 onChange={handleChange}
                 placeholder="Write your journal entry here... Markdown is supported."
-                required
                 className="h-full w-full resize-none border-none bg-transparent p-6 font-mono text-sm leading-relaxed focus:ring-0 focus:outline-none"
               />
             ) : (

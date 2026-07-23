@@ -24,6 +24,22 @@ export function AdminBlogForm() {
 
   const [activeTab, setActiveTab] = useState('edit');
 
+  const onFormSubmit = (e) => {
+    e.preventDefault();
+    const emptyFields = [];
+    if (!formData.title?.trim()) emptyFields.push('Title');
+    if (!formData.slug?.trim()) emptyFields.push('Slug');
+    if (!formData.content?.trim()) emptyFields.push('Content');
+
+    if (emptyFields.length > 0) {
+      const confirmSave = window.confirm(
+        `The following fields are empty:\n- ${emptyFields.join('\n- ')}\n\nAre you sure you want to save anyway?`
+      );
+      if (!confirmSave) return;
+    }
+    handleSubmit(e);
+  };
+
   const insertTextAtCursor = (text) => {
     const textarea = document.getElementById('blog-content-textarea');
     if (!textarea) return;
@@ -88,7 +104,7 @@ export function AdminBlogForm() {
       )}
 
       <form
-        onSubmit={handleSubmit}
+        onSubmit={onFormSubmit}
         className="space-y-6 rounded-xl border border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-800"
       >
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -97,9 +113,8 @@ export function AdminBlogForm() {
             <input
               type="text"
               name="title"
-              value={formData.title}
+              value={formData.title || ''}
               onChange={handleTitleChange}
-              required
               className="w-full rounded-lg border border-slate-300 bg-transparent px-4 py-2 focus:ring-2 focus:ring-cyan-500 focus:outline-none dark:border-slate-600"
             />
           </div>
@@ -108,9 +123,8 @@ export function AdminBlogForm() {
             <input
               type="text"
               name="slug"
-              value={formData.slug}
+              value={formData.slug || ''}
               onChange={handleChange}
-              required
               className="w-full rounded-lg border border-slate-300 bg-transparent px-4 py-2 focus:ring-2 focus:ring-cyan-500 focus:outline-none dark:border-slate-600"
             />
           </div>
@@ -163,9 +177,8 @@ export function AdminBlogForm() {
             <textarea
               id="blog-content-textarea"
               name="content"
-              value={formData.content}
+              value={formData.content || ''}
               onChange={handleChange}
-              required
               rows="15"
               className="w-full rounded-lg border border-slate-300 bg-transparent px-4 py-2 font-mono text-sm focus:ring-2 focus:ring-cyan-500 focus:outline-none dark:border-slate-600"
             />
@@ -189,7 +202,7 @@ export function AdminBlogForm() {
             <input
               type="text"
               name="tags"
-              value={formData.tags}
+              value={formData.tags || ''}
               onChange={handleChange}
               placeholder="React, Firebase, Tutorial"
               className="w-full rounded-lg border border-slate-300 bg-transparent px-4 py-2 focus:ring-2 focus:ring-cyan-500 focus:outline-none dark:border-slate-600"
@@ -202,7 +215,7 @@ export function AdminBlogForm() {
             <input
               type="url"
               name="coverImage"
-              value={formData.coverImage}
+              value={formData.coverImage || ''}
               onChange={handleChange}
               placeholder="https://..."
               className="w-full rounded-lg border border-slate-300 bg-transparent px-4 py-2 focus:ring-2 focus:ring-cyan-500 focus:outline-none dark:border-slate-600"

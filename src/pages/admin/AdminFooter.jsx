@@ -68,6 +68,26 @@ export function AdminFooter() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const emptyFields = [];
+    if (!formData.ctaTitle?.trim()) emptyFields.push('CTA Title');
+    if (!formData.ctaButtonText?.trim()) emptyFields.push('CTA Button Text');
+
+    let hasEmptySocial = false;
+    (formData.socialLinks || []).forEach(social => {
+      if (!social.platform?.trim() || !social.url?.trim() || !social.iconName?.trim()) {
+        hasEmptySocial = true;
+      }
+    });
+    if (hasEmptySocial) emptyFields.push('One or more Social Links have empty fields');
+
+    if (emptyFields.length > 0) {
+      const confirmSave = window.confirm(
+        `The following fields are empty:\n- ${emptyFields.join('\n- ')}\n\nAre you sure you want to save anyway?`
+      );
+      if (!confirmSave) return;
+    }
+
     setSaving(true);
     setMessage('');
     try {
